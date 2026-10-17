@@ -48,7 +48,7 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 #vg .vg-artist-row{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:8px;max-width:100%}
 #vg .vg-artist{font-size:15px;color:#ffffffa8;overflow-wrap:anywhere}
 #vg .vg-artist-row button{width:28px;height:28px;color:#ffffffb3}
-#vg .vg-album{font-size:12.5px;color:#ffffffa3;margin-top:2px;overflow-wrap:anywhere}
+#vg .vg-album{font-size:12.5px;color:#ffffff80;margin-top:2px;overflow-wrap:anywhere}
 .vg-progress{display:flex;align-items:center;gap:12px;width:100%;font-size:11.5px;font-variant-numeric:tabular-nums;color:#ffffffb3}
 #vg .vg-progress{margin-top:26px}
 .vg-elapsed,.vg-duration{min-width:36px;white-space:nowrap}.vg-elapsed{text-align:right}.vg-duration{text-align:left}
@@ -126,3 +126,14 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 @media(max-width:1100px){.main-nowPlayingBar-nowPlayingBar{grid-template-columns:minmax(120px,1fr) minmax(230px,1.3fr) minmax(160px,1fr);gap:10px}.vg-dock-open span{display:none}.vg-dock-open{width:36px;padding:0}.main-nowPlayingBar-right .volume-bar{max-width:70px}}
 @media(max-width:760px){.main-nowPlayingBar-nowPlayingBar{grid-template-columns:minmax(80px,1fr) minmax(180px,1.4fr);gap:8px}.main-nowPlayingBar-right{grid-column:auto!important;position:absolute;right:18px;bottom:94px;background:#1a181ef5;padding:4px;border-radius:24px}.main-nowPlayingBar-right .volume-bar{max-width:80px}.main-nowPlayingBar-center [data-testid="control-button-playpause"]{width:38px!important;height:38px!important;min-width:38px!important}}
 @media(prefers-reduced-motion:reduce){.main-nowPlayingBar-center [data-testid="control-button-playpause"],.main-nowPlayingBar-center [data-testid="control-button-playpause"]::before,.vg-cover-expand{animation:none!important;transition:none!important}}
+
+/* Stable selectors from the installed Spotify build. */
+.vg-native-progress .x-progressBar-fillColor,.vg-native-progress .x-progressBar-progressFillColor{opacity:0!important}
+.vg-native-progress .x-progressBar-progressBarBg{background:linear-gradient(to right,transparent var(--vg-fill),#ffffff38 var(--vg-fill))!important;height:2px}
+.main-nowPlayingBar-right .x-progressBar-fillColor{background:#fffffff2!important}
+.main-nowPlayingBar-right .x-progressBar-progressBarBg{background:#ffffff33!important;height:4px}
+
+.Root__now-playing-bar{padding:0!important}
+.view-homeShortcutsGrid-shortcut{border-radius:12px!important;overflow:hidden;background:#ffffff0f!important}
+.view-homeShortcutsGrid-shortcut:hover{background:#ffffff1c!important}
+.vg-immersive .main-nowPlayingBar-center [data-testid="control-button-playpause"],.vg-immersive .main-nowPlayingBar-center [data-testid="control-button-playpause"]::before,.vg-immersive .Root .vg-wave{animation-play-state:paused}

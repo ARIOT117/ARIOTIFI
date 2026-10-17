@@ -45,6 +45,9 @@ def player_state():
             'image_xlarge_url': str(metadata.get('mpris:artUrl', ''))}}}
 
 def control(action, value):
+    if action == 'spectrum-stop':
+        GLib.idle_add(stop_capture)
+        return
     methods = {'play': 'Play', 'pause': 'Pause', 'toggle': 'PlayPause', 'next': 'Next', 'back': 'Previous'}
     if action in methods:
         dbus_call(PLAYER_IFACE, methods[action], None)
@@ -78,6 +81,17 @@ def on_message(bus, msg):
         err, _ = msg.parse_error()
         state['error'] = str(err)
         state['active'] = False
+
+def stop_capture():
+    """Release the audio monitor immediately on close, pause or visibility loss."""
+    global pipeline, last_request
+    last_request = 0.0
+    if pipeline is not None:
+        pipeline.set_state(Gst.State.NULL)
+        pipeline.get_bus().remove_signal_watch()
+        pipeline = None
+    state.update(bands=[0.0] * 64, active=False)
+    return False
 
 def tick():
     global pipeline
