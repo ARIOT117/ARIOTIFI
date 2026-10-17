@@ -129,3 +129,33 @@ body { background: #090b0e !important; }
 @media(max-width:700px){#vg .vg-layout{grid-template-columns:minmax(0,1fr);gap:32px;padding:84px 24px 40px}#vg .vg-art-space{width:240px;height:240px}#vg .vg-title{margin-top:12px}#vg .vg-lyrics{height:320px}#vg .vg-lyric{min-height:86px;font-size:25px}#vg .vg-toolbar{left:16px;right:16px}#vg .vg-segments button{width:38px}#vg .vg-empty{padding:16px}#vg .vg-empty h2{font-size:26px}}
 @media(max-height:760px) and (min-width:701px){#vg .vg-layout{padding-top:80px;padding-bottom:32px}#vg .vg-art-space{width:260px;height:260px}#vg .vg-title{margin-top:8px}#vg .vg-lyrics{height:440px}#vg .vg-progress{margin-top:16px}#vg .vg-volume{margin-top:12px}}
 @media(prefers-reduced-motion:reduce){#vg *,#vg *::before,.vg-wave,.vg-spin,.vg-pulse{animation:none!important;transition:none!important}}
+
+/* B — Float the real Spotify dock; retain native queue/device/save controls. */
+.Root__now-playing-bar{margin:0 12px 12px!important;border-radius:22px!important;background:rgba(26,24,30,.78)!important;backdrop-filter:blur(24px) saturate(1.4);border:1px solid #ffffff14;box-shadow:0 20px 50px #0006;overflow:visible}
+.main-nowPlayingBar-container{height:84px!important;min-height:84px!important;padding:0 14px!important;border:0!important;background:transparent!important;min-width:0!important}
+.main-nowPlayingBar-nowPlayingBar{height:100%;display:grid!important;grid-template-columns:minmax(160px,1fr) minmax(260px,560px) minmax(240px,1fr);gap:16px;align-items:center}
+.main-nowPlayingBar-left,.main-nowPlayingBar-center,.main-nowPlayingBar-right{width:auto!important;min-width:0!important;max-width:100%!important}
+.main-nowPlayingBar-right{display:flex;align-items:center;justify-content:flex-end;gap:4px}
+.main-nowPlayingWidget-coverArtContainer,.main-nowPlayingWidget-coverArt{width:56px!important;height:56px!important;border-radius:12px!important}
+[data-vg-open]{position:relative}.vg-cover-expand{position:absolute;inset:0;border-radius:12px;background:#0007;display:grid;place-items:center;opacity:0;transition:opacity .2s;pointer-events:none;color:white}.vg-cover-expand svg{width:22px;height:22px}
+[data-vg-open]:hover .vg-cover-expand,[data-vg-open]:focus-visible .vg-cover-expand{opacity:1}
+.vg-dock-open{width:auto;height:36px;border-radius:99px;background:#ffffff14;color:white;font:700 13px Figtree,system-ui,sans-serif;gap:8px;padding:0 12px;white-space:nowrap}
+.vg-dock-open svg{width:16px;height:16px}
+.main-nowPlayingBar-center [data-testid="control-button-playpause"]{position:relative;background:transparent!important;width:44px!important;height:44px!important;min-width:44px!important;isolation:isolate;color:#141014!important;animation:vg-pulse 2.4s ease-in-out infinite}
+.main-nowPlayingBar-center [data-testid="control-button-playpause"]::before{content:'';position:absolute;inset:0;background:white;clip-path:var(--vg-play-clip);animation:vg-spin 18s linear infinite;z-index:-1}
+.vg-paused .main-nowPlayingBar-center [data-testid="control-button-playpause"]{animation-duration:5s}.vg-paused .main-nowPlayingBar-center [data-testid="control-button-playpause"]::before{animation-duration:40s}
+.vg-hidden .main-nowPlayingBar-center [data-testid="control-button-playpause"],.vg-hidden .main-nowPlayingBar-center [data-testid="control-button-playpause"]::before{animation-play-state:paused}
+.playback-bar{font-variant-numeric:tabular-nums;color:#ffffffb3!important}
+.playback-bar:has(.vg-native-duration) [data-testid="playback-duration"],.playback-bar:has(.vg-native-duration) .main-playbackBarRemainingTime-container{display:none!important}
+.vg-native-duration{font-size:11px;min-width:36px;color:#ffffffb3;text-align:left}
+.vg-native-progress{position:relative;--vg-fill:0%}
+.vg-native-progress .vg-wave-window{top:50%;margin-top:-8px;z-index:1}
+.vg-native-progress [data-testid="progress-bar-background"]{background:#ffffff38!important}
+.vg-native-progress [data-testid="progress-bar-foreground"]{opacity:0}
+.main-nowPlayingBar-right .volume-bar{max-width:96px;min-width:55px}
+.main-nowPlayingBar-right .progress-bar__slider{width:3px!important;height:16px!important;border-radius:2px!important;background:white!important;opacity:1!important}
+.main-nowPlayingBar-right [data-testid="progress-bar-background"]{height:4px;background:#ffffff33!important}
+.main-nowPlayingBar-right [data-testid="progress-bar-foreground"]{background:#fffffff2!important}
+@media(max-width:1100px){.main-nowPlayingBar-nowPlayingBar{grid-template-columns:minmax(120px,1fr) minmax(230px,1.3fr) minmax(160px,1fr);gap:10px}.vg-dock-open span{display:none}.vg-dock-open{width:36px;padding:0}.main-nowPlayingBar-right .volume-bar{max-width:70px}}
+@media(max-width:760px){.main-nowPlayingBar-nowPlayingBar{grid-template-columns:minmax(80px,1fr) minmax(180px,1.4fr);gap:8px}.main-nowPlayingBar-right{grid-column:auto!important;position:absolute;right:18px;bottom:94px;background:#1a181ef5;padding:4px;border-radius:24px}.main-nowPlayingBar-right .volume-bar{max-width:80px}.main-nowPlayingBar-center [data-testid="control-button-playpause"]{width:38px!important;height:38px!important;min-width:38px!important}}
+@media(prefers-reduced-motion:reduce){.main-nowPlayingBar-center [data-testid="control-button-playpause"],.main-nowPlayingBar-center [data-testid="control-button-playpause"]::before,.vg-cover-expand{animation:none!important;transition:none!important}}

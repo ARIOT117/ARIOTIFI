@@ -214,8 +214,34 @@
     (returnFocus?.isConnected?returnFocus:document.querySelector('[data-vg-open]'))?.focus({preventScroll:true});
   }
   async function transition(v,enter){if(motion.matches)return;const a=v.root.animate([{opacity:enter?0:1},{opacity:enter?1:0}],{duration:200,fill:'both'});v.animation=a;await a.finished.catch(()=>{});a.cancel();}
-  function mountDock() { /* Native dock enhancement is installed in part B. */ }
-  function updateDock() {}
+  function mountDock() {
+    const root=document.querySelector('.main-nowPlayingBar-nowPlayingBar');
+    if(!root)return;
+    if(dock?.root!==root){dock?.abort.abort();dock={root,abort:new AbortController()};}
+    const cover=root.querySelector('[data-testid="cover-art-button"],.main-nowPlayingWidget-coverArtContainer');
+    if(cover&&!cover.hasAttribute('data-vg-open')){
+      cover.dataset.vgOpen='true';cover.setAttribute('aria-label','Abrir vista inmersiva');
+      const expand=document.createElement('span');expand.className='vg-cover-expand';expand.dataset.vgOwned='';expand.innerHTML=svg('expand');cover.append(expand);
+      cover.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();openView();},{capture:true,signal:dock.abort.signal});
+    }
+    const right=root.querySelector('.main-nowPlayingBar-right');
+    if(right&&!right.querySelector('.vg-dock-open')){
+      const b=document.createElement('button');b.className='vg-button vg-dock-open';b.dataset.vgOpen='true';b.dataset.vgOwned='';b.innerHTML=svg('expand')+'<span>Inmersiva</span>';b.title='Abrir vista inmersiva';b.setAttribute('aria-label',b.title);b.onclick=openView;right.append(b);
+    }
+    const progress=root.querySelector('[data-testid="playback-progressbar"],.playback-progressbar');
+    if(progress&&!progress.querySelector('.vg-wave-window')){
+      progress.classList.add('vg-native-progress');progress.insertAdjacentHTML('beforeend',wave);progress.querySelector('.vg-wave-window').dataset.vgOwned='';
+    }
+    const bar=root.querySelector('.playback-bar');
+    if(bar&&!bar.querySelector('.vg-native-duration')){
+      const total=document.createElement('span');total.className='vg-native-duration';total.dataset.vgOwned='';total.title='Duración total';bar.append(total);
+    }
+  }
+  function updateDock(){
+    const r=dock.root,p=position(),d=state?.duration||0;
+    r.querySelector('.vg-native-progress')?.style.setProperty('--vg-fill',(d?p/d*100:0)+'%');
+    const total=r.querySelector('.vg-native-duration');if(total)total.textContent=fmt(d);
+  }
   const launcher=new Spicetify.Topbar.Button('Inmersiva',icons.expand,openView);
   document.addEventListener('keydown',e=>{
     if(e.ctrlKey&&e.altKey&&e.code==='KeyV'){e.preventDefault();view?closeView():openView();return;}
