@@ -1,60 +1,27 @@
-:root { --vg-cover: none; }
-body { background: #090b0e !important; }
-.Root__main-view { background: linear-gradient(150deg,#10201b88,#0b101be6),var(--vg-cover) center/cover !important; }
-.main-view-container__scroll-node { background: #0b0d10b8; backdrop-filter: blur(38px); }
-.main-topBar-background { background: #090c10c9 !important; backdrop-filter: blur(25px); }
-.main-trackList-trackListRow { border-radius: 10px; }
-.main-trackList-trackListRow:hover { background: #ffffff0c !important; }
-.Root__nav-bar,.Root__right-sidebar,.Root__now-playing-bar { background: #080b0edb !important; }
-.main-nowPlayingBar-container { border-top: 1px solid #ffffff0b; }
-.main-card-card { border-radius: 16px; background: #ffffff05; }
-.main-coverSlotCollapsed-container,.main-image-image { border-radius: 8px; }
-
-/* Keep the native player inside the window when Spotify is restored. */
-@media (max-width: 1100px) {
-  .main-nowPlayingBar-container { min-width: 0 !important; }
-  .main-nowPlayingBar-nowPlayingBar {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(210px, 1.4fr) minmax(0, 1fr);
-    column-gap: 12px;
-    align-items: center;
-    width: 100%;
-  }
-  .main-nowPlayingBar-left,
-  .main-nowPlayingBar-center,
-  .main-nowPlayingBar-right {
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-  }
-  .main-nowPlayingBar-left { overflow: hidden; }
-  .main-nowPlayingWidget-nowPlaying {
-    width: 100%;
-    min-width: 0 !important;
-    max-width: 100%;
-    overflow: hidden;
-  }
-  .main-trackInfo-container {
-    min-width: 0 !important;
-    overflow: hidden;
-  }
-  .main-trackInfo-name,
-  .main-trackInfo-artists {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .main-nowPlayingBar-right .volume-bar { min-width: 0; max-width: 100px; }
-}
-
-@media (max-width: 660px) {
-  .main-nowPlayingBar-nowPlayingBar {
-    grid-template-columns: minmax(0, 1fr) minmax(210px, 1.25fr);
-    row-gap: 6px;
-  }
-  .main-nowPlayingBar-right { grid-column: 1 / -1; justify-self: end; }
-  .main-nowPlayingBar-container { height: auto !important; min-height: 110px; }
-}
+/* D — Native home, library and now-playing surfaces. */
+:root{--vg-accent-rgb:180,150,170;--vg-surface:#121214;--vg-background:#09090b}
+body{background:var(--vg-background)!important;font-family:Figtree,system-ui,sans-serif!important}
+.Root{gap:8px!important;background:var(--vg-background)!important;--panel-gap:8px}
+.Root__main-view,.Root__nav-bar,.Root__right-sidebar{background:var(--vg-surface)!important;border-radius:16px!important;overflow:hidden}
+.main-view-container__scroll-node{background:transparent!important;backdrop-filter:none!important}
+.Root__main-view:has([data-testid="home-page"]){background:linear-gradient(180deg,rgba(var(--vg-accent-rgb),.32),rgba(var(--vg-accent-rgb),.08) 198px,transparent 360px),var(--vg-surface)!important}
+.main-home-homeHeader,.main-home-homeHeaderBackground{background:transparent!important}
+.Root__main-view h2{font-size:24px!important;font-weight:800!important;letter-spacing:-.015em}
+.main-topBar-background{background:#121214dd!important}
+.main-globalNav-searchInput{background:#ffffff12!important;border:1px solid #ffffff0f!important;border-radius:999px!important;color:white!important;backdrop-filter:blur(20px)}
+.main-globalNav-searchInput::placeholder{color:#ffffffb3!important}
+.main-home-homeHeader [data-testid="card"],.main-home-homeHeader a,.main-homeHomeCard-card{border-radius:12px!important}
+.main-card-card,[data-testid="card"]{border-radius:16px!important;transition:transform .25s!important}
+.main-card-card:hover,[data-testid="card"]:hover{transform:translateY(-3px);box-shadow:0 16px 32px #0005}
+.main-card-imageContainer,.main-cardImage-image{border-radius:14px!important}
+.main-trackList-trackListRow{border-radius:10px}.main-trackList-trackListRow:hover{background:#ffffff0c!important}
+.Root__right-sidebar [data-testid="NPV_Panel_OpenDiv"]{background:var(--vg-surface)!important}
+.Root__right-sidebar section{border-radius:16px!important;background:#ffffff0d}
+.Root__right-sidebar img{border-radius:12px}
+.Root__main-view .main-cardSubHeader-root,.Root__right-sidebar .encore-text-body-small{color:#b8b8bf!important}
+.main-nowPlayingBar-left{overflow:hidden}.main-nowPlayingWidget-nowPlaying,.main-trackInfo-container{min-width:0!important;max-width:100%!important}
+.main-trackInfo-name,.main-trackInfo-artists{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(prefers-reduced-motion:reduce){.main-card-card,[data-testid="card"]{transition:none!important}.main-card-card:hover,[data-testid="card"]:hover{transform:none}}
 
 /* A — Disposable immersive player and shared controls. */
 :root{--vg-accent-rgb:180,150,170}
