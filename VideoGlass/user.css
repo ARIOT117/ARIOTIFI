@@ -1,0 +1,57 @@
+:root { --vg-cover: none; }
+body { background: #090b0e !important; }
+.Root__main-view { background: linear-gradient(150deg,#10201b88,#0b101be6),var(--vg-cover) center/cover !important; }
+.main-view-container__scroll-node { background: #0b0d10b8; backdrop-filter: blur(38px); }
+.main-topBar-background { background: #090c10c9 !important; backdrop-filter: blur(25px); }
+.main-trackList-trackListRow { border-radius: 10px; }
+.main-trackList-trackListRow:hover { background: #ffffff0c !important; }
+.Root__nav-bar,.Root__right-sidebar,.Root__now-playing-bar { background: #080b0edb !important; }
+.main-nowPlayingBar-container { border-top: 1px solid #ffffff0b; }
+.main-card-card { border-radius: 16px; background: #ffffff05; }
+.main-coverSlotCollapsed-container,.main-image-image { border-radius: 8px; }
+
+/* Keep the native player inside the window when Spotify is restored. */
+@media (max-width: 1100px) {
+  .main-nowPlayingBar-container { min-width: 0 !important; }
+  .main-nowPlayingBar-nowPlayingBar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(210px, 1.4fr) minmax(0, 1fr);
+    column-gap: 12px;
+    align-items: center;
+    width: 100%;
+  }
+  .main-nowPlayingBar-left,
+  .main-nowPlayingBar-center,
+  .main-nowPlayingBar-right {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  .main-nowPlayingBar-left { overflow: hidden; }
+  .main-nowPlayingWidget-nowPlaying {
+    width: 100%;
+    min-width: 0 !important;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .main-trackInfo-container {
+    min-width: 0 !important;
+    overflow: hidden;
+  }
+  .main-trackInfo-name,
+  .main-trackInfo-artists {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .main-nowPlayingBar-right .volume-bar { min-width: 0; max-width: 100px; }
+}
+
+@media (max-width: 660px) {
+  .main-nowPlayingBar-nowPlayingBar {
+    grid-template-columns: minmax(0, 1fr) minmax(210px, 1.25fr);
+    row-gap: 6px;
+  }
+  .main-nowPlayingBar-right { grid-column: 1 / -1; justify-self: end; }
+  .main-nowPlayingBar-container { height: auto !important; min-height: 110px; }
+}
