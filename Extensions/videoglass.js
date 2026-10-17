@@ -202,7 +202,7 @@
     const full=!document.fullscreenElement?document.documentElement.requestFullscreen?.():null;
     const v=mountView();document.querySelector('.Root')?.setAttribute('inert','');document.documentElement.classList.add('vg-immersive');
     if(full)try{await full;fullscreenOwned=true;}catch{notify('No se pudo ocultar la barra del sistema; prueba Pantalla completa en ···.');}
-    if(view===v){await transition(v,true);syncVisualizer(v);}
+    if(view===v&&!closing){await transition(v,true);if(!closing)syncVisualizer(v);}
   }
   async function closeView(){
     const v=view;if(!v||closing)return;closing=true;stopVisualizer(v);v.lyricsAbort?.abort();
@@ -213,7 +213,32 @@
     if(fullscreenOwned&&document.fullscreenElement){fullscreenOwned=false;try{await document.exitFullscreen();}catch{}}
     (returnFocus?.isConnected?returnFocus:document.querySelector('[data-vg-open]'))?.focus({preventScroll:true});
   }
-  async function transition(v,enter){if(motion.matches)return;const a=v.root.animate([{opacity:enter?0:1},{opacity:enter?1:0}],{duration:200,fill:'both'});v.animation=a;await a.finished.catch(()=>{});a.cancel();}
+  async function transition(v,enter){
+    v.animation?.cancel();
+    if(motion.matches||document.hidden)return;
+    const art=document.querySelector('[data-testid="cover-art-button"],.main-nowPlayingWidget-coverArtContainer');
+    const rect=art?.getBoundingClientRect();
+    const cx=rect?rect.left+rect.width/2:54,cy=rect?rect.top+rect.height/2:innerHeight-54;
+    const radius=Math.max(2600,Math.hypot(Math.max(cx,innerWidth-cx),Math.max(cy,innerHeight-cy))/.76+4);
+    const ns='http://www.w3.org/2000/svg',mask=document.createElementNS(ns,'svg');
+    mask.setAttribute('width','0');mask.setAttribute('height','0');mask.setAttribute('aria-hidden','true');mask.style.position='absolute';
+    const defs=document.createElementNS(ns,'defs'),clip=document.createElementNS(ns,'clipPath'),polygon=document.createElementNS(ns,'polygon');
+    clip.id='vg-flower-clip';clip.setAttribute('clipPathUnits','userSpaceOnUse');
+    polygon.setAttribute('points',Array.from({length:96},(_,i)=>{const a=i/96*Math.PI*2,r=.88+.12*Math.cos(6*a);return `${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`;}).join(' '));
+    polygon.style.transformOrigin=`${cx}px ${cy}px`;clip.append(polygon);defs.append(clip);mask.append(defs);v.root.prepend(mask);
+    v.root.style.clipPath='url(#vg-flower-clip)';
+    const content=v.root.querySelector('.vg-content');content.style.transformOrigin=`${cx}px ${cy}px`;
+    const frames=[{transform:'rotate(0deg) scale(4)'},{transform:`rotate(50deg) scale(${radius})`}];
+    const timing={duration:720,easing:'cubic-bezier(.7,0,.25,1)',fill:'both'};
+    const flowerAnimation=polygon.animate(enter?frames:[...frames].reverse(),timing);
+    const contentFrames=[{transform:'scale(1.08)',opacity:.6},{transform:'scale(1)',opacity:1}];
+    const contentAnimation=content.animate(enter?contentFrames:[...contentFrames].reverse(),timing);
+    const animation={cancel(){flowerAnimation.cancel();contentAnimation.cancel();mask.remove();v.root.style.clipPath='';}};
+    v.animation=animation;
+    await Promise.all([flowerAnimation.finished,contentAnimation.finished]).catch(()=>{});
+    // A replaced animation must not remove the replacement's clip.
+    if(v.animation===animation){animation.cancel();v.animation=null;}
+  }
   function mountDock() {
     const root=document.querySelector('.main-nowPlayingBar-nowPlayingBar');
     if(!root)return;
