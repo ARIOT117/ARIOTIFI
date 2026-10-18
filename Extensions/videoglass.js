@@ -1,3 +1,212 @@
+/*
+ * WavyProgress — barra de progreso ondulada, limpia y ligera.
+ *
+ * - Un <canvas> nítido (respeta devicePixelRatio) encima del riel; no captura clics,
+ *   así que el slider nativo de Spotify sigue funcionando debajo.
+ * - La onda está fija en pantalla: solo se desplaza la fase. La atenuación de los
+ *   extremos depende de la posición x, NO de la fase, así que la forma nunca "tiembla".
+ * - La cabeza avanza de forma continua (extrapola entre lecturas) y no a saltos de 1 s.
+ * - En pausa, la amplitud se aplana suavemente y el bucle se detiene (0 CPU).
+ * - Se pausa sola si la ventana está oculta o el elemento no está en el DOM.
+ *
+ * Uso:
+ *   const wp = new WavyProgress(contenedorDelSlider);
+ *   wp.setDuration(ms); wp.setProgress(ms); wp.setPlaying(true|false);
+ *   wp.destroy();
+ */
+(function (global) {
+  'use strict';
+
+  var TAU = Math.PI * 2;
+
+  function smoothstep(e0, e1, x) {
+    var t = Math.min(1, Math.max(0, (x - e0) / (e1 - e0)));
+    return t * t * (3 - 2 * t);
+  }
+
+  function WavyProgress(host, opts) {
+    opts = opts || {};
+    this.host = host;
+    this.amp = opts.amplitude != null ? opts.amplitude : 2.2;          // px
+    this.wavelength = opts.wavelength != null ? opts.wavelength : 30;  // px
+    this.speed = opts.speed != null ? opts.speed : 0.3;                // periodos por segundo (lento)
+    this.stroke = opts.stroke != null ? opts.stroke : 2.5;             // grosor de la onda
+    this.trackStroke = opts.trackStroke != null ? opts.trackStroke : 3;
+    this.color = opts.color || 'rgba(255,255,255,0.95)';
+    this.trackColor = opts.trackColor || 'rgba(255,255,255,0.18)';
+    this.gap = opts.gap != null ? opts.gap : 4;                        // separación cabeza → riel
+    this.taperStart = 14;   // px donde la onda "nace"
+    this.taperEnd = 12;     // px antes de la cabeza donde "muere"
+
+    this.duration = 1;
+    this.posMs = 0;
+    this.posAt = performance.now();
+    this.playing = false;
+    this.ampNow = 0;        // amplitud animada 0..1
+    this.phase = 0;
+    this.raf = 0;
+    this.last = 0;
+    this.w = 0; this.h = 0; this.dpr = 1;
+
+    var c = document.createElement('canvas');
+    c.setAttribute('aria-hidden', 'true');
+    c.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:block;';
+    if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    host.appendChild(c);
+    this.canvas = c;
+    this.ctx = c.getContext('2d');
+
+    this.reduced = global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var self = this;
+    this._loop = function (t) { self._frame(t); };
+    this._onVis = function () { if (!document.hidden) self._kick(); };
+    document.addEventListener('visibilitychange', this._onVis);
+    this.ro = new ResizeObserver(function () { self._resize(); self._draw(); });
+    this.ro.observe(host);
+    this._resize();
+    this._draw();
+  }
+
+  WavyProgress.prototype.setDuration = function (ms) {
+    this.duration = Math.max(1, ms || 1);
+    this._draw();
+  };
+
+  // Llamar cada vez que Spotify reporte progreso (cada 250–1000 ms está bien).
+  WavyProgress.prototype.setProgress = function (ms) {
+    this.posMs = Math.max(0, Math.min(this.duration, ms));
+    this.posAt = performance.now();
+    if (!this.raf) this._draw();
+  };
+
+  WavyProgress.prototype.setPlaying = function (on) {
+    on = !!on;
+    if (on === this.playing) return;
+    // fija la posición extrapolada al pausar para que la cabeza no retroceda
+    this.posMs = this._currentMs();
+    this.posAt = performance.now();
+    this.playing = on;
+    this._kick();
+  };
+
+  WavyProgress.prototype.destroy = function () {
+    cancelAnimationFrame(this.raf); this.raf = 0;
+    document.removeEventListener('visibilitychange', this._onVis);
+    this.ro.disconnect();
+    this.canvas.remove();
+  };
+
+  WavyProgress.prototype._currentMs = function () {
+    if (!this.playing) return this.posMs;
+    var ms = this.posMs + (performance.now() - this.posAt);
+    return Math.min(this.duration, ms);
+  };
+
+  WavyProgress.prototype._resize = function () {
+    var r = this.host.getBoundingClientRect();
+    var dpr = Math.min(2, global.devicePixelRatio || 1);
+    this.w = r.width; this.h = r.height; this.dpr = dpr;
+    this.canvas.width = Math.max(1, Math.round(r.width * dpr));
+    this.canvas.height = Math.max(1, Math.round(r.height * dpr));
+  };
+
+  WavyProgress.prototype._kick = function () {
+    if (this.raf || document.hidden) return;
+    this.last = performance.now();
+    this.raf = requestAnimationFrame(this._loop);
+  };
+
+  WavyProgress.prototype._frame = function (t) {
+    this.raf = 0;
+    if (!this.host.isConnected) return this.destroy();
+    var dt = Math.min(0.05, (t - this.last) / 1000);
+    this.last = t;
+
+    var target = this.playing && !this.reduced ? 1 : 0;
+    // easing exponencial de la amplitud (~400 ms)
+    this.ampNow += (target - this.ampNow) * (1 - Math.exp(-dt / 0.13));
+    if (Math.abs(target - this.ampNow) < 0.002) this.ampNow = target;
+
+    if (this.playing && !this.reduced) this.phase = (this.phase + dt * this.speed) % 1;
+
+    this._draw();
+
+    // sigue animando solo si hace falta
+    if (this.playing || this.ampNow !== target) this._kick();
+  };
+
+  WavyProgress.prototype._draw = function () {
+    var ctx = this.ctx, w = this.w, h = this.h, dpr = this.dpr;
+    if (!w || !h) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    var pad = Math.max(this.stroke, this.trackStroke) / 2 + 0.5; // que las puntas redondas no se corten
+    var usable = w - pad * 2;
+    var head = pad + usable * (this._currentMs() / this.duration);
+    var cy = h / 2;
+
+    // Riel restante
+    var trackFrom = head + this.gap;
+    if (trackFrom < w - pad) {
+      ctx.beginPath();
+      ctx.moveTo(trackFrom, cy);
+      ctx.lineTo(w - pad, cy);
+      ctx.strokeStyle = this.trackColor;
+      ctx.lineWidth = this.trackStroke;
+      ctx.stroke();
+    }
+
+    // Onda reproducida
+    if (head <= pad + 0.5) return;
+    var A = this.amp * this.ampNow;
+    var k = TAU / this.wavelength;
+    var ph = this.phase * TAU;
+    var len = head - pad;
+    var step = 0.5; // muestreo fino = curva suave
+
+    ctx.beginPath();
+    for (var x = 0; x <= len + 0.001; x += step) {
+      var env = smoothstep(0, this.taperStart, x) * smoothstep(0, this.taperEnd, len - x);
+      var y = cy + A * env * Math.sin(x * k - ph);
+      if (x === 0) ctx.moveTo(pad + x, y); else ctx.lineTo(pad + x, y);
+    }
+    ctx.lineTo(head, cy);
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = this.stroke;
+    ctx.stroke();
+  };
+
+  /*
+   * Conexión con Spicetify (opcional). Devuelve una función para desconectar.
+   *   const off = WavyProgress.bindSpicetify(wp);
+   */
+  WavyProgress.bindSpicetify = function (wp) {
+    var P = global.Spicetify && global.Spicetify.Player;
+    if (!P) return function () {};
+    function sync() {
+      wp.setDuration(P.getDuration());
+      wp.setProgress(P.getProgress());
+      wp.setPlaying(P.isPlaying());
+    }
+    function onProg(e) { wp.setProgress(e && e.data != null ? e.data : P.getProgress()); }
+    P.addEventListener('songchange', sync);
+    P.addEventListener('onplaypause', sync);
+    P.addEventListener('onprogress', onProg);
+    sync();
+    return function () {
+      P.removeEventListener('songchange', sync);
+      P.removeEventListener('onplaypause', sync);
+      P.removeEventListener('onprogress', onProg);
+    };
+  };
+
+  global.WavyProgress = WavyProgress;
+})(window);
+
 // VideoGlass premium — native Spotify controls, disposable immersive view.
 (async function () {
   'use strict';
@@ -42,32 +251,26 @@
     return d+'Z';
   }
   const playFlower=`<span class="vg-pulse" aria-hidden="true" data-vg-owned=""><svg class="vg-spin" viewBox="0 0 100 100"><path d="${playFlowerPath()}" fill="white" stroke="none"/></svg></span>`;
-  let progressId=0;
-  const waveFields=new WeakMap(),wavePhase={active:false,elapsed:0,start:performance.now()};
-  const sineStops=Array.from({length:33},(_,i)=>`<stop offset="${i/32}" stop-color="rgb(0%,${(50+50*Math.sin(i/32*Math.PI*2)).toFixed(4)}%,0%)"/>`).join('');
-  function progressArt() {
-    const id='vg-progress-'+(++progressId);
-    // A small origin-clean SVG field bends one stroked line into a sine.
-    // Its alpha envelope tapers amplitude, rather than fading the line itself.
-    return `<span class="vg-progress-visual" data-vg-owned="" aria-hidden="true"><span class="vg-progress-remaining"></span><span class="vg-played"><svg class="vg-progress-svg" width="100%" height="24" xmlns="http://www.w3.org/2000/svg"><defs><filter id="${id}-bend" x="0" y="0" width="100%" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feImage class="vg-wave-field" x="0" y="0" width="100%" height="24" preserveAspectRatio="none" result="field"/><feFlood class="vg-wave-amplitude" flood-color="white" result="amplitude"/><feComposite in="field" in2="amplitude" operator="in" result="tapered"/><feFlood flood-color="rgb(50%,50%,50%)" result="neutral"/><feComposite in="tapered" in2="neutral" operator="over" result="enveloped"/><feColorMatrix in="enveloped" result="displacement" type="matrix" values="0 0 0 0 .5  0 1 0 0 0  0 0 0 0 0  0 0 0 0 1"/><feDisplacementMap in="SourceGraphic" in2="displacement" scale="4.5" xChannelSelector="R" yChannelSelector="G"/></filter></defs><path d="M0 12H4096" stroke="rgba(255,255,255,.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#${id}-bend)"/></svg></span><span class="vg-progress-head"></span></span>`;
+  // Keep the supplied renderer unchanged. Only its Spicetify input is throttled:
+  // this Spotify build emits onprogress every 100 ms, while the renderer extrapolates.
+  function attachProgress(host) {
+    if(host.getBoundingClientRect().height<10)host.style.height='14px';
+    const wp=new WavyProgress(host);
+    let lastProgress=-Infinity,detached=false;
+    const input={
+      setDuration:ms=>{if(!detached&&wp.duration!==Math.max(1,ms||1))wp.setDuration(ms);},
+      setPlaying:on=>{if(!detached)wp.setPlaying(on);},
+      setProgress:ms=>{if(!wp.playing&&ms===wp.posMs)return;const now=performance.now();if(!detached&&now-lastProgress>=250){lastProgress=now;wp.setProgress(ms);}}
+    };
+    const unbind=WavyProgress.bindSpicetify(input);
+    return {host,wp,off(){detached=true;unbind();},sync(){
+      if(detached)return;
+      const player=Spicetify.Player;
+      input.setDuration(player.getDuration());input.setProgress(player.getProgress());input.setPlaying(player.isPlaying());
+    }};
   }
-  function syncWavePhase(){
-    const active=!!state?.playing&&!document.hidden&&!motion.matches;
-    if(active!==wavePhase.active){const now=performance.now();if(wavePhase.active)wavePhase.elapsed+=now-wavePhase.start;wavePhase.start=now;wavePhase.active=active;}
-  }
-  function updateProgressArt(container){
-    const svg=container?.querySelector('.vg-progress-svg');if(!svg)return;
-    const width=Math.round(svg.getBoundingClientRect().width*10)/10;if(width<=0)return;
-    const key=width+':'+wavePhase.active;if(waveFields.get(svg)===key)return;
-    waveFields.set(svg,key);
-    const phase=(wavePhase.elapsed+(wavePhase.active?performance.now()-wavePhase.start:0))%3200;
-    // SVG-as-image runs this CSS transform animation; JS only changes width or
-    // playback state at the shared UI cadence. Negative delay preserves phase.
-    const movement=wavePhase.active?`animation:phase 3.2s linear infinite;animation-delay:-${phase}ms`:`transform:translateX(${-phase/3200*30}px)`;
-    const field=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="24"><style>@keyframes phase{to{transform:translateX(-30px)}}.phase{${movement}}@media(prefers-reduced-motion:reduce){.phase{animation:none}}</style><defs><linearGradient id="sine" x1="0" y1="0" x2="30" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="repeat">${sineStops}</linearGradient><linearGradient id="in"><stop stop-color="black"/><stop offset="1" stop-color="white"/></linearGradient><linearGradient id="out"><stop stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient><mask id="envelope"><rect width="100%" height="24" fill="white"/><rect width="12" height="24" fill="url(#in)"/><rect x="${Math.max(0,width-10)}" width="10" height="24" fill="url(#out)"/></mask></defs><g mask="url(#envelope)"><rect class="phase" x="-30" width="${width+60}" height="24" fill="url(#sine)"/></g></svg>`;
-    svg.querySelector('.vg-wave-field').setAttribute('href','data:image/svg+xml,'+encodeURIComponent(field));
-  }
-  function progressMarkup() {return `<div class="vg-progress"><span class="vg-elapsed">0:00</span><div class="vg-seek-wrap">${progressArt()}<input class="vg-seek" type="range" min="0" max="1000" value="0" aria-label="Progreso"></div><span class="vg-duration">0:00</span></div>`;}
+  function releaseProgress(progress){if(progress){progress.off();progress.wp.destroy();}}
+  function progressMarkup() {return `<div class="vg-progress"><span class="vg-elapsed">0:00</span><div class="vg-seek-wrap"><input class="vg-seek" type="range" min="0" max="1000" value="0" aria-label="Progreso"></div><span class="vg-duration">0:00</span></div>`;}
   function transportMarkup() {return `<div class="vg-transport">${button('shuffle','Aleatorio')}${button('back','Anterior','prev')}<button class="vg-button vg-play" data-action="toggle" aria-label="Reproducir">${playFlower}<span class="vg-play-icon">${svg('play')}</span></button>${button('next','Siguiente')}${button('repeat','Repetir')}</div>`;}
   function volumeMarkup() {return `<label class="vg-volume">${svg('volume')}<input class="vg-vol" type="range" min="0" max="100" value="0" aria-label="Volumen"></label>`;}
   function notify(message) { Spicetify.showNotification?.(message); }
@@ -99,19 +302,19 @@
   }
   function rangeFill(input) {input.style.setProperty('--vg-fill',(Number(input.value)/Number(input.max)*100)+'%');}
   function updateUI() {
-    syncWavePhase();document.documentElement.classList.toggle('vg-paused',!state?.playing);
+    document.documentElement.classList.toggle('vg-paused',!state?.playing);
     if(dock) updateDock();
     const v=view;if(!v||closing)return;
     const r=v.root,p=position(),d=state?.duration||0;
     const seek=r.querySelector('.vg-seek');
-    if(!v.dragging.has(seek)) {seek.value=d?p/d*1000:0;rangeFill(seek);seek.parentElement.style.setProperty('--vg-fill',seek.value/10+'%');r.querySelector('.vg-elapsed').textContent=fmt(p);}
+    if(!v.dragging.has(seek)) {seek.value=d?p/d*1000:0;r.querySelector('.vg-elapsed').textContent=fmt(p);}
     seek.setAttribute('aria-valuetext',fmt(p)+' de '+fmt(d));
     r.querySelector('.vg-duration').textContent=fmt(d);
     const vol=r.querySelector('.vg-vol');if(!v.dragging.has(vol)){vol.value=(state?.volume||0)*100;rangeFill(vol);}
     if(v.playing!==state?.playing){v.playing=state?.playing;r.querySelector('.vg-play-icon').innerHTML=svg(v.playing?'pause':'play');r.querySelector('.vg-play').setAttribute('aria-label',v.playing?'Pausar':'Reproducir');syncVisualizer(v);}
     for(const [key,value] of [['shuffle',!!state?.shuffle],['repeat',!!state?.repeat]])r.querySelector(`[data-action="${key}"]`).setAttribute('aria-pressed',String(value));
     r.querySelector('[data-action="repeat"]').setAttribute('aria-label',state?.repeat===2?'Repetir canción':state?.repeat===1?'Repetir lista':'Repetición desactivada');
-    updateProgressArt(seek.parentElement);updateLyric(v,p);
+    v.progress?.sync();updateLyric(v,p);
   }
   async function prepareArtwork(id,url) {
     artRequest?.abort();artRequest=null;
@@ -156,10 +359,11 @@
     for(const input of root.querySelectorAll('input[type="range"]')){
       input.addEventListener('pointerdown',()=>v.dragging.add(input),{signal:v.abort.signal});
       for(const event of ['pointerup','pointercancel','blur'])input.addEventListener(event,()=>v.dragging.delete(input),{signal:v.abort.signal});
-      input.addEventListener('input',()=>{rangeFill(input);if(input.classList.contains('vg-seek')){input.parentElement.style.setProperty('--vg-fill',input.value/10+'%');root.querySelector('.vg-elapsed').textContent=fmt((state?.duration||0)*input.value/1000);updateProgressArt(input.parentElement);}},{signal:v.abort.signal});
+      input.addEventListener('input',()=>{if(input.classList.contains('vg-seek')){root.querySelector('.vg-elapsed').textContent=fmt((state?.duration||0)*input.value/1000);}else rangeFill(input);},{signal:v.abort.signal});
       input.addEventListener('change',()=>control(input.classList.contains('vg-seek')?'seek':'volume',input.classList.contains('vg-seek')?(state?.duration||0)*input.value/1000:input.value/100),{signal:v.abort.signal});
     }
     v.resize=new ResizeObserver(()=>{sizeCanvas(v);updateLyric(v,position(),true);if(!state?.playing)drawSpectrum(v);});v.resize.observe(root.querySelector('.vg-art-space'));v.resize.observe(root.querySelector('.vg-lyrics'));
+    v.progress=attachProgress(root.querySelector('.vg-seek-wrap'));
     sizeCanvas(v);loadSong(v);if(cache.has(track))applyArtwork(cache.get(track));updateUI();root.focus({preventScroll:true});return v;
   }
   async function loadSong(v) {
@@ -238,6 +442,7 @@
     const v=view;if(!v||closing)return;closing=true;stopVisualizer(v);v.lyricsAbort?.abort();
     document.documentElement.classList.remove('vg-immersive');
     await transition(v,false);
+    releaseProgress(v.progress);v.progress=null;
     v.abort.abort();v.resize.disconnect();v.animation?.cancel();v.root.querySelectorAll('canvas').forEach(c=>{c.width=c.height=0;});v.root.remove();v.lines=[];view=null;closing=false;
     document.querySelector('.Root')?.removeAttribute('inert');
     if(fullscreenOwned&&document.fullscreenElement){fullscreenOwned=false;try{await document.exitFullscreen();}catch{}}
@@ -271,9 +476,9 @@
   }
   function mountDock() {
     const root=document.querySelector('.main-nowPlayingBar-nowPlayingBar');
-    if(!root)return;
+    if(!root){releaseProgress(dock?.progress);if(dock)dock.progress=null;return;}
     if(dock?.root!==root){
-      dock?.abort.abort();dock?.tooltips?.disconnect();dock={root,abort:new AbortController()};
+      releaseProgress(dock?.progress);dock?.abort.abort();dock?.tooltips?.disconnect();dock={root,abort:new AbortController()};
       const stripTitles=node=>{if(node.nodeType!==1)return;for(const el of [node,...node.querySelectorAll('[title]')]){const title=el.getAttribute('title');if(title!==null){if(title&&!el.hasAttribute('aria-label'))el.setAttribute('aria-label',title);el.removeAttribute('title');}}};
       stripTitles(root);
       dock.tooltips=new MutationObserver(records=>{for(const record of records){if(record.type==='attributes')stripTitles(record.target);else for(const node of record.addedNodes)stripTitles(node);}});
@@ -293,12 +498,8 @@
     }
     const progress=root.querySelector('[data-testid="playback-progressbar"],.playback-progressbar');
     if(progress)progress.dataset.vgProgress='';
-    if(progress&&!progress.querySelector('.vg-progress-visual')){
-      progress.classList.add('vg-native-progress');progress.insertAdjacentHTML('beforeend',progressArt());
-      const preview=e=>{if(!dock?.dragging)return;const box=progress.getBoundingClientRect();progress.style.setProperty('--vg-fill',Math.max(0,Math.min(100,(e.clientX-box.left)/box.width*100))+'%');updateProgressArt(progress);};
-      progress.addEventListener('pointerdown',e=>{dock.dragging=true;preview(e);},{signal:dock.abort.signal});
-      window.addEventListener('pointermove',preview,{signal:dock.abort.signal});
-      for(const event of ['pointerup','pointercancel'])window.addEventListener(event,()=>{dock.dragging=false;},{signal:dock.abort.signal});
+    if(dock.progress?.host!==progress||dock.progress&&!dock.progress.wp.canvas.isConnected){
+      releaseProgress(dock.progress);dock.progress=progress?attachProgress(progress):null;
     }
     const bar=root.querySelector('.playback-bar');
     if(bar&&!bar.querySelector('.vg-native-duration')){
@@ -306,9 +507,8 @@
     }
   }
   function updateDock(){
-    const r=dock.root,p=position(),d=state?.duration||0;
-    if(!dock.dragging)r.querySelector('[data-vg-progress]')?.style.setProperty('--vg-fill',(d?p/d*100:0)+'%');
-    const total=r.querySelector('.vg-native-duration');if(total)total.textContent=fmt(d);updateProgressArt(r.querySelector('[data-vg-progress]'));
+    const r=dock.root,d=state?.duration||0;
+    const total=r.querySelector('.vg-native-duration');if(total)total.textContent=fmt(d);dock.progress?.sync();
   }
   const launcher=new Spicetify.Topbar.Button('Inmersiva',icons.expand,openView);
   document.addEventListener('keydown',e=>{
@@ -319,9 +519,9 @@
     if(e.code==='Space'){e.preventDefault();control('toggle');}
     if(e.code==='ArrowLeft'||e.code==='ArrowRight'){e.preventDefault();control('seek',Math.max(0,Math.min(state?.duration||0,position()+(e.code==='ArrowLeft'?-10000:10000))));}
   },{signal:life.signal});
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)playerRequest?.abort();if(view)syncVisualizer(view);document.documentElement.classList.toggle('vg-hidden',document.hidden);syncWavePhase();if(dock)updateDock();if(view)updateProgressArt(view.root.querySelector('.vg-seek-wrap'));},{signal:life.signal});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)playerRequest?.abort();if(view)syncVisualizer(view);document.documentElement.classList.toggle('vg-hidden',document.hidden);},{signal:life.signal});
   document.addEventListener('fullscreenchange',()=>{if(fullscreenOwned&&!document.fullscreenElement){fullscreenOwned=false;closeView();}},{signal:life.signal});
-  function dispose(){disposed=true;clearTimeout(tickTimer);clearTimeout(sleepTimer);playerRequest?.abort();artRequest?.abort();life.abort();if(view){stopVisualizer(view);view.abort.abort();view.lyricsAbort?.abort();view.resize.disconnect();view.animation?.cancel();view.root.remove();view=null;}cache.clear();launcher?.deregister?.();dock?.abort.abort();dock?.tooltips?.disconnect();document.querySelectorAll('[data-vg-owned]').forEach(x=>x.remove());document.querySelectorAll('[data-vg-open]').forEach(x=>x.removeAttribute('data-vg-open'));document.querySelectorAll('[data-vg-progress]').forEach(x=>{x.classList.remove('vg-native-progress');x.removeAttribute('data-vg-progress');});if(fullscreenOwned&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});document.querySelector('.Root')?.removeAttribute('inert');document.documentElement.classList.remove('vg-immersive','vg-paused','vg-hidden');}
+  function dispose(){disposed=true;clearTimeout(tickTimer);clearTimeout(sleepTimer);playerRequest?.abort();artRequest?.abort();life.abort();if(view){releaseProgress(view.progress);stopVisualizer(view);view.abort.abort();view.lyricsAbort?.abort();view.resize.disconnect();view.animation?.cancel();view.root.remove();view=null;}cache.clear();launcher?.deregister?.();releaseProgress(dock?.progress);dock?.abort.abort();dock?.tooltips?.disconnect();document.querySelectorAll('[data-vg-owned]').forEach(x=>x.remove());document.querySelectorAll('[data-vg-open]').forEach(x=>x.removeAttribute('data-vg-open'));document.querySelectorAll('[data-vg-progress]').forEach(x=>{x.removeAttribute('data-vg-progress');});if(fullscreenOwned&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});document.querySelector('.Root')?.removeAttribute('inert');document.documentElement.classList.remove('vg-immersive','vg-paused','vg-hidden');}
   window.VideoGlass={open:openView,close:closeView,dispose,get root(){return view?.root||null;},diagnostics:()=>({mounted:!!view,frames:view?.frame?1:0,cache:cache.size,lyricLines:view?.lines.length||0,playing:!!state?.playing})};
   clockTick();
 })();
