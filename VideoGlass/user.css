@@ -35,7 +35,10 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 .vg-button:hover{background:#ffffff18}.vg-button:active{transform:scale(.95)}
 .vg-button svg,.vg-volume svg{width:20px;height:20px;flex-shrink:0}
 #vg button:focus-visible,#vg input:focus-visible,[data-vg-open]:focus-visible{outline:2px solid white;outline-offset:4px}
-#vg .vg-toolbar>[data-action=close]{background:#ffffff14;border:1px solid #ffffff0f}
+#vg .vg-window-actions{position:relative;display:flex;align-items:center;gap:8px;flex-shrink:0;z-index:1}
+#vg .vg-window-actions>.vg-button{position:relative;inset:auto;width:40px;height:40px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);color:rgba(255,255,255,.85)}
+#vg .vg-window-actions>.vg-button svg{width:18px;height:18px}
+#vg .vg-window-actions>.vg-button:hover{background:rgba(255,255,255,.14)}
 #vg .vg-segments{display:flex;gap:2px;padding:4px;border-radius:99px;background:#ffffff14;border:1px solid #ffffff12;backdrop-filter:blur(20px)}
 #vg .vg-segments button{width:48px;height:36px;border-radius:99px;color:#ffffffc7}
 #vg .vg-segments button[aria-pressed=true]{background:#fffffff0;color:#1a1016}
