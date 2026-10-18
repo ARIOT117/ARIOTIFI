@@ -53,14 +53,22 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 #vg .vg-progress{margin-top:26px}
 .vg-elapsed,.vg-duration{min-width:36px;white-space:nowrap}.vg-elapsed{text-align:right}.vg-duration{text-align:left}
 .vg-seek-wrap{--vg-fill:0%;position:relative;flex:1;min-width:0;height:24px}
-.vg-seek-wrap::before{content:'';position:absolute;left:var(--vg-fill);right:0;top:11px;height:2px;background:#ffffff38;border-radius:2px}
-.vg-wave-window{position:absolute;left:0;top:4px;height:16px;width:var(--vg-fill,0%);overflow:hidden;pointer-events:none}
-.vg-wave{display:block;max-width:none;animation:vg-wave 1.1s linear infinite}
+.vg-progress-visual{position:absolute;inset:0;pointer-events:none;z-index:0}
+.vg-progress-remaining{position:absolute;left:var(--vg-fill,0%);right:0;top:50%;height:3px;transform:translateY(-50%);border-radius:99px;background:rgba(255,255,255,.18)}
+.vg-played{position:absolute;inset:0 auto 0 0;width:var(--vg-fill,0%);overflow:hidden}
+.vg-progress-svg{position:absolute;left:0;top:50%;height:24px;transform:translateY(-50%);overflow:hidden;max-width:none}
+.vg-wave-amplitude{flood-opacity:1;transition:flood-opacity .4s cubic-bezier(.2,.7,.3,1)}
+.vg-paused .vg-wave-amplitude{flood-opacity:0}
+.vg-progress-head{position:absolute;left:var(--vg-fill,0%);top:50%;width:4px;height:14px;transform:translate(-50%,-50%);border-radius:99px;background:white;opacity:0;transition:opacity .15s}
+.vg-seek-wrap:is(:hover,:focus-within) .vg-progress-head,[data-vg-progress]:is(:hover,:focus-within) .vg-progress-head{opacity:1}
+.vg-seek-wrap:is(:hover,:focus-within) .vg-progress-remaining,[data-vg-progress]:is(:hover,:focus-within) .vg-progress-remaining{height:4px}
+
+@media(prefers-reduced-motion:reduce){.vg-wave-amplitude{flood-opacity:0!important;transition:none!important}}
 #vg input[type=range]{appearance:none;-webkit-appearance:none;margin:0;padding:0;border:0;min-width:0;cursor:pointer;background:transparent;height:24px}
 #vg .vg-seek{position:absolute;inset:0;width:100%;z-index:1}
 #vg .vg-seek::-webkit-slider-runnable-track{background:transparent;height:2px}
-#vg .vg-seek::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:8px;height:14px;margin-top:-6px;background:white;border-radius:4px;opacity:0}
-#vg .vg-seek:hover::-webkit-slider-thumb,#vg .vg-seek:focus-visible::-webkit-slider-thumb{opacity:1}
+#vg .vg-seek::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:4px;height:14px;margin-top:-6px;background:transparent;border-radius:4px;opacity:0}
+#vg .vg-seek:hover::-webkit-slider-thumb,#vg .vg-seek:focus-visible::-webkit-slider-thumb{opacity:0}
 #vg .vg-transport{display:flex;justify-content:space-between;align-items:center;width:min(292px,100%);margin-top:18px;gap:4px}
 #vg .vg-transport>.vg-button{width:44px;height:44px;color:#ffffffd9}
 #vg .vg-transport>.vg-play{width:68px;height:68px;background:transparent;color:#141014}
@@ -115,10 +123,11 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 .playback-bar{font-variant-numeric:tabular-nums;color:#ffffffb3!important}
 .playback-bar:has(.vg-native-duration) [data-testid="playback-duration"],.playback-bar:has(.vg-native-duration) .main-playbackBarRemainingTime-container{display:none!important}
 .vg-native-duration{font-size:11px;min-width:36px;color:#ffffffb3;text-align:left}
-.vg-native-progress{position:relative;--vg-fill:0%}
-.vg-native-progress .vg-wave-window{top:50%;margin-top:-8px;z-index:1}
-.vg-native-progress [data-testid="progress-bar-background"]{background:#ffffff38!important}
-.vg-native-progress [data-testid="progress-bar-foreground"]{opacity:0}
+[data-vg-progress]{position:relative;--vg-fill:0%;height:24px!important;isolation:isolate}
+/* Preserve the native hit target, thumb and keyboard behavior, hiding only paint. */
+[data-vg-progress] [data-testid="progress-bar-background"],[data-vg-progress] .x-progressBar-progressBarBg{background:transparent!important;box-shadow:none!important}
+[data-vg-progress] .x-progressBar-fillColor,[data-vg-progress] .x-progressBar-progressFillColor,[data-vg-progress] .progress-bar__slider,[data-vg-progress] [data-testid="progress-bar-handle"],[data-vg-progress] [data-testid="progress-bar-saber-overlay"]{opacity:0!important;box-shadow:none!important}
+[data-vg-progress]>.vg-progress-visual{z-index:-1}
 .main-nowPlayingBar-right .volume-bar{max-width:96px;min-width:55px}
 .main-nowPlayingBar-right .progress-bar__slider{width:3px!important;height:16px!important;border-radius:2px!important;background:white!important;opacity:1!important}
 .main-nowPlayingBar-right [data-testid="progress-bar-background"]{height:4px;background:#ffffff33!important}
@@ -128,8 +137,6 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 @media(prefers-reduced-motion:reduce){.main-nowPlayingBar-center [data-testid="control-button-playpause"],.main-nowPlayingBar-center [data-testid="control-button-playpause"]::before,.vg-cover-expand{animation:none!important;transition:none!important}}
 
 /* Stable selectors from the installed Spotify build. */
-.vg-native-progress .x-progressBar-fillColor,.vg-native-progress .x-progressBar-progressFillColor{opacity:0!important}
-.vg-native-progress .x-progressBar-progressBarBg{background:linear-gradient(to right,transparent var(--vg-fill),#ffffff38 var(--vg-fill))!important;height:2px}
 .main-nowPlayingBar-right .x-progressBar-fillColor{background:#fffffff2!important}
 .main-nowPlayingBar-right .x-progressBar-progressBarBg{background:#ffffff33!important;height:4px}
 
