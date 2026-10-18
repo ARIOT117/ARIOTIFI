@@ -207,6 +207,156 @@
   global.WavyProgress = WavyProgress;
 })(window);
 
+/*
+ * FlowerButton — fondo de flor suave para el botón play/pausa.
+ *
+ * Por qué se veía "trabado": Spotify vuelve a dibujar su botón a cada rato y eso
+ * reinicia cualquier animación CSS, así que el giro nunca avanzaba. Aquí el ángulo
+ * se calcula a partir del reloj (performance.now), así que aunque el botón se
+ * vuelva a crear, el giro sigue exactamente donde iba.
+ *
+ * - Flor dibujada como path SVG de 240 puntos (bordes suaves, sin facetas).
+ * - Un solo requestAnimationFrame compartido por todos los botones.
+ * - Gira solo mientras suena; en pausa se queda quieta en su ángulo (sin saltos).
+ * - Se detiene con la ventana oculta y respeta prefers-reduced-motion.
+ *
+ * Uso:
+ *   const fb = new FlowerButton(botonPlay, { size: 40 });
+ *   fb.setPlaying(true|false);
+ *   fb.destroy();
+ *   // o, con Spicetify:  FlowerButton.bindSpicetify(fb);
+ */
+(function (global) {
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var instances = new Set();
+  var raf = 0;
+  var angle = 0;          // grados, compartido: todas las flores giran igual
+  var lastT = 0;
+  var reduced = global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function flowerPath(lobes, amp, points) {
+    var d = '';
+    for (var i = 0; i <= points; i++) {
+      var a = (i / points) * Math.PI * 2;
+      var r = 50 * (1 - amp + amp * Math.cos(lobes * a));
+      var x = 50 + r * Math.cos(a), y = 50 + r * Math.sin(a);
+      d += (i ? 'L' : 'M') + x.toFixed(2) + ' ' + y.toFixed(2);
+    }
+    return d + 'Z';
+  }
+
+  function anyPlaying() {
+    var on = false;
+    instances.forEach(function (fb) { if (fb.playing) on = true; });
+    return on;
+  }
+
+  function tick(t) {
+    raf = 0;
+    var dt = lastT ? Math.min(0.05, (t - lastT) / 1000) : 0;
+    lastT = t;
+    angle = (angle + dt * (360 / FlowerButton.period)) % 360;
+    instances.forEach(function (fb) { fb._apply(); });
+    if (anyPlaying() && !document.hidden && !reduced) raf = requestAnimationFrame(tick);
+    else lastT = 0;
+  }
+
+  function kick() {
+    if (!raf && anyPlaying() && !document.hidden && !reduced) raf = requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange', kick);
+
+  function FlowerButton(button, opts) {
+    opts = opts || {};
+    if (button.__flower && !button.__flower._dead) return button.__flower;
+    button.__flower = this;
+    this.button = button;
+    this.size = opts.size || 40;
+    this.lobes = opts.lobes || 10;
+    this.amp = opts.amplitude != null ? opts.amplitude : 0.028;
+    this.color = opts.color || '#fff';
+    this.playing = false;
+    this._unbinds = [];
+
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.style.cssText = 'position:absolute;left:50%;top:50%;width:' + this.size + 'px;height:' + this.size +
+      'px;margin:' + (-this.size / 2) + 'px 0 0 ' + (-this.size / 2) + 'px;pointer-events:none;z-index:0;' +
+      'overflow:visible;will-change:transform;transition:scale .2s ease;';
+    var path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', flowerPath(this.lobes, this.amp, 240));
+    path.setAttribute('fill', this.color);
+    svg.appendChild(path);
+    this.svg = svg;
+
+    this._attach();
+    // Si Spotify vuelve a crear el contenido del botón, volvemos a poner la flor.
+    // Observamos SOLO el botón (no todo el documento).
+    var self = this;
+    this.mo = new MutationObserver(function () { if (!svg.isConnected) self._attach(); });
+    this.mo.observe(button, { childList: true });
+    instances.add(this);
+    this._apply();
+  }
+
+  FlowerButton.period = 24; // segundos por vuelta: sutil, pero se nota que está vivo
+
+  FlowerButton.prototype._attach = function () {
+    var b = this.button;
+    if (!b.isConnected) return this.destroy();
+    if (getComputedStyle(b).position === 'static') b.style.position = 'relative';
+    // el ícono queda por encima de la flor
+    Array.prototype.forEach.call(b.children, function (c) {
+      if (c !== this.svg && getComputedStyle(c).position === 'static') { c.style.position = 'relative'; c.style.zIndex = '1'; }
+    }, this);
+    b.insertBefore(this.svg, b.firstChild);
+  };
+
+  FlowerButton.prototype._apply = function () {
+    if (!this.button.isConnected) return this.destroy();
+    // giro (por reloj) + respiración muy leve solo mientras suena
+    var s = this.playing && !reduced ? 1 + 0.02 * Math.sin(performance.now() / 3000 * Math.PI * 2) : 1;
+    this.svg.style.transform = 'rotate(' + angle.toFixed(2) + 'deg) scale(' + s.toFixed(4) + ')';
+  };
+
+  FlowerButton.prototype.setPlaying = function (on) {
+    if (this._dead) return;
+    this.playing = !!on;
+    this._apply();
+    kick();
+  };
+
+  FlowerButton.prototype.destroy = function () {
+    if (this._dead) return;
+    this._dead = true;
+    this._unbinds.forEach(function (f) { try { f(); } catch (e) {} });
+    this.mo.disconnect();
+    this.svg.remove();
+    instances.delete(this);
+    if (this.button.__flower === this) this.button.__flower = null;
+  };
+
+  FlowerButton.bindSpicetify = function (fb) {
+    var P = global.Spicetify && global.Spicetify.Player;
+    if (!P) return function () {};
+    function sync() { fb.setPlaying(P.isPlaying()); }
+    P.addEventListener('onplaypause', sync);
+    P.addEventListener('songchange', sync);
+    sync();
+    var off = function () {
+      P.removeEventListener('onplaypause', sync);
+      P.removeEventListener('songchange', sync);
+    };
+    fb._unbinds.push(off);
+    return off;
+  };
+
+  global.FlowerButton = FlowerButton;
+})(window);
+
 // VideoGlass premium — native Spotify controls, disposable immersive view.
 (async function () {
   'use strict';
@@ -243,14 +393,6 @@
     return 'polygon('+Array.from({length:count},(_,i)=>{const a=i/count*Math.PI*2,r=50*(1-amp+amp*Math.cos(lobes*a));return `${50+r*Math.cos(a)}% ${50+r*Math.sin(a)}%`;}).join(',')+')';
   }
   document.documentElement.style.setProperty('--vg-art-clip',flower(12,.035));
-  function playFlowerPath() {
-    const n=80,h=Math.PI*2/n;
-    const sample=a=>{const r=48.5*(1+.0275*Math.cos(10*a)),dr=-48.5*.0275*10*Math.sin(10*a);return {x:50+r*Math.cos(a),y:50+r*Math.sin(a),dx:dr*Math.cos(a)-r*Math.sin(a),dy:dr*Math.sin(a)+r*Math.cos(a)};};
-    const first=sample(0);let d=`M${first.x.toFixed(3)} ${first.y.toFixed(3)}`;
-    for(let i=0;i<n;i++){const a=sample(i*h),b=sample((i+1)*h);d+=`C${(a.x+a.dx*h/3).toFixed(3)} ${(a.y+a.dy*h/3).toFixed(3)} ${(b.x-b.dx*h/3).toFixed(3)} ${(b.y-b.dy*h/3).toFixed(3)} ${b.x.toFixed(3)} ${b.y.toFixed(3)}`;}
-    return d+'Z';
-  }
-  const playFlower=`<span class="vg-pulse" aria-hidden="true" data-vg-owned=""><svg class="vg-spin" viewBox="0 0 100 100"><path d="${playFlowerPath()}" fill="white" stroke="none"/></svg></span>`;
   // Keep the supplied renderer unchanged. Only its Spicetify input is throttled:
   // this Spotify build emits onprogress every 100 ms, while the renderer extrapolates.
   function attachProgress(host) {
@@ -271,7 +413,7 @@
   }
   function releaseProgress(progress){if(progress){progress.off();progress.wp.destroy();}}
   function progressMarkup() {return `<div class="vg-progress"><span class="vg-elapsed">0:00</span><div class="vg-seek-wrap"><input class="vg-seek" type="range" min="0" max="1000" value="0" aria-label="Progreso"></div><span class="vg-duration">0:00</span></div>`;}
-  function transportMarkup() {return `<div class="vg-transport">${button('shuffle','Aleatorio')}${button('back','Anterior','prev')}<button class="vg-button vg-play" data-action="toggle" aria-label="Reproducir">${playFlower}<span class="vg-play-icon">${svg('play')}</span></button>${button('next','Siguiente')}${button('repeat','Repetir')}</div>`;}
+  function transportMarkup() {return `<div class="vg-transport">${button('shuffle','Aleatorio')}${button('back','Anterior','prev')}<button class="vg-button vg-play" data-action="toggle" aria-label="Reproducir"><span class="vg-play-icon">${svg('play')}</span></button>${button('next','Siguiente')}${button('repeat','Repetir')}</div>`;}
   function volumeMarkup() {return `<label class="vg-volume">${svg('volume')}<input class="vg-vol" type="range" min="0" max="100" value="0" aria-label="Volumen"></label>`;}
   function notify(message) { Spicetify.showNotification?.(message); }
   async function control(action,value) {
@@ -363,6 +505,7 @@
       input.addEventListener('change',()=>control(input.classList.contains('vg-seek')?'seek':'volume',input.classList.contains('vg-seek')?(state?.duration||0)*input.value/1000:input.value/100),{signal:v.abort.signal});
     }
     v.resize=new ResizeObserver(()=>{sizeCanvas(v);updateLyric(v,position(),true);if(!state?.playing)drawSpectrum(v);});v.resize.observe(root.querySelector('.vg-art-space'));v.resize.observe(root.querySelector('.vg-lyrics'));
+    v.flower=new FlowerButton(root.querySelector('.vg-play'),{size:64});FlowerButton.bindSpicetify(v.flower);
     v.progress=attachProgress(root.querySelector('.vg-seek-wrap'));
     sizeCanvas(v);loadSong(v);if(cache.has(track))applyArtwork(cache.get(track));updateUI();root.focus({preventScroll:true});return v;
   }
@@ -451,7 +594,7 @@
     document.documentElement.classList.remove('vg-immersive');
     await transition(v,false);
     document.body.classList.remove('vg-immersive-open');
-    releaseProgress(v.progress);v.progress=null;
+    releaseProgress(v.progress);v.progress=null;v.flower?.destroy();v.flower=null;
     v.abort.abort();v.resize.disconnect();v.animation?.cancel();v.root.querySelectorAll('canvas').forEach(c=>{c.width=c.height=0;});v.root.remove();v.lines=[];view=null;closing=false;
     document.querySelector('.Root')?.removeAttribute('inert');
     await setNativeButtonsVisible(true);
@@ -486,16 +629,19 @@
   }
   function mountDock() {
     const root=document.querySelector('.main-nowPlayingBar-nowPlayingBar');
-    if(!root){releaseProgress(dock?.progress);if(dock)dock.progress=null;return;}
+    if(!root){releaseProgress(dock?.progress);dock?.flower?.destroy();if(dock){dock.progress=null;dock.flower=null;}return;}
     if(dock?.root!==root){
-      releaseProgress(dock?.progress);dock?.abort.abort();dock?.tooltips?.disconnect();dock={root,abort:new AbortController()};
+      releaseProgress(dock?.progress);dock?.flower?.destroy();dock?.abort.abort();dock?.tooltips?.disconnect();dock={root,abort:new AbortController()};
       const stripTitles=node=>{if(node.nodeType!==1)return;for(const el of [node,...node.querySelectorAll('[title]')]){const title=el.getAttribute('title');if(title!==null){if(title&&!el.hasAttribute('aria-label'))el.setAttribute('aria-label',title);el.removeAttribute('title');}}};
       stripTitles(root);
       dock.tooltips=new MutationObserver(records=>{for(const record of records){if(record.type==='attributes')stripTitles(record.target);else for(const node of record.addedNodes)stripTitles(node);}});
       dock.tooltips.observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['title']});
     }
     const play=root.querySelector('[data-testid="control-button-playpause"]');
-    if(play&&!play.querySelector('.vg-pulse'))play.insertAdjacentHTML('afterbegin',playFlower);
+    if(dock.flower?.button!==play||dock.flower?._dead){
+      dock.flower?.destroy();dock.flower=play?new FlowerButton(play,{size:40}):null;
+      if(dock.flower)FlowerButton.bindSpicetify(dock.flower);
+    }
     const cover=root.querySelector('[data-testid="cover-art-button"],.main-nowPlayingWidget-coverArtContainer');
     if(cover&&!cover.hasAttribute('data-vg-open')){
       cover.dataset.vgOpen='true';cover.setAttribute('aria-label','Abrir vista inmersiva');
@@ -531,7 +677,7 @@
   },{signal:life.signal});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)playerRequest?.abort();if(view)syncVisualizer(view);document.documentElement.classList.toggle('vg-hidden',document.hidden);},{signal:life.signal});
   document.addEventListener('fullscreenchange',()=>{if(fullscreenOwned&&!document.fullscreenElement){fullscreenOwned=false;closeView();}},{signal:life.signal});
-  function dispose(){disposed=true;document.body.classList.remove('vg-immersive-open');setNativeButtonsVisible(true);clearTimeout(tickTimer);clearTimeout(sleepTimer);playerRequest?.abort();artRequest?.abort();life.abort();if(view){releaseProgress(view.progress);stopVisualizer(view);view.abort.abort();view.lyricsAbort?.abort();view.resize.disconnect();view.animation?.cancel();view.root.remove();view=null;}cache.clear();launcher?.deregister?.();releaseProgress(dock?.progress);dock?.abort.abort();dock?.tooltips?.disconnect();document.querySelectorAll('[data-vg-owned]').forEach(x=>x.remove());document.querySelectorAll('[data-vg-open]').forEach(x=>x.removeAttribute('data-vg-open'));document.querySelectorAll('[data-vg-progress]').forEach(x=>{x.removeAttribute('data-vg-progress');});if(fullscreenOwned&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});document.querySelector('.Root')?.removeAttribute('inert');document.documentElement.classList.remove('vg-immersive','vg-paused','vg-hidden');}
+  function dispose(){disposed=true;document.body.classList.remove('vg-immersive-open');setNativeButtonsVisible(true);clearTimeout(tickTimer);clearTimeout(sleepTimer);playerRequest?.abort();artRequest?.abort();life.abort();if(view){view.flower?.destroy();releaseProgress(view.progress);stopVisualizer(view);view.abort.abort();view.lyricsAbort?.abort();view.resize.disconnect();view.animation?.cancel();view.root.remove();view=null;}cache.clear();launcher?.deregister?.();releaseProgress(dock?.progress);dock?.flower?.destroy();dock?.abort.abort();dock?.tooltips?.disconnect();document.querySelectorAll('[data-vg-owned]').forEach(x=>x.remove());document.querySelectorAll('[data-vg-open]').forEach(x=>x.removeAttribute('data-vg-open'));document.querySelectorAll('[data-vg-progress]').forEach(x=>{x.removeAttribute('data-vg-progress');});if(fullscreenOwned&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});document.querySelector('.Root')?.removeAttribute('inert');document.documentElement.classList.remove('vg-immersive','vg-paused','vg-hidden');}
   window.VideoGlass={open:openView,close:closeView,dispose,get root(){return view?.root||null;},diagnostics:()=>({mounted:!!view,frames:view?.frame?1:0,cache:cache.size,lyricLines:view?.lines.length||0,playing:!!state?.playing})};
   clockTick();
 })();
