@@ -26,6 +26,10 @@
 
   function WavyProgress(host, opts) {
     opts = opts || {};
+    // Una sola instancia por contenedor: si ya existe, la reutiliza (evita fugas de memoria)
+    if (host.__wavy && !host.__wavy._dead) return host.__wavy;
+    host.__wavy = this;
+    this._unbinds = [];
     this.host = host;
     this.amp = opts.amplitude != null ? opts.amplitude : 2.2;          // px
     this.wavelength = opts.wavelength != null ? opts.wavelength : 30;  // px
@@ -75,12 +79,15 @@
 
   // Llamar cada vez que Spotify reporte progreso (cada 250–1000 ms está bien).
   WavyProgress.prototype.setProgress = function (ms) {
+    if (this._dead) return;
+    if (!this.host.isConnected) return this.destroy();
     this.posMs = Math.max(0, Math.min(this.duration, ms));
     this.posAt = performance.now();
     if (!this.raf) this._draw();
   };
 
   WavyProgress.prototype.setPlaying = function (on) {
+    if (this._dead) return;
     on = !!on;
     if (on === this.playing) return;
     // fija la posición extrapolada al pausar para que la cabeza no retroceda
@@ -91,6 +98,11 @@
   };
 
   WavyProgress.prototype.destroy = function () {
+    if (this._dead) return;
+    this._dead = true;
+    this._unbinds.forEach(function (f) { try { f(); } catch (e) {} });
+    this._unbinds = [];
+    if (this.host.__wavy === this) this.host.__wavy = null;
     cancelAnimationFrame(this.raf); this.raf = 0;
     document.removeEventListener('visibilitychange', this._onVis);
     this.ro.disconnect();
@@ -197,11 +209,13 @@
     P.addEventListener('onplaypause', sync);
     P.addEventListener('onprogress', onProg);
     sync();
-    return function () {
+    var off = function () {
       P.removeEventListener('songchange', sync);
       P.removeEventListener('onplaypause', sync);
       P.removeEventListener('onprogress', onProg);
     };
+    wp._unbinds.push(off); // destroy() también desconecta los listeners
+    return off;
   };
 
   global.WavyProgress = WavyProgress;
