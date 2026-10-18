@@ -1,0 +1,20 @@
+{
+  "baseline-with-fixed": {
+    "HTMLImageElement_DOM": 326,
+    "MutationObserver": 13,
+    "ResizeObserver": 11,
+    "HTMLImageElement_DOM_detached": 91,
+    "HTMLCanvasElement_DOM": 1,
+    "WavyProgress": 1,
+    "FlowerButton": 1
+  },
+  "stress-fixed": {
+    "HTMLImageElement_DOM": 326,
+    "MutationObserver": 13,
+    "ResizeObserver": 11,
+    "HTMLImageElement_DOM_detached": 91,
+    "HTMLCanvasElement_DOM": 1,
+    "FlowerButton": 1,
+    "WavyProgress": 1
+  }
+}

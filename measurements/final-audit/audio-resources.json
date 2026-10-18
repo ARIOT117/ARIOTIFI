@@ -1,0 +1,33 @@
+{
+  "opened": [
+    {
+      "pid": 10367,
+      "command": [
+        "/usr/bin/python3",
+        "/home/diego/.local/share/spotify-personalizado/visualizer.py"
+      ],
+      "rss_MiB": 38.4921875,
+      "pss_MiB": 22.03125,
+      "cpu_single_core_percent": 0.5999920567051564
+    },
+    {
+      "pid": 13764,
+      "command": [
+        "/usr/bin/python3",
+        "/home/diego/.local/share/spotify-personalizado/visualizer.py",
+        "--spectrum-worker"
+      ],
+      "rss_MiB": 44.90234375,
+      "pss_MiB": 26.1474609375,
+      "cpu_single_core_percent": 1.399981465645364
+    }
+  ],
+  "closed": {
+    "ok": true,
+    "audio": "output monitor",
+    "active": false,
+    "pipeline": false,
+    "lease_timer": false,
+    "worker_pid": null
+  }
+}

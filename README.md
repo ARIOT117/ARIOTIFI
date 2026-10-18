@@ -1,8 +1,15 @@
 # Reproductor premium — entrega
 
+## Correcciones finales: FlowerButton y auditoría
+
+Se integraron los dos adjuntos actuales sin modificarlos: FlowerButton (40/64 px, periodo 24 s) y WavyProgress con destrucción idempotente. Se corrigieron las alternativas y precarga de portada, se retira el skeleton del DOM y la captura de audio funciona en un proceso hijo que termina al cerrar.
+
+**Las metas globales de RAM y CPU todavía no se cumplen.** Resultados, capturas al 200%, snapshots, commits y reversión: [AUDITORIA-FINAL.md](AUDITORIA-FINAL.md). Las cifras históricas de las secciones siguientes corresponden a versiones anteriores.
+
+
 ## Actualización: componente WavyProgress original
 
-La onda de progreso anterior fue eliminada y reemplazada por `/home/diego/Descargas/wavy-progress.js`, copiado sin cambios a `Extensions/wavy-progress.js`. Su contenido exacto está al principio de `Extensions/videoglass.js` para cargarlo antes de la integración, sin depender del orden de extensiones de Spicetify. SHA-256 del componente: `608fc1ea8cbf4076fabd3364733e6dc48c97e385a373ccd4b36e358ae003bb5a`.
+La onda de progreso anterior fue eliminada y reemplazada por `/home/diego/Descargas/wavy-progress.js`, copiado sin cambios a `Extensions/wavy-progress.js`. Su contenido exacto está al principio de `Extensions/videoglass.js` para cargarlo antes de la integración, sin depender del orden de extensiones de Spicetify. SHA-256 del componente: `539b4c92954d9e2d3404303de2b6a7852fc7addcc82a49c9997372397e8e30ca`.
 
 Se conservan los valores por defecto: amplitud 2,2 px, longitud 30 px, velocidad 0,3 y grosor 2,5 px. El adaptador de entrada limita a cuatro llamadas por segundo a `setProgress` porque Spicetify emite `onprogress` cada 100 ms. El componente extrapola entre lecturas. Al cerrar la inmersiva se llama a su desconexión y a `destroy()`. El slider nativo conserva sus interacciones; solo se ocultan sus capas visuales.
 
@@ -17,7 +24,7 @@ La instalación usa Spotify Desktop 1.2.95 con Spicetify 2.45.3, una extensión 
 
 **Inmersiva abre dentro de la ventana, sin activar pantalla completa**, según la indicación posterior del usuario. La opción manual está en ··· → Pantalla completa. La decoración de GNOME se conserva al trabajar dentro de la ventana.
 
-La portada del dock y el botón Inmersiva abren la vista. Ctrl + Alt + V también abre/cierra. Esc cierra el panel abierto o vuelve al inicio. La portada tiene 12 ondas, el botón de reproducción 9 y la transición 6 pétalos. El visualizador tiene 72 barras en un canvas y usa audio real de la salida del equipo. No captura el micrófono.
+La portada del dock y el botón Inmersiva abren la vista. Ctrl + Alt + V también abre/cierra. Esc cierra el panel abierto o vuelve al inicio. La portada tiene 12 ondas, el botón de reproducción 10 y la transición 6 pétalos. El visualizador tiene 72 barras en un canvas y usa audio real de la salida del equipo. No captura el micrófono.
 
 El tiempo derecho es duración total. El progreso utiliza el componente WavyProgress adjunto sin modificar; su entrada se limita a cuatro lecturas por segundo y el componente extrapola entre ellas. Las letras provienen de LRCLIB, permiten buscar desde un verso y muestran ♪ en intervalos instrumentales identificados. Si solamente hay letra sin tiempos, se muestra texto desplazable; si no hay letra, aparece el estado diseñado con botón para reintentar.
 

@@ -1,0 +1,20 @@
+{
+  "nextURL": {
+    "attempts": [
+      "https://i.scdn.co/image/ab67616d0000b273b0860cf0a98e09663c82290c",
+      "https://i.scdn.co/image/ab67616d00001e02b0860cf0a98e09663c82290c"
+    ],
+    "loaded": true,
+    "url": "https://i.scdn.co/image/ab67616d00001e02b0860cf0a98e09663c82290c"
+  },
+  "allFail": {
+    "attempts": [
+      "https://i.scdn.co/image/ab67616d00001e02b0860cf0a98e09663c82290c",
+      "https://i.scdn.co/image/ab67616d0000b273b0860cf0a98e09663c82290c",
+      "https://i.scdn.co/image/ab67616d00004851b0860cf0a98e09663c82290c"
+    ],
+    "images": 0,
+    "fallback": true,
+    "background": "linear-gradient(135deg, rgb(97, 97, 97), rgb(23, 16, 30))"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "uri": "spotify:track:7so0lgd0zP2Sbgs2d7a1SZ",
+  "playing": false,
+  "position": 3204,
+  "audit": "undefined",
+  "view": {
+    "mounted": false,
+    "frames": 0,
+    "cache": 2,
+    "lyricLines": 0,
+    "playing": false,
+    "flowers": 1,
+    "progress": 1,
+    "artLoading": false,
+    "loading": false,
+    "visualizerRequests": 0
+  },
+  "native": "visible",
+  "fullscreen": false,
+  "audio": {
+    "ok": true,
+    "audio": "output monitor",
+    "active": false,
+    "pipeline": false,
+    "lease_timer": false,
+    "worker_pid": null
+  },
+  "options": {
+    "period": 24,
+    "flowerAmplitude": 0.028,
+    "lobes": 10,
+    "size": 40,
+    "amplitude": 2.2,
+    "wavelength": 30,
+    "speed": 0.3,
+    "stroke": 2.5
+  }
+}

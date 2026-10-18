@@ -379,7 +379,7 @@
   const API = 'http://127.0.0.1:43891';
   const life = new AbortController(), motion = matchMedia('(prefers-reduced-motion: reduce)');
   const cache = new Map();
-  let state = null, sampledAt = 0, view = null, closing = false, tickTimer = 0, playerRequest = null;
+  let state = null, sampledAt = 0, view = null, closing = false, tickTimer = 0;
   let track = '', artRequest = null, sleepTimer = 0, returnFocus = null, fullscreenOwned = false;
   let disposed = false, dock = null;
   const icons = {
@@ -426,7 +426,7 @@
       input.setDuration(player.getDuration());input.setProgress(player.getProgress());input.setPlaying(player.isPlaying());
     }};
   }
-  function releaseProgress(progress){if(progress){progress.off();progress.wp.destroy();}}
+  function releaseProgress(progress){if(progress){progress.off();progress.wp.canvas.width=progress.wp.canvas.height=0;progress.wp.destroy();}}
   function progressMarkup() {return `<div class="vg-progress"><span class="vg-elapsed">0:00</span><div class="vg-seek-wrap"><input class="vg-seek" type="range" min="0" max="1000" value="0" aria-label="Progreso"></div><span class="vg-duration">0:00</span></div>`;}
   function transportMarkup() {return `<div class="vg-transport">${button('shuffle','Aleatorio')}${button('back','Anterior','prev')}<button class="vg-button vg-play" data-action="toggle" aria-label="Reproducir"><span class="vg-play-icon">${svg('play')}</span></button>${button('next','Siguiente')}${button('repeat','Repetir')}</div>`;}
   function volumeMarkup() {return `<label class="vg-volume">${svg('volume')}<input class="vg-vol" type="range" min="0" max="100" value="0" aria-label="Volumen"></label>`;}
@@ -438,24 +438,18 @@
       // The shared 500 ms clock is the sole writer of playback progress.
     } catch { notify('No se pudo controlar la reproducción. Comprueba el servicio VideoGlass.'); }
   }
-  async function refresh() {
-    if(disposed || document.hidden || playerRequest) return;
-    const request=playerRequest=new AbortController();
-    try {
-      const r=await fetch(API+'/player',{signal:AbortSignal.any([request.signal,AbortSignal.timeout(2500)])});
-      if(!r.ok) throw Error('player');
-      const next=await r.json(); if(disposed || request.signal.aborted) return;
-      state=next; sampledAt=performance.now();
-      const id=state.item?.uri || '';
-      if(id!==track){track=id;prepareArtwork(id);if(view)loadSong(view);}
-      updateUI();
-    } catch(e) { if(e.name!=='AbortError' && view) view.root.querySelector('.vg-status').textContent='Esperando al reproductor…'; }
-    finally {if(playerRequest===request)playerRequest=null;}
+  function refresh() {
+    if(disposed||document.hidden)return;
+    const p=Spicetify.Player,item=p.data?.item;if(!item)return;
+    state={item,playing:p.isPlaying(),duration:p.getDuration(),position:p.getProgress(),volume:p.getVolume(),shuffle:p.getShuffle(),repeat:p.getRepeat()};sampledAt=performance.now();
+    const id=item.uri||'';
+    if(id!==track){track=id;prepareArtwork(id);if(view)loadSong(view);}
+    updateUI();
   }
-  async function clockTick() {
+  function clockTick() {
     if(disposed)return;
-    if(!document.hidden)mountDock(); await refresh();
-    if(!disposed)tickTimer=setTimeout(clockTick,document.hidden?1500:500);
+    if(!document.hidden){mountDock();refresh();}
+    tickTimer=setTimeout(clockTick,document.hidden?1500:500);
   }
   function rangeFill(input) {input.style.setProperty('--vg-fill',(Number(input.value)/Number(input.max)*100)+'%');}
   function updateUI() {
@@ -653,11 +647,12 @@
     await transition(v,false);
     document.body.classList.remove('vg-immersive-open');
     releaseProgress(v.progress);v.progress=null;v.flower?.destroy();v.flower=null;
-    v.abort.abort();v.resize.disconnect();v.coverAnimation?.cancel();v.animation?.cancel();v.root.querySelectorAll('canvas').forEach(c=>{c.width=c.height=0;});v.root.remove();v.lines=[];view=null;closing=false;
+    v.abort.abort();v.dragging.clear();v.resize.disconnect();v.coverAnimation?.cancel();v.coverAnimation=null;v.animation?.cancel();v.root.querySelectorAll('canvas').forEach(c=>{c.width=c.height=0;});v.root.querySelectorAll('img').forEach(img=>img.removeAttribute('src'));v.root.querySelector('.vg-backdrop').style.backgroundImage='none';v.root.remove();v.lines=[];v.ctx=null;view=null;closing=false;
     document.querySelector('.Root')?.removeAttribute('inert');
     await setNativeButtonsVisible(true);
     if(fullscreenOwned&&document.fullscreenElement){fullscreenOwned=false;try{await document.exitFullscreen();}catch{}}
-    (returnFocus?.isConnected?returnFocus:document.querySelector('[data-vg-open]'))?.focus({preventScroll:true});
+    const focus=returnFocus;returnFocus=null;
+    (focus?.isConnected?focus:document.querySelector('[data-vg-open]'))?.focus({preventScroll:true});
   }
   async function transition(v,enter){
     v.animation?.cancel();
@@ -687,12 +682,18 @@
   }
   function mountDock() {
     const root=document.querySelector('.main-nowPlayingBar-nowPlayingBar');
-    if(!root){releaseProgress(dock?.progress);dock?.flower?.destroy();if(dock){dock.progress=null;dock.flower=null;}return;}
+    if(!root){releaseProgress(dock?.progress);dock?.flower?.destroy();dock?.abort.abort();dock?.tooltips?.disconnect();dock=null;return;}
     if(dock?.root!==root){
       releaseProgress(dock?.progress);dock?.flower?.destroy();dock?.abort.abort();dock?.tooltips?.disconnect();dock={root,abort:new AbortController()};
+      root.addEventListener('click',e=>{if(e.target.closest('[data-vg-open]')){e.preventDefault();e.stopImmediatePropagation();openView();}},{capture:true,signal:dock.abort.signal});
       const stripTitles=node=>{if(node.nodeType!==1)return;for(const el of [node,...node.querySelectorAll('[title]')]){const title=el.getAttribute('title');if(title!==null){if(title&&!el.hasAttribute('aria-label'))el.setAttribute('aria-label',title);el.removeAttribute('title');}}};
       stripTitles(root);
-      dock.tooltips=new MutationObserver(records=>{for(const record of records){if(record.type==='attributes')stripTitles(record.target);else for(const node of record.addedNodes)stripTitles(node);}});
+      dock.tooltips=new MutationObserver(records=>{
+        for(const record of records){if(record.type==='attributes')stripTitles(record.target);else for(const node of record.addedNodes)stripTitles(node);}
+        // React can replace the entire button, not only its children. Reconcile
+        // on the existing dock observer, without waiting for the 500 ms clock.
+        if(dock?.root===root){const play=root.querySelector('[data-testid="control-button-playpause"]');if(play!==dock.flower?.button||dock.flower?._dead||dock.progress&&!dock.progress.wp.canvas.isConnected)mountDock();}
+      });
       dock.tooltips.observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['title']});
     }
     const play=root.querySelector('[data-testid="control-button-playpause"]');
@@ -704,11 +705,10 @@
     if(cover&&!cover.hasAttribute('data-vg-open')){
       cover.dataset.vgOpen='true';cover.setAttribute('aria-label','Abrir vista inmersiva');
       const expand=document.createElement('span');expand.className='vg-cover-expand';expand.dataset.vgOwned='';expand.innerHTML=svg('expand');cover.append(expand);
-      cover.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();openView();},{capture:true,signal:dock.abort.signal});
     }
     const right=root.querySelector('.main-nowPlayingBar-right');
     if(right&&!right.querySelector('.vg-dock-open')){
-      const b=document.createElement('button');b.className='vg-button vg-dock-open';b.dataset.vgOpen='true';b.dataset.vgOwned='';b.innerHTML=svg('expand')+'<span>Inmersiva</span>';b.setAttribute('aria-label','Abrir vista inmersiva');b.onclick=openView;right.append(b);
+      const b=document.createElement('button');b.className='vg-button vg-dock-open';b.dataset.vgOpen='true';b.dataset.vgOwned='';b.innerHTML=svg('expand')+'<span>Inmersiva</span>';b.setAttribute('aria-label','Abrir vista inmersiva');right.append(b);
     }
     const progress=root.querySelector('[data-testid="playback-progressbar"],.playback-progressbar');
     if(progress)progress.dataset.vgProgress='';
@@ -733,9 +733,9 @@
     if(e.code==='Space'){e.preventDefault();control('toggle');}
     if(e.code==='ArrowLeft'||e.code==='ArrowRight'){e.preventDefault();control('seek',Math.max(0,Math.min(state?.duration||0,position()+(e.code==='ArrowLeft'?-10000:10000))));}
   },{signal:life.signal});
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)playerRequest?.abort();if(view)syncVisualizer(view);document.documentElement.classList.toggle('vg-hidden',document.hidden);},{signal:life.signal});
+  document.addEventListener('visibilitychange',()=>{if(view)syncVisualizer(view);document.documentElement.classList.toggle('vg-hidden',document.hidden);},{signal:life.signal});
   document.addEventListener('fullscreenchange',()=>{if(fullscreenOwned&&!document.fullscreenElement){fullscreenOwned=false;closeView();}},{signal:life.signal});
-  function dispose(){disposed=true;document.body.classList.remove('vg-immersive-open');setNativeButtonsVisible(true);clearTimeout(tickTimer);clearTimeout(sleepTimer);playerRequest?.abort();artRequest?.abort();life.abort();if(view){view.flower?.destroy();releaseProgress(view.progress);stopVisualizer(view);view.abort.abort();view.lyricsAbort?.abort();clearLyricsLoading(view);view.resize.disconnect();view.coverAnimation?.cancel();view.animation?.cancel();view.root.remove();view=null;}cache.clear();launcher?.deregister?.();releaseProgress(dock?.progress);dock?.flower?.destroy();dock?.abort.abort();dock?.tooltips?.disconnect();document.querySelectorAll('[data-vg-owned]').forEach(x=>x.remove());document.querySelectorAll('[data-vg-open]').forEach(x=>x.removeAttribute('data-vg-open'));document.querySelectorAll('[data-vg-progress]').forEach(x=>{x.removeAttribute('data-vg-progress');});if(fullscreenOwned&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});document.querySelector('.Root')?.removeAttribute('inert');document.documentElement.classList.remove('vg-immersive','vg-paused','vg-hidden');}
-  window.VideoGlass={open:openView,close:closeView,dispose,get root(){return view?.root||null;},diagnostics:()=>({mounted:!!view,frames:view?.frame?1:0,cache:cache.size,lyricLines:view?.lines.length||0,playing:!!state?.playing})};
+  function dispose(){disposed=true;document.body.classList.remove('vg-immersive-open');setNativeButtonsVisible(true);clearTimeout(tickTimer);clearTimeout(sleepTimer);artRequest?.abort();life.abort();if(view){view.flower?.destroy();releaseProgress(view.progress);stopVisualizer(view);view.abort.abort();view.lyricsAbort?.abort();clearLyricsLoading(view);view.resize.disconnect();view.coverAnimation?.cancel();view.animation?.cancel();view.root.querySelectorAll('canvas').forEach(c=>{c.width=c.height=0;});view.root.querySelectorAll('img').forEach(img=>img.removeAttribute('src'));view.root.remove();view=null;}cache.clear();launcher?.deregister?.();releaseProgress(dock?.progress);dock?.flower?.destroy();dock?.abort.abort();dock?.tooltips?.disconnect();dock=null;returnFocus=null;document.querySelectorAll('[data-vg-owned]').forEach(x=>x.remove());document.querySelectorAll('[data-vg-open]').forEach(x=>x.removeAttribute('data-vg-open'));document.querySelectorAll('[data-vg-progress]').forEach(x=>{x.removeAttribute('data-vg-progress');});if(fullscreenOwned&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});document.querySelector('.Root')?.removeAttribute('inert');document.documentElement.classList.remove('vg-immersive','vg-paused','vg-hidden');}
+  window.VideoGlass={open:openView,close:closeView,dispose,get root(){return view?.root||null;},diagnostics:()=>({mounted:!!view,frames:view?.frame?1:0,cache:cache.size,lyricLines:view?.lines.length||0,playing:!!state?.playing,flowers:Number(!!dock?.flower&&!dock.flower._dead)+Number(!!view?.flower&&!view.flower._dead),progress:Number(!!dock?.progress&&!dock.progress.wp._dead)+Number(!!view?.progress&&!view.progress.wp._dead),artLoading:!!artRequest,loading:!!view?.loading,visualizerRequests:Number(!!view?.spectrumAbort)})};
   clockTick();
 })();

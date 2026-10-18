@@ -1,0 +1,40 @@
+{
+  "rotation": true,
+  "wholeButtonReplaced": true,
+  "pauseFrozen": true,
+  "lyricsLoaded": {
+    "skeleton": 0,
+    "current": "♪",
+    "busy": "false"
+  },
+  "nativeCorner": {
+    "fullscreen": false,
+    "nav": "hidden",
+    "gap": 8,
+    "flower": 64,
+    "cover": true
+  },
+  "emptyRemoved": true,
+  "closed": {
+    "mounted": false,
+    "frames": 0,
+    "cache": 1,
+    "lyricLines": 0,
+    "playing": false,
+    "flowers": 1,
+    "progress": 1,
+    "artLoading": false,
+    "loading": false,
+    "visualizerRequests": 0,
+    "native": "visible",
+    "health": null
+  },
+  "health": {
+    "ok": true,
+    "audio": "output monitor",
+    "active": false,
+    "pipeline": false,
+    "lease_timer": false,
+    "worker_pid": null
+  }
+}

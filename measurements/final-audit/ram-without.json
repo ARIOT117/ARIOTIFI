@@ -1,0 +1,101 @@
+{
+  "label": "ram-without",
+  "time": "2026-10-18T11:37:03-0600",
+  "spotify": {
+    "rss_MiB": 1593.4453125,
+    "pss_MiB": 906.8486328125,
+    "cpu_percent": 70.70338423307864,
+    "pids": [
+      9045,
+      9048,
+      9052,
+      9053,
+      9080,
+      9082,
+      9094,
+      9146,
+      9190
+    ],
+    "processes": {
+      "9045": {
+        "cpu": 3.13,
+        "rss": 371224576,
+        "pss": 241449984
+      },
+      "9048": {
+        "cpu": 0.03,
+        "rss": 99860480,
+        "pss": 31935488
+      },
+      "9052": {
+        "cpu": 0.03,
+        "rss": 110563328,
+        "pss": 25282560
+      },
+      "9053": {
+        "cpu": 0.03,
+        "rss": 110522368,
+        "pss": 20935680
+      },
+      "9080": {
+        "cpu": 1.95,
+        "rss": 226152448,
+        "pss": 117044224
+      },
+      "9082": {
+        "cpu": 0.65,
+        "rss": 152350720,
+        "pss": 54906880
+      },
+      "9094": {
+        "cpu": 0.03,
+        "rss": 53370880,
+        "pss": 13299712
+      },
+      "9146": {
+        "cpu": 19.939999999999998,
+        "rss": 429387776,
+        "pss": 364853248
+      },
+      "9190": {
+        "cpu": 0.73,
+        "rss": 117415936,
+        "pss": 81191936
+      }
+    }
+  },
+  "visualizer": {
+    "rss_MiB": 38.82421875,
+    "pss_MiB": 22.7216796875,
+    "cpu_percent": 0.0,
+    "pids": [
+      9044
+    ],
+    "processes": {
+      "9044": {
+        "cpu": 0.12,
+        "rss": 40710144,
+        "pss": 23825408
+      }
+    }
+  },
+  "sample_seconds": 10.056095726000024,
+  "visibility": "visible",
+  "heap": {
+    "usedSize": 94651152,
+    "totalSize": 97267712,
+    "embedderHeapUsedSize": 30059144,
+    "backingStorageSize": 11494824
+  },
+  "dom": {
+    "documents": 3,
+    "nodes": 16422,
+    "jsEventListeners": 5625
+  },
+  "diagnostics": null,
+  "audit": null,
+  "playback": {
+    "playing": true,
+    "uri": "spotify:track:7so0lgd0zP2Sbgs2d7a1SZ"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "label": "stress-fixed",
+  "time": "2026-10-18T10:23:27-0600",
+  "spotify": {
+    "rss_MiB": 2328.48828125,
+    "pss_MiB": 1625.02734375,
+    "cpu_percent": 137.710012073711,
+    "pids": [
+      15254,
+      15257,
+      15261,
+      15262,
+      15287,
+      15289,
+      15302,
+      15350,
+      15396
+    ],
+    "processes": {
+      "15254": {
+        "cpu": 9.24,
+        "rss": 407117824,
+        "pss": 274270208
+      },
+      "15257": {
+        "cpu": 0.02,
+        "rss": 99753984,
+        "pss": 31943680
+      },
+      "15261": {
+        "cpu": 0.03,
+        "rss": 110493696,
+        "pss": 25140224
+      },
+      "15262": {
+        "cpu": 0.03,
+        "rss": 110567424,
+        "pss": 20515840
+      },
+      "15287": {
+        "cpu": 40.79,
+        "rss": 306896896,
+        "pss": 189565952
+      },
+      "15289": {
+        "cpu": 1.9500000000000002,
+        "rss": 153362432,
+        "pss": 55775232
+      },
+      "15302": {
+        "cpu": 0.04,
+        "rss": 53518336,
+        "pss": 13309952
+      },
+      "15350": {
+        "cpu": 136.52,
+        "rss": 1082286080,
+        "pss": 1012241408
+      },
+      "15396": {
+        "cpu": 0.8300000000000001,
+        "rss": 117600256,
+        "pss": 81202176
+      }
+    }
+  },
+  "visualizer": {
+    "rss_MiB": 49.2890625,
+    "pss_MiB": 29.8388671875,
+    "cpu_percent": 0.0,
+    "pids": [
+      15239
+    ],
+    "processes": {
+      "15239": {
+        "cpu": 0.68,
+        "rss": 51683328,
+        "pss": 31288320
+      }
+    }
+  },
+  "sample_seconds": 10.071889321000072,
+  "heap": {
+    "usedSize": 93458472,
+    "totalSize": 97267712,
+    "embedderHeapUsedSize": 70117176,
+    "backingStorageSize": 11595210
+  },
+  "dom": {
+    "documents": 3,
+    "nodes": 14992,
+    "jsEventListeners": 5204
+  },
+  "diagnostics": {
+    "mounted": false,
+    "frames": 0,
+    "cache": 17,
+    "lyricLines": 0,
+    "playing": true,
+    "flowers": 1,
+    "progress": 1,
+    "artLoading": false,
+    "loading": false,
+    "visualizerRequests": 0
+  },
+  "audit": {
+    "playerListeners": {
+      "onplaypause": 2,
+      "songchange": 2,
+      "onprogress": 1
+    },
+    "blobURLs": 0
+  },
+  "playback": {
+    "playing": true,
+    "uri": "spotify:track:7so0lgd0zP2Sbgs2d7a1SZ"
+  },
+  "retained": {
+    "MutationObserver": 16,
+    "ResizeObserver": 13,
+    "HTMLCanvasElement": 3,
+    "HTMLImageElement": 3,
+    "FlowerButton": 1,
+    "WavyProgress": 1
+  },
+  "snapshot": "measurements/final-audit/stress-fixed.heapsnapshot",
+  "snapshot_bytes": 203620223
+}

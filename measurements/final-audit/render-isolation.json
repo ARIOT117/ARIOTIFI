@@ -1,0 +1,275 @@
+{
+  "normal": {
+    "processes": {
+      "7864": {
+        "cpu": 1.2,
+        "type": "main"
+      },
+      "7867": {
+        "cpu": 0.0,
+        "type": "--type=crashpad-handler"
+      },
+      "7871": {
+        "cpu": 0.0,
+        "type": "--type=zygote"
+      },
+      "7872": {
+        "cpu": 0.0,
+        "type": "--type=zygote"
+      },
+      "7897": {
+        "cpu": 14.4,
+        "type": "--type=gpu-process"
+      },
+      "7899": {
+        "cpu": 0.0,
+        "type": "--type=utility"
+      },
+      "7903": {
+        "cpu": 0.0,
+        "type": "--type=utility"
+      },
+      "7961": {
+        "cpu": 114.2,
+        "type": "--type=renderer"
+      },
+      "8005": {
+        "cpu": 0.0,
+        "type": "--type=utility"
+      }
+    },
+    "threads": [
+      [
+        7897,
+        7897,
+        8.8,
+        "spotify"
+      ],
+      [
+        7897,
+        7959,
+        4.8,
+        "VizCompositorTh"
+      ],
+      [
+        7961,
+        7961,
+        99.8,
+        "spotify"
+      ],
+      [
+        7961,
+        7980,
+        14.4,
+        "Compositor"
+      ]
+    ],
+    "visible": "visible"
+  },
+  "both components frozen": {
+    "processes": {
+      "7864": {
+        "cpu": 2.6,
+        "type": "main"
+      },
+      "7867": {
+        "cpu": 0.0,
+        "type": "--type=crashpad-handler"
+      },
+      "7871": {
+        "cpu": 0.0,
+        "type": "--type=zygote"
+      },
+      "7872": {
+        "cpu": 0.0,
+        "type": "--type=zygote"
+      },
+      "7897": {
+        "cpu": 7.0,
+        "type": "--type=gpu-process"
+      },
+      "7899": {
+        "cpu": 0.0,
+        "type": "--type=utility"
+      },
+      "7903": {
+        "cpu": 0.0,
+        "type": "--type=utility"
+      },
+      "7961": {
+        "cpu": 88.2,
+        "type": "--type=renderer"
+      },
+      "8005": {
+        "cpu": 0.0,
+        "type": "--type=utility"
+      }
+    },
+    "threads": [
+      [
+        7897,
+        7897,
+        2.0,
+        "spotify"
+      ],
+      [
+        7897,
+        7959,
+        3.8,
+        "VizCompositorTh"
+      ],
+      [
+        7961,
+        7961,
+        53.2,
+        "spotify"
+      ],
+      [
+        7961,
+        7967,
+        1.2,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7980,
+        25.2,
+        "Compositor"
+      ],
+      [
+        7961,
+        7992,
+        1.2,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7993,
+        1.2,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7995,
+        1.2,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7996,
+        1.2,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7997,
+        1.2,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7999,
+        1.2,
+        "ThreadPoolForeg"
+      ]
+    ],
+    "visible": "visible"
+  },
+  "without theme and components": {
+    "processes": {
+      "7864": {
+        "cpu": 2.2,
+        "type": "main"
+      },
+      "7867": {
+        "cpu": 0.0,
+        "type": "--type=crashpad-handler"
+      },
+      "7871": {
+        "cpu": 0.0,
+        "type": "--type=zygote"
+      },
+      "7872": {
+        "cpu": 0.0,
+        "type": "--type=zygote"
+      },
+      "7897": {
+        "cpu": 16.0,
+        "type": "--type=gpu-process"
+      },
+      "7899": {
+        "cpu": 0.0,
+        "type": "--type=utility"
+      },
+      "7903": {
+        "cpu": 0.0,
+        "type": "--type=utility"
+      },
+      "7961": {
+        "cpu": 100.6,
+        "type": "--type=renderer"
+      },
+      "8005": {
+        "cpu": 0.0,
+        "type": "--type=utility"
+      }
+    },
+    "threads": [
+      [
+        7897,
+        7897,
+        10.2,
+        "spotify"
+      ],
+      [
+        7897,
+        7959,
+        4.6,
+        "VizCompositorTh"
+      ],
+      [
+        7961,
+        7961,
+        69.4,
+        "spotify"
+      ],
+      [
+        7961,
+        7965,
+        1.6,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7967,
+        1.6,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7980,
+        19.8,
+        "Compositor"
+      ],
+      [
+        7961,
+        7992,
+        1.6,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7993,
+        1.4,
+        "ThreadPoolForeg"
+      ],
+      [
+        7961,
+        7995,
+        1.4,
+        "ThreadPoolForeg"
+      ]
+    ],
+    "visible": "visible"
+  }
+}

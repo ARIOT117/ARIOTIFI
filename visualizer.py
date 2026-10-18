@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 """Local output-audio spectrum and cached public lyrics for VideoGlass."""
-import json, os, time, threading, urllib.parse, urllib.request, re
+import json, os, sys, time, threading, subprocess, urllib.parse, urllib.request, re
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import gi
-gi.require_version('Gst', '1.0')
-from gi.repository import Gst, GLib, Gio
+from gi.repository import GLib, Gio
 
-Gst.init(None)
 PORT = 43891
 state = {'bands': [0.0] * 64, 'active': False, 'error': ''}
 last_request = 0.0
 pipeline = None
+reader = None
+lease_timer = 0
 cache = Path.home() / '.cache/spotify-videoglass/lyrics'
 cache.mkdir(parents=True, exist_ok=True)
 bus_connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
@@ -66,50 +66,103 @@ def control(action, value):
     else:
         raise ValueError('Acción desconocida')
 
-def on_message(bus, msg):
-    if msg.type == Gst.MessageType.ELEMENT:
-        s = msg.get_structure()
-        if s and s.get_name() == 'spectrum':
-            # Ubuntu's GI package may not ship Gst.ValueList overrides.
-            raw = re.search(r'magnitude=\(float\)\{([^}]+)\}', s.to_string())
-            if not raw:
-                return
-            values = [float(v) for v in raw.group(1).split(',')]
-            state['bands'] = [round(max(0, min(1, (float(v) + 75) / 65)), 3) for v in values]
-            state['active'] = True
-    elif msg.type == Gst.MessageType.ERROR:
-        err, _ = msg.parse_error()
-        state['error'] = str(err)
-        state['active'] = False
+def spectrum_worker():
+    """The audio process exists only while the immersive view needs spectrum."""
+    gi.require_version('Gst', '1.0')
+    from gi.repository import Gst
+    import signal
+    Gst.init(None)
+    capture = Gst.parse_launch('pulsesrc device="@DEFAULT_MONITOR@" ! audioconvert ! spectrum bands=64 interval=100000000 threshold=-75 ! fakesink sync=false')
+    loop = GLib.MainLoop()
+    def message(bus, msg):
+        if msg.type == Gst.MessageType.ELEMENT:
+            structure = msg.get_structure()
+            if structure and structure.get_name() == 'spectrum':
+                raw = re.search(r'magnitude=\(float\)\{([^}]+)\}', structure.to_string())
+                if raw:
+                    bands = [round(max(0, min(1, (float(v) + 75) / 65)), 3) for v in raw.group(1).split(',')]
+                    print(json.dumps({'bands': bands, 'active': True, 'error': ''}), flush=True)
+        elif msg.type == Gst.MessageType.ERROR:
+            error, _ = msg.parse_error()
+            print(json.dumps({'active': False, 'error': str(error)}), flush=True)
+            loop.quit()
+    bus = capture.get_bus()
+    bus.add_signal_watch()
+    handler = bus.connect('message', message)
+    def quit_worker():
+        loop.quit()
+        return False
+    GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGTERM, quit_worker)
+    try:
+        capture.set_state(Gst.State.PLAYING)
+        loop.run()
+    finally:
+        capture.set_state(Gst.State.NULL)
+        bus.disconnect(handler)
+        bus.remove_signal_watch()
+
+def read_spectrum(worker):
+    try:
+        for line in worker.stdout:
+            if pipeline is not worker:
+                break
+            try:
+                data = json.loads(line)
+                state.update(data)
+            except (ValueError, TypeError):
+                pass
+    finally:
+        worker.stdout.close()
+        if pipeline is worker:
+            state['active'] = False
 
 def stop_capture():
-    """Release the audio monitor immediately on close, pause or visibility loss."""
-    global pipeline, last_request
+    """Terminate and reap the audio child; leave only the idle lyrics HTTP server."""
+    global pipeline, reader, last_request, lease_timer
     last_request = 0.0
-    if pipeline is not None:
-        pipeline.set_state(Gst.State.NULL)
-        pipeline.get_bus().remove_signal_watch()
-        pipeline = None
+    if lease_timer:
+        GLib.source_remove(lease_timer)
+        lease_timer = 0
+    worker, pipeline = pipeline, None
+    if worker is not None:
+        if worker.poll() is None:
+            worker.terminate()
+            try:
+                worker.wait(timeout=1)
+            except subprocess.TimeoutExpired:
+                worker.kill()
+                worker.wait(timeout=1)
+        else:
+            worker.wait()
+    if reader is not None:
+        reader.join(timeout=1)
+        reader = None
     state.update(bands=[0.0] * 64, active=False)
     return False
 
-def tick():
-    global pipeline
-    wanted = time.monotonic() - last_request < 6
-    if wanted and pipeline is None:
-        # Explicit monitor source: never select the microphone.
-        pipeline = Gst.parse_launch('pulsesrc device="@DEFAULT_MONITOR@" ! audioconvert ! spectrum bands=64 interval=80000000 threshold=-75 ! fakesink sync=false')
-        bus = pipeline.get_bus()
-        bus.add_signal_watch()
-        bus.connect('message', on_message)
-        state['error'] = ''
-        pipeline.set_state(Gst.State.PLAYING)
-    elif not wanted and pipeline is not None:
-        pipeline.set_state(Gst.State.NULL)
-        pipeline.get_bus().remove_signal_watch()
-        pipeline = None
-        state.update(bands=[0.0]*64, active=False)
-    return True
+def expire_capture():
+    global lease_timer
+    lease_timer = 0
+    if time.monotonic() - last_request >= 2:
+        stop_capture()
+        return False
+    lease_timer = GLib.timeout_add_seconds(1, expire_capture)
+    return False
+
+def request_capture():
+    global pipeline, reader, lease_timer
+    if time.monotonic() - last_request >= 2:
+        return False
+    if pipeline is not None and pipeline.poll() is not None:
+        stop_capture()
+        return False
+    if pipeline is None:
+        pipeline = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), '--spectrum-worker'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, bufsize=1)
+        reader = threading.Thread(target=read_spectrum, args=(pipeline,), daemon=True)
+        reader.start()
+    if not lease_timer:
+        lease_timer = GLib.timeout_add_seconds(1, expire_capture)
+    return False
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
@@ -156,9 +209,10 @@ class Handler(BaseHTTPRequestHandler):
                 self.reply({'error': 'Spotify no está disponible'}, 503)
         elif u.path == '/spectrum':
             last_request = time.monotonic()
+            GLib.idle_add(request_capture)
             self.reply(dict(state))
         elif u.path == '/health':
-            self.reply({'ok': True, 'audio': 'output monitor', 'active': state['active']})
+            self.reply({'ok': True, 'audio': 'output monitor', 'active': state['active'], 'pipeline': pipeline is not None, 'lease_timer': bool(lease_timer), 'worker_pid': pipeline.pid if pipeline is not None else None})
         elif u.path == '/lyrics':
             import hashlib
             q = urllib.parse.parse_qs(u.query)
@@ -183,8 +237,15 @@ class Handler(BaseHTTPRequestHandler):
 def main():
     server = ThreadingHTTPServer(('127.0.0.1', PORT), Handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
-    GLib.timeout_add(300, tick)
-    GLib.MainLoop().run()
+    try:
+        GLib.MainLoop().run()
+    finally:
+        stop_capture()
+        server.shutdown()
+        server.server_close()
 
 if __name__ == '__main__':
-    main()
+    if '--spectrum-worker' in sys.argv:
+        spectrum_worker()
+    else:
+        main()

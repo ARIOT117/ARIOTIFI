@@ -3,10 +3,10 @@
 import socket,struct,os,json,urllib.request,urllib.parse,base64,sys
 
 class CDP:
-    def __init__(self):
+    def __init__(self, websocket_url=None):
         tabs=json.load(urllib.request.urlopen('http://127.0.0.1:9222/json'))
         tab=next(t for t in tabs if 'xpui.app.spotify.com' in t['url'])
-        u=urllib.parse.urlparse(tab['webSocketDebuggerUrl'])
+        u=urllib.parse.urlparse(websocket_url or tab['webSocketDebuggerUrl'])
         self.sock=socket.create_connection((u.hostname,u.port),timeout=20)
         key=base64.b64encode(os.urandom(16)).decode()
         self.sock.sendall(('GET '+u.path+' HTTP/1.1\r\nHost: 127.0.0.1:9222\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Key: '+key+'\r\nSec-WebSocket-Version: 13\r\n\r\n').encode())
@@ -40,6 +40,7 @@ class CDP:
             if mask:payload=bytes(b^mask[i%4] for i,b in enumerate(payload))
             if first&15==1:
                 result=json.loads(payload)
+                if result.get('method') and getattr(self,'on_event',None):self.on_event(result)
                 if result.get('id')==self.seq:return result
 
     def evaluate(self,expression):

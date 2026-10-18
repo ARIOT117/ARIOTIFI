@@ -1,0 +1,114 @@
+{
+  "label": "ram-with-old",
+  "time": "2026-10-18T11:37:26-0600",
+  "spotify": {
+    "rss_MiB": 1613.59765625,
+    "pss_MiB": 921.5322265625,
+    "cpu_percent": 144.78786432640757,
+    "pids": [
+      9340,
+      9343,
+      9347,
+      9348,
+      9376,
+      9378,
+      9391,
+      9434,
+      9477
+    ],
+    "processes": {
+      "9340": {
+        "cpu": 2.95,
+        "rss": 371347456,
+        "pss": 241556480
+      },
+      "9343": {
+        "cpu": 0.03,
+        "rss": 99614720,
+        "pss": 31494144
+      },
+      "9347": {
+        "cpu": 0.04,
+        "rss": 111157248,
+        "pss": 25834496
+      },
+      "9348": {
+        "cpu": 0.03,
+        "rss": 111071232,
+        "pss": 20627456
+      },
+      "9376": {
+        "cpu": 10.659999999999998,
+        "rss": 230629376,
+        "pss": 119603200
+      },
+      "9378": {
+        "cpu": 0.74,
+        "rss": 152027136,
+        "pss": 54387712
+      },
+      "9391": {
+        "cpu": 0.03,
+        "rss": 53514240,
+        "pss": 13317120
+      },
+      "9434": {
+        "cpu": 24.19,
+        "rss": 445157376,
+        "pss": 378270720
+      },
+      "9477": {
+        "cpu": 0.76,
+        "rss": 117460992,
+        "pss": 81205248
+      }
+    }
+  },
+  "visualizer": {
+    "rss_MiB": 39.09765625,
+    "pss_MiB": 23.07421875,
+    "cpu_percent": 0.19874792632314,
+    "pids": [
+      9339
+    ],
+    "processes": {
+      "9339": {
+        "cpu": 0.16999999999999998,
+        "rss": 40996864,
+        "pss": 24195072
+      }
+    }
+  },
+  "sample_seconds": 10.062998074999996,
+  "visibility": "visible",
+  "heap": {
+    "usedSize": 90431660,
+    "totalSize": 92811264,
+    "embedderHeapUsedSize": 30500064,
+    "backingStorageSize": 11544392
+  },
+  "dom": {
+    "documents": 3,
+    "nodes": 15581,
+    "jsEventListeners": 5292
+  },
+  "diagnostics": {
+    "mounted": false,
+    "frames": 0,
+    "cache": 1,
+    "lyricLines": 0,
+    "playing": true
+  },
+  "audit": {
+    "playerListeners": {
+      "songchange": 1,
+      "onplaypause": 1,
+      "onprogress": 1
+    },
+    "blobURLs": 0
+  },
+  "playback": {
+    "playing": true,
+    "uri": "spotify:track:7so0lgd0zP2Sbgs2d7a1SZ"
+  }
+}
