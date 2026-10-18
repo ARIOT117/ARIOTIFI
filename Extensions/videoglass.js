@@ -198,10 +198,7 @@
   }
   async function openView(){
     if(view||closing)return;returnFocus=document.activeElement;
-    // Call fullscreen synchronously from the user's click, preserving activation.
-    const full=!document.fullscreenElement?document.documentElement.requestFullscreen?.():null;
     const v=mountView();document.querySelector('.Root')?.setAttribute('inert','');
-    if(full)try{await full;fullscreenOwned=true;if(view!==v){fullscreenOwned=false;await document.exitFullscreen();}}catch{notify('No se pudo ocultar la barra del sistema; prueba Pantalla completa en ···.');}
     if(view===v&&!closing){await transition(v,true);if(view===v&&!closing){document.documentElement.classList.add('vg-immersive');syncVisualizer(v);}}
   }
   async function closeView(){
