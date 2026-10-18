@@ -64,8 +64,8 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 .vg-wave-pattern{animation:vg-wave-phase 3.2s linear infinite}
 .vg-paused .vg-wave-map{opacity:0}.vg-paused .vg-wave-pattern,.vg-hidden .vg-wave-pattern{animation-play-state:paused}
 .vg-progress-head{position:absolute;left:var(--vg-fill,0%);top:50%;width:4px;height:14px;transform:translate(-50%,-50%);border-radius:99px;background:white;opacity:0;transition:opacity .15s}
-.vg-seek-wrap:is(:hover,:focus-within) .vg-progress-head,.vg-native-progress:is(:hover,:focus-within) .vg-progress-head{opacity:1}
-.vg-seek-wrap:is(:hover,:focus-within) .vg-progress-remaining,.vg-native-progress:is(:hover,:focus-within) .vg-progress-remaining{height:4px}
+.vg-seek-wrap:is(:hover,:focus-within) .vg-progress-head,[data-vg-progress]:is(:hover,:focus-within) .vg-progress-head{opacity:1}
+.vg-seek-wrap:is(:hover,:focus-within) .vg-progress-remaining,[data-vg-progress]:is(:hover,:focus-within) .vg-progress-remaining{height:4px}
 @keyframes vg-wave-phase{to{transform:translateX(-30px)}}
 @media(prefers-reduced-motion:reduce){.vg-wave-map{opacity:0!important;transition:none!important}.vg-wave-pattern{animation:none!important}}
 #vg input[type=range]{appearance:none;-webkit-appearance:none;margin:0;padding:0;border:0;min-width:0;cursor:pointer;background:transparent;height:24px}
@@ -138,11 +138,11 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 .playback-bar{font-variant-numeric:tabular-nums;color:#ffffffb3!important}
 .playback-bar:has(.vg-native-duration) [data-testid="playback-duration"],.playback-bar:has(.vg-native-duration) .main-playbackBarRemainingTime-container{display:none!important}
 .vg-native-duration{font-size:11px;min-width:36px;color:#ffffffb3;text-align:left}
-.vg-native-progress{position:relative;--vg-fill:0%;height:24px!important;isolation:isolate}
+[data-vg-progress]{position:relative;--vg-fill:0%;height:24px!important;isolation:isolate}
 /* Preserve the native hit target, thumb and keyboard behavior, hiding only paint. */
-.vg-native-progress [data-testid="progress-bar-background"],.vg-native-progress .x-progressBar-progressBarBg{background:transparent!important;box-shadow:none!important}
-.vg-native-progress .x-progressBar-fillColor,.vg-native-progress .x-progressBar-progressFillColor,.vg-native-progress .progress-bar__slider,.vg-native-progress [data-testid="progress-bar-handle"],.vg-native-progress [data-testid="progress-bar-saber-overlay"]{opacity:0!important;box-shadow:none!important}
-.vg-native-progress>.vg-progress-visual{z-index:-1}
+[data-vg-progress] [data-testid="progress-bar-background"],[data-vg-progress] .x-progressBar-progressBarBg{background:transparent!important;box-shadow:none!important}
+[data-vg-progress] .x-progressBar-fillColor,[data-vg-progress] .x-progressBar-progressFillColor,[data-vg-progress] .progress-bar__slider,[data-vg-progress] [data-testid="progress-bar-handle"],[data-vg-progress] [data-testid="progress-bar-saber-overlay"]{opacity:0!important;box-shadow:none!important}
+[data-vg-progress]>.vg-progress-visual{z-index:-1}
 .main-nowPlayingBar-right .volume-bar{max-width:96px;min-width:55px}
 .main-nowPlayingBar-right .progress-bar__slider{width:3px!important;height:16px!important;border-radius:2px!important;background:white!important;opacity:1!important}
 .main-nowPlayingBar-right [data-testid="progress-bar-background"]{height:4px;background:#ffffff33!important}
