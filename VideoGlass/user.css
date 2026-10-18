@@ -112,7 +112,7 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 [data-vg-open]:hover .vg-cover-expand,[data-vg-open]:focus-visible .vg-cover-expand{opacity:1}
 .vg-dock-open{width:auto;height:36px;border-radius:99px;background:#ffffff14;color:white;font:700 13px Figtree,system-ui,sans-serif;gap:8px;padding:0 12px;white-space:nowrap}
 .vg-dock-open svg{width:16px;height:16px}
-.main-nowPlayingBar-center [data-testid="control-button-playpause"]{position:relative;background:transparent!important;width:40px!important;height:40px!important;min-width:40px!important;isolation:isolate;color:#141014!important;animation:none;overflow:visible}
+.main-nowPlayingBar-center [data-testid="control-button-playpause"]{position:relative;background:transparent!important;width:40px!important;height:40px!important;min-width:40px!important;isolation:isolate;color:#141014!important;animation:none;overflow:visible;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
 .main-nowPlayingBar-center [data-testid="control-button-playpause"]::before{content:none!important}
 .main-nowPlayingBar-center [data-testid="control-button-playpause"]>svg{position:relative;z-index:1}
 #vg .vg-play,.main-nowPlayingBar-center [data-testid="control-button-playpause"]{transition:transform .15s,box-shadow .15s}
