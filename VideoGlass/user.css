@@ -60,14 +60,13 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 .vg-progress-remaining{position:absolute;left:var(--vg-fill,0%);right:0;top:50%;height:3px;transform:translateY(-50%);border-radius:99px;background:rgba(255,255,255,.18)}
 .vg-played{position:absolute;inset:0 auto 0 0;width:var(--vg-fill,0%);overflow:hidden}
 .vg-progress-svg{position:absolute;left:0;top:50%;height:24px;transform:translateY(-50%);overflow:hidden;max-width:none}
-.vg-wave-map{opacity:1;transition:opacity .4s cubic-bezier(.2,.7,.3,1)}
-.vg-wave-pattern{animation:vg-wave-phase 3.2s linear infinite}
-.vg-paused .vg-wave-map{opacity:0}.vg-paused .vg-wave-pattern,.vg-hidden .vg-wave-pattern{animation-play-state:paused}
+.vg-wave-amplitude{flood-opacity:1;transition:flood-opacity .4s cubic-bezier(.2,.7,.3,1)}
+.vg-paused .vg-wave-amplitude{flood-opacity:0}
 .vg-progress-head{position:absolute;left:var(--vg-fill,0%);top:50%;width:4px;height:14px;transform:translate(-50%,-50%);border-radius:99px;background:white;opacity:0;transition:opacity .15s}
 .vg-seek-wrap:is(:hover,:focus-within) .vg-progress-head,[data-vg-progress]:is(:hover,:focus-within) .vg-progress-head{opacity:1}
 .vg-seek-wrap:is(:hover,:focus-within) .vg-progress-remaining,[data-vg-progress]:is(:hover,:focus-within) .vg-progress-remaining{height:4px}
-@keyframes vg-wave-phase{to{transform:translateX(-30px)}}
-@media(prefers-reduced-motion:reduce){.vg-wave-map{opacity:0!important;transition:none!important}.vg-wave-pattern{animation:none!important}}
+
+@media(prefers-reduced-motion:reduce){.vg-wave-amplitude{flood-opacity:0!important;transition:none!important}}
 #vg input[type=range]{appearance:none;-webkit-appearance:none;margin:0;padding:0;border:0;min-width:0;cursor:pointer;background:transparent;height:24px}
 #vg .vg-seek{position:absolute;inset:0;width:100%;z-index:1}
 #vg .vg-seek::-webkit-slider-runnable-track{background:transparent;height:2px}

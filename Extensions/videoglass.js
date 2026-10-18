@@ -43,13 +43,29 @@
   }
   const playFlower=`<span class="vg-pulse" aria-hidden="true" data-vg-owned=""><svg class="vg-spin" viewBox="0 0 100 100"><path d="${playFlowerPath()}" fill="white" stroke="none"/></svg></span>`;
   let progressId=0;
+  const waveFields=new WeakMap(),wavePhase={active:false,elapsed:0,start:performance.now()};
+  const sineStops=Array.from({length:33},(_,i)=>`<stop offset="${i/32}" stop-color="rgb(0%,${(50+50*Math.sin(i/32*Math.PI*2)).toFixed(4)}%,0%)"/>`).join('');
   function progressArt() {
     const id='vg-progress-'+(++progressId);
-    // The sine is a repeated displacement field for a single stroked path.
-    // Alpha in the field scales its displacement, tapering amplitude (not opacity)
-    // over the first 12 px and last 10 px. No JS animation loop is needed.
-    const stops=Array.from({length:33},(_,i)=>`<stop offset="${i/32}" stop-color="rgb(0%,${(50+50*Math.sin(i/32*Math.PI*2)).toFixed(4)}%,0%)"/>`).join('');
-    return `<span class="vg-progress-visual" data-vg-owned="" aria-hidden="true"><span class="vg-progress-remaining"></span><span class="vg-played"><svg class="vg-progress-svg" width="100%" height="24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${id}-sine" x1="0" y1="0" x2="30" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="repeat">${stops}</linearGradient><linearGradient id="${id}-in"><stop stop-color="black"/><stop offset="1" stop-color="white"/></linearGradient><linearGradient id="${id}-out"><stop stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient><mask id="${id}-envelope" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="24"><rect width="100%" height="24" fill="white"/><rect width="12" height="24" fill="url(#${id}-in)"/><rect x="100%" width="10" height="24" transform="translate(-10 0)" fill="url(#${id}-out)"/></mask><g id="${id}-map"><g class="vg-wave-map" mask="url(#${id}-envelope)"><rect class="vg-wave-pattern" x="-30" width="calc(100% + 60px)" height="24" fill="url(#${id}-sine)"/></g></g><filter id="${id}-bend" x="0" y="0" width="100%" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feImage href="#${id}-map" x="0" y="0" width="100%" height="24" result="field"/><feColorMatrix in="field" result="displacement" type="matrix" values="0 0 0 0 .5  0 1 0 -.5 .5  0 0 0 0 0  0 0 0 0 1"/><feDisplacementMap in="SourceGraphic" in2="displacement" scale="4.5" xChannelSelector="R" yChannelSelector="G"/></filter></defs><path d="M0 12H4096" stroke="rgba(255,255,255,.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#${id}-bend)"/></svg></span><span class="vg-progress-head"></span></span>`;
+    // A small origin-clean SVG field bends one stroked line into a sine.
+    // Its alpha envelope tapers amplitude, rather than fading the line itself.
+    return `<span class="vg-progress-visual" data-vg-owned="" aria-hidden="true"><span class="vg-progress-remaining"></span><span class="vg-played"><svg class="vg-progress-svg" width="100%" height="24" xmlns="http://www.w3.org/2000/svg"><defs><filter id="${id}-bend" x="0" y="0" width="100%" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feImage class="vg-wave-field" x="0" y="0" width="100%" height="24" preserveAspectRatio="none" result="field"/><feFlood class="vg-wave-amplitude" flood-color="white" result="amplitude"/><feComposite in="field" in2="amplitude" operator="in" result="tapered"/><feColorMatrix in="tapered" result="displacement" type="matrix" values="0 0 0 0 .5  0 1 0 -.5 .5  0 0 0 0 0  0 0 0 0 1"/><feDisplacementMap in="SourceGraphic" in2="displacement" scale="4.5" xChannelSelector="R" yChannelSelector="G"/></filter></defs><path d="M0 12H4096" stroke="rgba(255,255,255,.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#${id}-bend)"/></svg></span><span class="vg-progress-head"></span></span>`;
+  }
+  function syncWavePhase(){
+    const active=!!state?.playing&&!document.hidden&&!motion.matches;
+    if(active!==wavePhase.active){const now=performance.now();if(wavePhase.active)wavePhase.elapsed+=now-wavePhase.start;wavePhase.start=now;wavePhase.active=active;}
+  }
+  function updateProgressArt(container){
+    const svg=container?.querySelector('.vg-progress-svg');if(!svg)return;
+    const width=Math.round(svg.getBoundingClientRect().width*10)/10;if(width<=0)return;
+    const key=width+':'+wavePhase.active;if(waveFields.get(svg)===key)return;
+    waveFields.set(svg,key);
+    const phase=(wavePhase.elapsed+(wavePhase.active?performance.now()-wavePhase.start:0))%3200;
+    // SVG-as-image runs this CSS transform animation; JS only changes width or
+    // playback state at the shared UI cadence. Negative delay preserves phase.
+    const movement=wavePhase.active?`animation:phase 3.2s linear infinite;animation-delay:-${phase}ms`:`transform:translateX(${-phase/3200*30}px)`;
+    const field=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="24"><style>@keyframes phase{to{transform:translateX(-30px)}}.phase{${movement}}@media(prefers-reduced-motion:reduce){.phase{animation:none}}</style><defs><linearGradient id="sine" x1="0" y1="0" x2="30" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="repeat">${sineStops}</linearGradient><linearGradient id="in"><stop stop-color="black"/><stop offset="1" stop-color="white"/></linearGradient><linearGradient id="out"><stop stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient><mask id="envelope"><rect width="100%" height="24" fill="white"/><rect width="12" height="24" fill="url(#in)"/><rect x="${Math.max(0,width-10)}" width="10" height="24" fill="url(#out)"/></mask></defs><g mask="url(#envelope)"><rect class="phase" x="-30" width="${width+60}" height="24" fill="url(#sine)"/></g></svg>`;
+    svg.querySelector('.vg-wave-field').setAttribute('href','data:image/svg+xml,'+encodeURIComponent(field));
   }
   function progressMarkup() {return `<div class="vg-progress"><span class="vg-elapsed">0:00</span><div class="vg-seek-wrap">${progressArt()}<input class="vg-seek" type="range" min="0" max="1000" value="0" aria-label="Progreso"></div><span class="vg-duration">0:00</span></div>`;}
   function transportMarkup() {return `<div class="vg-transport">${button('shuffle','Aleatorio')}${button('back','Anterior','prev')}<button class="vg-button vg-play" data-action="toggle" aria-label="Reproducir">${playFlower}<span class="vg-play-icon">${svg('play')}</span></button>${button('next','Siguiente')}${button('repeat','Repetir')}</div>`;}
@@ -83,7 +99,7 @@
   }
   function rangeFill(input) {input.style.setProperty('--vg-fill',(Number(input.value)/Number(input.max)*100)+'%');}
   function updateUI() {
-    document.documentElement.classList.toggle('vg-paused',!state?.playing);
+    syncWavePhase();document.documentElement.classList.toggle('vg-paused',!state?.playing);
     if(dock) updateDock();
     const v=view;if(!v||closing)return;
     const r=v.root,p=position(),d=state?.duration||0;
@@ -95,7 +111,7 @@
     if(v.playing!==state?.playing){v.playing=state?.playing;r.querySelector('.vg-play-icon').innerHTML=svg(v.playing?'pause':'play');r.querySelector('.vg-play').setAttribute('aria-label',v.playing?'Pausar':'Reproducir');syncVisualizer(v);}
     for(const [key,value] of [['shuffle',!!state?.shuffle],['repeat',!!state?.repeat]])r.querySelector(`[data-action="${key}"]`).setAttribute('aria-pressed',String(value));
     r.querySelector('[data-action="repeat"]').setAttribute('aria-label',state?.repeat===2?'Repetir canción':state?.repeat===1?'Repetir lista':'Repetición desactivada');
-    updateLyric(v,p);
+    updateProgressArt(seek.parentElement);updateLyric(v,p);
   }
   async function prepareArtwork(id,url) {
     artRequest?.abort();artRequest=null;
@@ -140,7 +156,7 @@
     for(const input of root.querySelectorAll('input[type="range"]')){
       input.addEventListener('pointerdown',()=>v.dragging.add(input),{signal:v.abort.signal});
       for(const event of ['pointerup','pointercancel','blur'])input.addEventListener(event,()=>v.dragging.delete(input),{signal:v.abort.signal});
-      input.addEventListener('input',()=>{rangeFill(input);if(input.classList.contains('vg-seek')){input.parentElement.style.setProperty('--vg-fill',input.value/10+'%');root.querySelector('.vg-elapsed').textContent=fmt((state?.duration||0)*input.value/1000);}},{signal:v.abort.signal});
+      input.addEventListener('input',()=>{rangeFill(input);if(input.classList.contains('vg-seek')){input.parentElement.style.setProperty('--vg-fill',input.value/10+'%');root.querySelector('.vg-elapsed').textContent=fmt((state?.duration||0)*input.value/1000);updateProgressArt(input.parentElement);}},{signal:v.abort.signal});
       input.addEventListener('change',()=>control(input.classList.contains('vg-seek')?'seek':'volume',input.classList.contains('vg-seek')?(state?.duration||0)*input.value/1000:input.value/100),{signal:v.abort.signal});
     }
     v.resize=new ResizeObserver(()=>{sizeCanvas(v);updateLyric(v,position(),true);if(!state?.playing)drawSpectrum(v);});v.resize.observe(root.querySelector('.vg-art-space'));v.resize.observe(root.querySelector('.vg-lyrics'));
@@ -279,7 +295,7 @@
     if(progress)progress.dataset.vgProgress='';
     if(progress&&!progress.querySelector('.vg-progress-visual')){
       progress.classList.add('vg-native-progress');progress.insertAdjacentHTML('beforeend',progressArt());
-      const preview=e=>{if(!dock?.dragging)return;const box=progress.getBoundingClientRect();progress.style.setProperty('--vg-fill',Math.max(0,Math.min(100,(e.clientX-box.left)/box.width*100))+'%');};
+      const preview=e=>{if(!dock?.dragging)return;const box=progress.getBoundingClientRect();progress.style.setProperty('--vg-fill',Math.max(0,Math.min(100,(e.clientX-box.left)/box.width*100))+'%');updateProgressArt(progress);};
       progress.addEventListener('pointerdown',e=>{dock.dragging=true;preview(e);},{signal:dock.abort.signal});
       window.addEventListener('pointermove',preview,{signal:dock.abort.signal});
       for(const event of ['pointerup','pointercancel'])window.addEventListener(event,()=>{dock.dragging=false;},{signal:dock.abort.signal});
@@ -292,7 +308,7 @@
   function updateDock(){
     const r=dock.root,p=position(),d=state?.duration||0;
     if(!dock.dragging)r.querySelector('[data-vg-progress]')?.style.setProperty('--vg-fill',(d?p/d*100:0)+'%');
-    const total=r.querySelector('.vg-native-duration');if(total)total.textContent=fmt(d);
+    const total=r.querySelector('.vg-native-duration');if(total)total.textContent=fmt(d);updateProgressArt(r.querySelector('[data-vg-progress]'));
   }
   const launcher=new Spicetify.Topbar.Button('Inmersiva',icons.expand,openView);
   document.addEventListener('keydown',e=>{
@@ -303,7 +319,7 @@
     if(e.code==='Space'){e.preventDefault();control('toggle');}
     if(e.code==='ArrowLeft'||e.code==='ArrowRight'){e.preventDefault();control('seek',Math.max(0,Math.min(state?.duration||0,position()+(e.code==='ArrowLeft'?-10000:10000))));}
   },{signal:life.signal});
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)playerRequest?.abort();if(view)syncVisualizer(view);document.documentElement.classList.toggle('vg-hidden',document.hidden);},{signal:life.signal});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)playerRequest?.abort();if(view)syncVisualizer(view);document.documentElement.classList.toggle('vg-hidden',document.hidden);syncWavePhase();if(dock)updateDock();if(view)updateProgressArt(view.root.querySelector('.vg-seek-wrap'));},{signal:life.signal});
   document.addEventListener('fullscreenchange',()=>{if(fullscreenOwned&&!document.fullscreenElement){fullscreenOwned=false;closeView();}},{signal:life.signal});
   function dispose(){disposed=true;clearTimeout(tickTimer);clearTimeout(sleepTimer);playerRequest?.abort();artRequest?.abort();life.abort();if(view){stopVisualizer(view);view.abort.abort();view.lyricsAbort?.abort();view.resize.disconnect();view.animation?.cancel();view.root.remove();view=null;}cache.clear();launcher?.deregister?.();dock?.abort.abort();dock?.tooltips?.disconnect();document.querySelectorAll('[data-vg-owned]').forEach(x=>x.remove());document.querySelectorAll('[data-vg-open]').forEach(x=>x.removeAttribute('data-vg-open'));document.querySelectorAll('[data-vg-progress]').forEach(x=>{x.classList.remove('vg-native-progress');x.removeAttribute('data-vg-progress');});if(fullscreenOwned&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});document.querySelector('.Root')?.removeAttribute('inert');document.documentElement.classList.remove('vg-immersive','vg-paused','vg-hidden');}
   window.VideoGlass={open:openView,close:closeView,dispose,get root(){return view?.root||null;},diagnostics:()=>({mounted:!!view,frames:view?.frame?1:0,cache:cache.size,lyricLines:view?.lines.length||0,playing:!!state?.playing})};
