@@ -179,3 +179,6 @@ body.vg-immersive-open #global-nav-bar,
 body.vg-immersive-open .menu-button{visibility:hidden!important;pointer-events:none!important}
 
 .vg-paused .vg-backdrop,.vg-hidden .vg-backdrop{animation-play-state:paused}
+
+#vg .vg-art-fallback{display:grid;place-items:center;background:linear-gradient(135deg,rgba(var(--vg-accent-rgb),1),#17101e);color:#ffffffb3}
+#vg .vg-art-fallback svg{width:60px;height:60px}
