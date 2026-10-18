@@ -35,8 +35,16 @@
   }
   document.documentElement.style.setProperty('--vg-art-clip',flower(12,.035));
   document.documentElement.style.setProperty('--vg-play-clip',flower(9,.06));
-  const wave = `<span class="vg-wave-window" aria-hidden="true"><svg class="vg-wave" width="2048" height="16"><path d="${Array.from({length:1025},(_,i)=>(i?'L':'M')+(i*2)+' '+(8+2.6*Math.sin(i*2/16*Math.PI*2)).toFixed(2)).join(' ')}" fill="none" stroke="white" stroke-width="2"/></svg></span>`;
-  function progressMarkup() {return `<div class="vg-progress"><span class="vg-elapsed">0:00</span><div class="vg-seek-wrap">${wave}<input class="vg-seek" type="range" min="0" max="1000" value="0" aria-label="Progreso"></div><span class="vg-duration">0:00</span></div>`;}
+  let progressId=0;
+  function progressArt() {
+    const id='vg-progress-'+(++progressId);
+    // The sine is a repeated displacement field for a single stroked path.
+    // Alpha in the field scales its displacement, tapering amplitude (not opacity)
+    // over the first 12 px and last 10 px. No JS animation loop is needed.
+    const stops=Array.from({length:33},(_,i)=>`<stop offset="${i/32}" stop-color="rgb(0%,${(50+50*Math.sin(i/32*Math.PI*2)).toFixed(4)}%,0%)"/>`).join('');
+    return `<span class="vg-progress-visual" data-vg-owned="" aria-hidden="true"><span class="vg-progress-remaining"></span><span class="vg-played"><svg class="vg-progress-svg" width="100%" height="24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${id}-sine" x1="0" y1="0" x2="30" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="repeat">${stops}</linearGradient><linearGradient id="${id}-in"><stop stop-color="black"/><stop offset="1" stop-color="white"/></linearGradient><linearGradient id="${id}-out"><stop stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient><mask id="${id}-envelope" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="24"><rect width="100%" height="24" fill="white"/><rect width="12" height="24" fill="url(#${id}-in)"/><rect x="100%" width="10" height="24" transform="translate(-10 0)" fill="url(#${id}-out)"/></mask><g id="${id}-map"><g class="vg-wave-map" mask="url(#${id}-envelope)"><rect class="vg-wave-pattern" x="-30" width="calc(100% + 60px)" height="24" fill="url(#${id}-sine)"/></g></g><filter id="${id}-bend" x="0" y="0" width="100%" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feImage href="#${id}-map" x="0" y="0" width="100%" height="24" result="field"/><feColorMatrix in="field" result="displacement" type="matrix" values="0 0 0 0 .5  0 1 0 -.5 .5  0 0 0 0 0  0 0 0 0 1"/><feDisplacementMap in="SourceGraphic" in2="displacement" scale="4.5" xChannelSelector="R" yChannelSelector="G"/></filter></defs><path d="M0 12H4096" stroke="rgba(255,255,255,.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#${id}-bend)"/></svg></span><span class="vg-progress-head"></span></span>`;
+  }
+  function progressMarkup() {return `<div class="vg-progress"><span class="vg-elapsed">0:00</span><div class="vg-seek-wrap">${progressArt()}<input class="vg-seek" type="range" min="0" max="1000" value="0" aria-label="Progreso"></div><span class="vg-duration">0:00</span></div>`;}
   function transportMarkup() {return `<div class="vg-transport">${button('shuffle','Aleatorio')}${button('back','Anterior','prev')}<button class="vg-button vg-play" data-action="toggle" aria-label="Reproducir"><span class="vg-pulse"><span class="vg-spin"></span></span><span class="vg-play-icon">${svg('play')}</span></button>${button('next','Siguiente')}${button('repeat','Repetir')}</div>`;}
   function volumeMarkup() {return `<label class="vg-volume">${svg('volume')}<input class="vg-vol" type="range" min="0" max="100" value="0" aria-label="Volumen"></label>`;}
   function notify(message) { Spicetify.showNotification?.(message); }
@@ -251,8 +259,12 @@
       const b=document.createElement('button');b.className='vg-button vg-dock-open';b.dataset.vgOpen='true';b.dataset.vgOwned='';b.innerHTML=svg('expand')+'<span>Inmersiva</span>';b.title='Abrir vista inmersiva';b.setAttribute('aria-label',b.title);b.onclick=openView;right.append(b);
     }
     const progress=root.querySelector('[data-testid="playback-progressbar"],.playback-progressbar');
-    if(progress&&!progress.querySelector('.vg-wave-window')){
-      progress.classList.add('vg-native-progress');progress.insertAdjacentHTML('beforeend',wave);progress.querySelector('.vg-wave-window').dataset.vgOwned='';
+    if(progress&&!progress.querySelector('.vg-progress-visual')){
+      progress.classList.add('vg-native-progress');progress.insertAdjacentHTML('beforeend',progressArt());
+      const preview=e=>{if(!dock?.dragging)return;const box=progress.getBoundingClientRect();progress.style.setProperty('--vg-fill',Math.max(0,Math.min(100,(e.clientX-box.left)/box.width*100))+'%');};
+      progress.addEventListener('pointerdown',e=>{dock.dragging=true;preview(e);},{signal:dock.abort.signal});
+      window.addEventListener('pointermove',preview,{signal:dock.abort.signal});
+      for(const event of ['pointerup','pointercancel'])window.addEventListener(event,()=>{dock.dragging=false;},{signal:dock.abort.signal});
     }
     const bar=root.querySelector('.playback-bar');
     if(bar&&!bar.querySelector('.vg-native-duration')){
@@ -261,7 +273,7 @@
   }
   function updateDock(){
     const r=dock.root,p=position(),d=state?.duration||0;
-    r.querySelector('.vg-native-progress')?.style.setProperty('--vg-fill',(d?p/d*100:0)+'%');
+    if(!dock.dragging)r.querySelector('.vg-native-progress')?.style.setProperty('--vg-fill',(d?p/d*100:0)+'%');
     const total=r.querySelector('.vg-native-duration');if(total)total.textContent=fmt(d);
   }
   const launcher=new Spicetify.Topbar.Button('Inmersiva',icons.expand,openView);
