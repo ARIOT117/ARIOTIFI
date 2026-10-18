@@ -25,7 +25,7 @@ body{background:var(--vg-background)!important;font-family:Figtree,system-ui,san
 
 /* A — Disposable immersive player and shared controls. */
 :root{--vg-accent-rgb:180,150,170}
-#vg{position:fixed;inset:0;z-index:10000;background:#120a12;color:white;font-family:Figtree,system-ui,sans-serif;overflow:hidden;isolation:isolate}
+#vg{position:fixed;inset:0;z-index:2147483647;background:#120a12;color:white;font-family:Figtree,system-ui,sans-serif;overflow:hidden;isolation:isolate}
 #vg *{box-sizing:border-box}
 #vg .vg-content{position:absolute;inset:0;overflow:auto}
 #vg .vg-backdrop{position:fixed;inset:-10%;background-color:rgba(var(--vg-accent-rgb),.35);background-size:cover;background-position:center;animation:vg-drift 24s ease-in-out infinite alternate;pointer-events:none}
@@ -177,3 +177,9 @@ html,body{min-width:0!important;width:100%;height:100vh!important;overflow:hidde
 .vg-elapsed,.vg-duration,.playback-bar [data-testid="playback-position"],.playback-bar .vg-native-duration{display:flex;align-items:center;justify-content:center;flex:0 0 44px;min-width:44px;width:44px;height:24px;line-height:24px;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
 .playback-bar{align-items:center!important;gap:10px}
 .main-nowPlayingBar-center [data-testid="control-button-playpause"]>span:not(.vg-pulse){position:relative;z-index:1;background:transparent!important;box-shadow:none!important}
+
+/* DevTools: #global-nav-bar owns the menu spacer; NativeAPI hides the native child view. */
+body.vg-immersive-open .Root__globalNav,
+body.vg-immersive-open .Root__globalNav *,
+body.vg-immersive-open #global-nav-bar,
+body.vg-immersive-open .menu-button{visibility:hidden!important;pointer-events:none!important}

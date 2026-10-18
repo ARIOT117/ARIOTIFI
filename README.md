@@ -1,5 +1,16 @@
 # Reproductor premium — entrega
 
+## Actualización: componente WavyProgress original
+
+La onda de progreso anterior fue eliminada y reemplazada por `/home/diego/Descargas/wavy-progress.js`, copiado sin cambios a `Extensions/wavy-progress.js`. Su contenido exacto está al principio de `Extensions/videoglass.js` para cargarlo antes de la integración, sin depender del orden de extensiones de Spicetify. SHA-256 del componente: `608fc1ea8cbf4076fabd3364733e6dc48c97e385a373ccd4b36e358ae003bb5a`.
+
+Se conservan los valores por defecto: amplitud 2,2 px, longitud 30 px, velocidad 0,3 y grosor 2,5 px. El adaptador de entrada limita a cuatro llamadas por segundo a `setProgress` porque Spicetify emite `onprogress` cada 100 ms. El componente extrapola entre lecturas. Al cerrar la inmersiva se llama a su desconexión y a `destroy()`. El slider nativo conserva sus interacciones; solo se ocultan sus capas visuales.
+
+La esquina superpuesta tenía un menú dibujado por Spotify fuera del DOM. Ocultar `.Root__globalNav` no bastaba: ahora `body.vg-immersive-open` oculta la barra global durante toda la inmersiva y `Platform.NativeAPI.setWindowButtonsVisibility(false)` retira la capa nativa. Tras la transición de salida se restaura con `true`. La inmersiva usa `z-index:2147483647` y continúa dentro de la ventana.
+
+Validación: `tests/wavy-check.py`. Capturas al 200% y resultados están en `measurements/wavy-original-200/`; `esquina-inmersiva-nativa.png` se capturó directamente de la ventana X11, incluyendo los controles nativos, y `esquina-normal-menu-restaurado.png` confirma su restauración. Se verificaron las opciones originales, cero SVG de la onda anterior, intervalo mínimo de 253,5 ms entre lecturas, 434 posiciones continuas, reposo en pausa y destrucción al cerrar.
+
+
 La instalación usa Spotify Desktop 1.2.95 con Spicetify 2.45.3, una extensión JavaScript, CSS y el puente Python existente (MPRIS, monitor de salida de audio y LRCLIB). El proyecto editable y su historial están en esta carpeta. Los archivos instalados están en `~/.config/spicetify` y `~/.local/share/spotify-personalizado`.
 
 ## Comportamiento final
@@ -8,7 +19,7 @@ La instalación usa Spotify Desktop 1.2.95 con Spicetify 2.45.3, una extensión 
 
 La portada del dock y el botón Inmersiva abren la vista. Ctrl + Alt + V también abre/cierra. Esc cierra el panel abierto o vuelve al inicio. La portada tiene 12 ondas, el botón de reproducción 9 y la transición 6 pétalos. El visualizador tiene 72 barras en un canvas y usa audio real de la salida del equipo. No captura el micrófono.
 
-El tiempo derecho es duración total. El progreso ondulado usa CSS; los datos se actualizan como máximo dos veces por segundo. Las letras provienen de LRCLIB, permiten buscar desde un verso y muestran ♪ en intervalos instrumentales identificados. Si solamente hay letra sin tiempos, se muestra texto desplazable; si no hay letra, aparece el estado diseñado con botón para reintentar.
+El tiempo derecho es duración total. El progreso utiliza el componente WavyProgress adjunto sin modificar; su entrada se limita a cuatro lecturas por segundo y el componente extrapola entre ellas. Las letras provienen de LRCLIB, permiten buscar desde un verso y muestran ♪ en intervalos instrumentales identificados. Si solamente hay letra sin tiempos, se muestra texto desplazable; si no hay letra, aparece el estado diseñado con botón para reintentar.
 
 La vista se desmonta tras cerrar. Se cancelan peticiones, listeners, ResizeObserver, RAF, animación y consultas del espectro. El servicio libera la captura al recibir `spectrum-stop`. El reloj general del dock y un temporizador de apagado elegido por el usuario pertenecen a la aplicación y pueden continuar con la inmersiva cerrada.
 
@@ -48,7 +59,7 @@ Se abrió Spotify y se usó su depurador local. Evidencia en `measurements/`:
 
 El estado vacío se probó interceptando temporalmente solamente la respuesta de letras; se restauró fetch después. Las pruebas de reproducción restauraron posición y estado al terminar. Las últimas comprobaciones de tamaños y memoria conservaron la reproducción actual.
 
-## Memoria medida
+## Memoria medida (versión previa a WavyProgress)
 
 Comparación del 18 de octubre de 2026 en la misma instancia de Spotify, misma pista (`Bad Romance`) y reproducción activa, con inmersiva cerrada. Se cargó la versión anterior y después la nueva; ambas tuvieron 8 segundos para estabilizarse y una recolección explícita de basura antes de tomar la muestra. Se restauró la versión nueva al terminar.
 

@@ -433,18 +433,28 @@
     if(action.startsWith('sleep-')){clearTimeout(sleepTimer);const minutes=Number(action.slice(6));sleepTimer=minutes?setTimeout(()=>{control('pause');sleepTimer=0;},minutes*60000):0;v.root.querySelector('.vg-panel').hidden=true;notify(minutes?'La música se pausará en '+minutes+' minutos.':'Temporizador cancelado.');return;}
     if(action==='search-lyrics'){loadSong(v);}
   }
+  async function setNativeButtonsVisible(visible){
+    // The desktop app menu is a native child view, above all DOM z-index values.
+    // DevTools exposes its supported visibility API through Platform.NativeAPI.
+    try{await Spicetify.Platform.NativeAPI?.setWindowButtonsVisibility(visible);}
+    catch(error){console.warn('[VideoGlass] Native menu visibility',error);}
+  }
   async function openView(){
     if(view||closing)return;returnFocus=document.activeElement;
+    document.body.classList.add('vg-immersive-open');
     const v=mountView();document.querySelector('.Root')?.setAttribute('inert','');
+    await setNativeButtonsVisible(false);
     if(view===v&&!closing){await transition(v,true);if(view===v&&!closing){document.documentElement.classList.add('vg-immersive');syncVisualizer(v);}}
   }
   async function closeView(){
     const v=view;if(!v||closing)return;closing=true;stopVisualizer(v);v.lyricsAbort?.abort();
     document.documentElement.classList.remove('vg-immersive');
     await transition(v,false);
+    document.body.classList.remove('vg-immersive-open');
     releaseProgress(v.progress);v.progress=null;
     v.abort.abort();v.resize.disconnect();v.animation?.cancel();v.root.querySelectorAll('canvas').forEach(c=>{c.width=c.height=0;});v.root.remove();v.lines=[];view=null;closing=false;
     document.querySelector('.Root')?.removeAttribute('inert');
+    await setNativeButtonsVisible(true);
     if(fullscreenOwned&&document.fullscreenElement){fullscreenOwned=false;try{await document.exitFullscreen();}catch{}}
     (returnFocus?.isConnected?returnFocus:document.querySelector('[data-vg-open]'))?.focus({preventScroll:true});
   }
@@ -521,7 +531,7 @@
   },{signal:life.signal});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)playerRequest?.abort();if(view)syncVisualizer(view);document.documentElement.classList.toggle('vg-hidden',document.hidden);},{signal:life.signal});
   document.addEventListener('fullscreenchange',()=>{if(fullscreenOwned&&!document.fullscreenElement){fullscreenOwned=false;closeView();}},{signal:life.signal});
-  function dispose(){disposed=true;clearTimeout(tickTimer);clearTimeout(sleepTimer);playerRequest?.abort();artRequest?.abort();life.abort();if(view){releaseProgress(view.progress);stopVisualizer(view);view.abort.abort();view.lyricsAbort?.abort();view.resize.disconnect();view.animation?.cancel();view.root.remove();view=null;}cache.clear();launcher?.deregister?.();releaseProgress(dock?.progress);dock?.abort.abort();dock?.tooltips?.disconnect();document.querySelectorAll('[data-vg-owned]').forEach(x=>x.remove());document.querySelectorAll('[data-vg-open]').forEach(x=>x.removeAttribute('data-vg-open'));document.querySelectorAll('[data-vg-progress]').forEach(x=>{x.removeAttribute('data-vg-progress');});if(fullscreenOwned&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});document.querySelector('.Root')?.removeAttribute('inert');document.documentElement.classList.remove('vg-immersive','vg-paused','vg-hidden');}
+  function dispose(){disposed=true;document.body.classList.remove('vg-immersive-open');setNativeButtonsVisible(true);clearTimeout(tickTimer);clearTimeout(sleepTimer);playerRequest?.abort();artRequest?.abort();life.abort();if(view){releaseProgress(view.progress);stopVisualizer(view);view.abort.abort();view.lyricsAbort?.abort();view.resize.disconnect();view.animation?.cancel();view.root.remove();view=null;}cache.clear();launcher?.deregister?.();releaseProgress(dock?.progress);dock?.abort.abort();dock?.tooltips?.disconnect();document.querySelectorAll('[data-vg-owned]').forEach(x=>x.remove());document.querySelectorAll('[data-vg-open]').forEach(x=>x.removeAttribute('data-vg-open'));document.querySelectorAll('[data-vg-progress]').forEach(x=>{x.removeAttribute('data-vg-progress');});if(fullscreenOwned&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});document.querySelector('.Root')?.removeAttribute('inert');document.documentElement.classList.remove('vg-immersive','vg-paused','vg-hidden');}
   window.VideoGlass={open:openView,close:closeView,dispose,get root(){return view?.root||null;},diagnostics:()=>({mounted:!!view,frames:view?.frame?1:0,cache:cache.size,lyricLines:view?.lines.length||0,playing:!!state?.playing})};
   clockTick();
 })();
