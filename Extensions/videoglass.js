@@ -34,7 +34,14 @@
     return 'polygon('+Array.from({length:count},(_,i)=>{const a=i/count*Math.PI*2,r=50*(1-amp+amp*Math.cos(lobes*a));return `${50+r*Math.cos(a)}% ${50+r*Math.sin(a)}%`;}).join(',')+')';
   }
   document.documentElement.style.setProperty('--vg-art-clip',flower(12,.035));
-  document.documentElement.style.setProperty('--vg-play-clip',flower(9,.06));
+  function playFlowerPath() {
+    const n=80,h=Math.PI*2/n;
+    const sample=a=>{const r=48.5*(1+.0275*Math.cos(10*a)),dr=-48.5*.0275*10*Math.sin(10*a);return {x:50+r*Math.cos(a),y:50+r*Math.sin(a),dx:dr*Math.cos(a)-r*Math.sin(a),dy:dr*Math.sin(a)+r*Math.cos(a)};};
+    const first=sample(0);let d=`M${first.x.toFixed(3)} ${first.y.toFixed(3)}`;
+    for(let i=0;i<n;i++){const a=sample(i*h),b=sample((i+1)*h);d+=`C${(a.x+a.dx*h/3).toFixed(3)} ${(a.y+a.dy*h/3).toFixed(3)} ${(b.x-b.dx*h/3).toFixed(3)} ${(b.y-b.dy*h/3).toFixed(3)} ${b.x.toFixed(3)} ${b.y.toFixed(3)}`;}
+    return d+'Z';
+  }
+  const playFlower=`<span class="vg-pulse" aria-hidden="true" data-vg-owned=""><svg class="vg-spin" viewBox="0 0 100 100"><path d="${playFlowerPath()}" fill="white" stroke="none"/></svg></span>`;
   let progressId=0;
   function progressArt() {
     const id='vg-progress-'+(++progressId);
@@ -45,7 +52,7 @@
     return `<span class="vg-progress-visual" data-vg-owned="" aria-hidden="true"><span class="vg-progress-remaining"></span><span class="vg-played"><svg class="vg-progress-svg" width="100%" height="24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${id}-sine" x1="0" y1="0" x2="30" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="repeat">${stops}</linearGradient><linearGradient id="${id}-in"><stop stop-color="black"/><stop offset="1" stop-color="white"/></linearGradient><linearGradient id="${id}-out"><stop stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient><mask id="${id}-envelope" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="24"><rect width="100%" height="24" fill="white"/><rect width="12" height="24" fill="url(#${id}-in)"/><rect x="100%" width="10" height="24" transform="translate(-10 0)" fill="url(#${id}-out)"/></mask><g id="${id}-map"><g class="vg-wave-map" mask="url(#${id}-envelope)"><rect class="vg-wave-pattern" x="-30" width="calc(100% + 60px)" height="24" fill="url(#${id}-sine)"/></g></g><filter id="${id}-bend" x="0" y="0" width="100%" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feImage href="#${id}-map" x="0" y="0" width="100%" height="24" result="field"/><feColorMatrix in="field" result="displacement" type="matrix" values="0 0 0 0 .5  0 1 0 -.5 .5  0 0 0 0 0  0 0 0 0 1"/><feDisplacementMap in="SourceGraphic" in2="displacement" scale="4.5" xChannelSelector="R" yChannelSelector="G"/></filter></defs><path d="M0 12H4096" stroke="rgba(255,255,255,.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#${id}-bend)"/></svg></span><span class="vg-progress-head"></span></span>`;
   }
   function progressMarkup() {return `<div class="vg-progress"><span class="vg-elapsed">0:00</span><div class="vg-seek-wrap">${progressArt()}<input class="vg-seek" type="range" min="0" max="1000" value="0" aria-label="Progreso"></div><span class="vg-duration">0:00</span></div>`;}
-  function transportMarkup() {return `<div class="vg-transport">${button('shuffle','Aleatorio')}${button('back','Anterior','prev')}<button class="vg-button vg-play" data-action="toggle" aria-label="Reproducir"><span class="vg-pulse"><span class="vg-spin"></span></span><span class="vg-play-icon">${svg('play')}</span></button>${button('next','Siguiente')}${button('repeat','Repetir')}</div>`;}
+  function transportMarkup() {return `<div class="vg-transport">${button('shuffle','Aleatorio')}${button('back','Anterior','prev')}<button class="vg-button vg-play" data-action="toggle" aria-label="Reproducir">${playFlower}<span class="vg-play-icon">${svg('play')}</span></button>${button('next','Siguiente')}${button('repeat','Repetir')}</div>`;}
   function volumeMarkup() {return `<label class="vg-volume">${svg('volume')}<input class="vg-vol" type="range" min="0" max="100" value="0" aria-label="Volumen"></label>`;}
   function notify(message) { Spicetify.showNotification?.(message); }
   async function control(action,value) {
@@ -248,6 +255,8 @@
     const root=document.querySelector('.main-nowPlayingBar-nowPlayingBar');
     if(!root)return;
     if(dock?.root!==root){dock?.abort.abort();dock={root,abort:new AbortController()};}
+    const play=root.querySelector('[data-testid="control-button-playpause"]');
+    if(play&&!play.querySelector('.vg-pulse'))play.insertAdjacentHTML('afterbegin',playFlower);
     const cover=root.querySelector('[data-testid="cover-art-button"],.main-nowPlayingWidget-coverArtContainer');
     if(cover&&!cover.hasAttribute('data-vg-open')){
       cover.dataset.vgOpen='true';cover.setAttribute('aria-label','Abrir vista inmersiva');
