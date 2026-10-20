@@ -1,0 +1,8 @@
+[Unit]
+Description=ARIOTIFI — audio, letras y controles de VideoGlass
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 "%h/.local/share/spotify-personalizado/visualizer.py"
+Restart=on-failure
+RestartSec=3

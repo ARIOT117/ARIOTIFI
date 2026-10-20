@@ -1,0 +1,54 @@
+{
+  "label": "baseline-without",
+  "time": "2026-10-18T10:14:24-0600",
+  "spotify": {
+    "rss_MiB": 1585.65234375,
+    "pss_MiB": 916.9453125,
+    "cpu_percent": 78.01198943109851,
+    "pids": [
+      9056,
+      9067,
+      9071,
+      9072,
+      9094,
+      9100,
+      9110,
+      9175,
+      9315
+    ]
+  },
+  "visualizer": {
+    "rss_MiB": 40.265625,
+    "pss_MiB": 24.287109375,
+    "cpu_percent": 0.0,
+    "pids": [
+      9055
+    ]
+  },
+  "sample_seconds": 10.088192926999909,
+  "heap": {
+    "usedSize": 81652884,
+    "totalSize": 86257664,
+    "embedderHeapUsedSize": 27380960,
+    "backingStorageSize": 11662481
+  },
+  "dom": {
+    "documents": 4,
+    "nodes": 12433,
+    "jsEventListeners": 4662
+  },
+  "diagnostics": null,
+  "audit": null,
+  "playback": {
+    "playing": true,
+    "uri": "spotify:track:4eLDmhsJW3JoZTXCAozHor"
+  },
+  "retained": {
+    "MutationObserver": 14,
+    "ResizeObserver": 12,
+    "HTMLImageElement": 3,
+    "HTMLCanvasElement": 1
+  },
+  "snapshot": "measurements/final-audit/baseline-without.heapsnapshot",
+  "snapshot_bytes": 171992290
+}

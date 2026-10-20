@@ -1,0 +1,68 @@
+{
+  "label": "baseline-with-old",
+  "time": "2026-10-18T10:15:39-0600",
+  "spotify": {
+    "rss_MiB": 1625.65234375,
+    "pss_MiB": 929.646484375,
+    "cpu_percent": 144.69182303512952,
+    "pids": [
+      10546,
+      10549,
+      10553,
+      10554,
+      10578,
+      10580,
+      10589,
+      10644,
+      10690
+    ]
+  },
+  "visualizer": {
+    "rss_MiB": 40.45703125,
+    "pss_MiB": 24.482421875,
+    "cpu_percent": 0.1987525041691341,
+    "pids": [
+      9055
+    ]
+  },
+  "sample_seconds": 10.06276629499996,
+  "heap": {
+    "usedSize": 90265292,
+    "totalSize": 93597696,
+    "embedderHeapUsedSize": 30067216,
+    "backingStorageSize": 11528229
+  },
+  "dom": {
+    "documents": 3,
+    "nodes": 15362,
+    "jsEventListeners": 5275
+  },
+  "diagnostics": {
+    "mounted": false,
+    "frames": 0,
+    "cache": 1,
+    "lyricLines": 0,
+    "playing": true
+  },
+  "audit": {
+    "playerListeners": {
+      "songchange": 1,
+      "onplaypause": 1,
+      "onprogress": 1
+    },
+    "blobURLs": 0
+  },
+  "playback": {
+    "playing": true,
+    "uri": "spotify:track:4eLDmhsJW3JoZTXCAozHor"
+  },
+  "retained": {
+    "MutationObserver": 15,
+    "ResizeObserver": 13,
+    "HTMLImageElement": 3,
+    "HTMLCanvasElement": 3,
+    "WavyProgress": 1
+  },
+  "snapshot": "measurements/final-audit/baseline-with-old.heapsnapshot",
+  "snapshot_bytes": 194550461
+}

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+systemctl --user start spotify-videoglass.service
+exec "$HOME/.local/share/spotify-personalizado/spotify/spotify" "$@"

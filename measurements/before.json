@@ -1,0 +1,53 @@
+{
+  "label": "before",
+  "time": "2026-10-18T00:08:42.496431",
+  "memory": {
+    "usedSize": 77279776,
+    "totalSize": 81801216,
+    "embedderHeapUsedSize": 21814968,
+    "backingStorageSize": 11513566
+  },
+  "gc": "Explicit garbage collection before both snapshots",
+  "dom": {
+    "documents": 5,
+    "nodes": 12854,
+    "jsEventListeners": 4807
+  },
+  "view": {
+    "id": 4,
+    "result": {
+      "result": {
+        "type": "object",
+        "value": {
+          "mounted": false
+        }
+      }
+    }
+  },
+  "spotify_rss_kib_sum": 1843160,
+  "spotify_pss_kib_sum": 1115044,
+  "playback": {
+    "id": 5,
+    "result": {
+      "result": {
+        "type": "object",
+        "value": {
+          "track": "spotify:track:0SiywuOBRcynK0uKGWdCnn",
+          "playing": true
+        }
+      }
+    }
+  },
+  "pids": [
+    41946,
+    41949,
+    41953,
+    41954,
+    41978,
+    41980,
+    41983,
+    42044,
+    42191
+  ],
+  "note": "RSS sums shared pages more than once. Compare equivalent playback/window states."
+}

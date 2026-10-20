@@ -1,0 +1,70 @@
+{
+  "clickFraction": 0.44998874772397146,
+  "dragFraction": 0.5499976131535697,
+  "keyboardSeekMs": 4350,
+  "nativeVisuals": {
+    "rail": "rgba(0, 0, 0, 0)",
+    "fill": "0",
+    "period": 30,
+    "transition": "0.4s",
+    "play": 40,
+    "titles": 0
+  },
+  "pause": {
+    "amplitude": "0",
+    "spin": "paused",
+    "angleUnchanged": true
+  },
+  "buttons": {
+    "close": [
+      40,
+      40
+    ],
+    "more": [
+      40,
+      40
+    ],
+    "gap": 8,
+    "titles": 0,
+    "fullscreen": false,
+    "play": 64
+  },
+  "skeleton": [
+    {
+      "height": 26,
+      "width": "60%",
+      "shimmer": "1.6s"
+    },
+    {
+      "height": 26,
+      "width": "80%",
+      "shimmer": "1.6s"
+    },
+    {
+      "height": 26,
+      "width": "45%",
+      "shimmer": "1.6s"
+    },
+    {
+      "height": 26,
+      "width": "70%",
+      "shimmer": "1.6s"
+    },
+    {
+      "height": 26,
+      "width": "55%",
+      "shimmer": "1.6s"
+    }
+  ],
+  "reduced": {
+    "amplitude": "0",
+    "spin": "none"
+  },
+  "closed": {
+    "mounted": false,
+    "frames": 0,
+    "cache": 1,
+    "lyricLines": 0,
+    "playing": true
+  }
+}

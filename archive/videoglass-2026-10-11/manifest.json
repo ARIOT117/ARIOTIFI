@@ -1,0 +1,41 @@
+{
+  "fecha": "2026-10-11",
+  "spotify": "1.2.95.453.g0eeebbed",
+  "snap_revision": "99",
+  "spicetify": "2.45.3",
+  "archivos": {
+    "VideoGlass/color.ini": {
+      "origen": "/home/diego/.config/spicetify/Themes/VideoGlass/color.ini",
+      "sha256": "2a4a4740a2729ddda7aad4450d5887fb576826772805a416cdfe4a0548b8b2a3"
+    },
+    "VideoGlass/user.css": {
+      "origen": "/home/diego/.config/spicetify/Themes/VideoGlass/user.css",
+      "sha256": "39245f817022539291ea2187fa0bfdfcb980ab9ebf5f465ad4b5d39bef0ae3c3"
+    },
+    "Extensions/videoglass.js": {
+      "origen": "/home/diego/.config/spicetify/Extensions/videoglass.js",
+      "sha256": "8dc73d49243627044807dd91e633291fad6e41161bf3f1fa7645ebfebc6c2652"
+    },
+    "visualizer.py": {
+      "origen": "/home/diego/.local/share/spotify-personalizado/visualizer.py",
+      "sha256": "6c1cf7490717fbbe9802e4d75397e5947768bacf56620524529082b2faf9aaf2"
+    },
+    "spotify-videoglass.service": {
+      "origen": "/home/diego/.config/systemd/user/spotify-videoglass.service",
+      "sha256": "217ae4af4de234a02549a724f2687866cebd34642bc984811018a8e4ec43deea"
+    },
+    "spotify-personalizado": {
+      "origen": "/home/diego/.local/bin/spotify-personalizado",
+      "sha256": "c2acf2c1a61c78b442ddb9ab5c98e725110879a5187c690d7954a18777c506d0"
+    },
+    "spotify_spotify.desktop": {
+      "origen": "/home/diego/.local/share/applications/spotify_spotify.desktop",
+      "sha256": "19f65d9177ba84aecf613bb133c0648722ca67fb356de5cd895cd99b2458c541"
+    },
+    "config-xpui.ini": {
+      "origen": "/home/diego/.config/spicetify/config-xpui.ini",
+      "nota": "Se omite el estado [Backup], que debe generar Spicetify para cada instalación.",
+      "sha256": "b346ed49dfd270f49806ae5446e5fc529b91d9600eb215a09c64a43d6457c550"
+    }
+  }
+}

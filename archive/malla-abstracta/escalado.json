@@ -1,0 +1,53 @@
+[
+  {
+    "viewport": [
+      800,
+      600
+    ],
+    "dpr": 1,
+    "cssWidth": 302,
+    "pixelWidth": 302,
+    "pixelHeight": 302,
+    "cover": [
+      155.515625,
+      155.515625
+    ],
+    "radius": "50%",
+    "playing": true,
+    "pass": true
+  },
+  {
+    "viewport": [
+      800,
+      600
+    ],
+    "dpr": 2,
+    "cssWidth": 302,
+    "pixelWidth": 604,
+    "pixelHeight": 604,
+    "cover": [
+      155.515625,
+      155.515625
+    ],
+    "radius": "50%",
+    "playing": true,
+    "pass": true
+  },
+  {
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 2,
+    "cssWidth": 479,
+    "pixelWidth": 958,
+    "pixelHeight": 958,
+    "cover": [
+      246.234375,
+      246.234375
+    ],
+    "radius": "50%",
+    "playing": true,
+    "pass": true
+  }
+]

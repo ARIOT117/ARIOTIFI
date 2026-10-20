@@ -1,0 +1,475 @@
+{
+  "measured_at": "2026-10-07T22:08:44.491528-06:00",
+  "logical_cpus": 12,
+  "player_start": {
+    "playing": true,
+    "position_ms": 151811,
+    "title": "QUE VUELVAS"
+  },
+  "samples": [
+    {
+      "elapsed_seconds": 10.061,
+      "groups": {
+        "spotify": {
+          "cpu_one_core_percent": 38.466,
+          "cpu_total_percent": 3.206,
+          "rss_bytes": 2188890112,
+          "pss_bytes": 1167790080,
+          "private_bytes": 915836928,
+          "swap_pss_bytes": 0
+        },
+        "auxiliar": {
+          "cpu_one_core_percent": 5.268,
+          "cpu_total_percent": 0.439,
+          "rss_bytes": 50900992,
+          "pss_bytes": 30571520,
+          "private_bytes": 27860992,
+          "swap_pss_bytes": 0
+        }
+      },
+      "process_cpu": [
+        {
+          "pid": 29838,
+          "group": "auxiliar",
+          "cpu_one_core_percent": 5.268
+        },
+        {
+          "pid": 46207,
+          "group": "spotify",
+          "cpu_one_core_percent": 7.455
+        },
+        {
+          "pid": 46212,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46216,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46217,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46240,
+          "group": "spotify",
+          "cpu_one_core_percent": 2.584
+        },
+        {
+          "pid": 46242,
+          "group": "spotify",
+          "cpu_one_core_percent": 5.169
+        },
+        {
+          "pid": 46245,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.099
+        },
+        {
+          "pid": 46297,
+          "group": "spotify",
+          "cpu_one_core_percent": 23.159
+        },
+        {
+          "pid": 46326,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 10.052,
+      "groups": {
+        "spotify": {
+          "cpu_one_core_percent": 49.941,
+          "cpu_total_percent": 4.162,
+          "rss_bytes": 2195959808,
+          "pss_bytes": 1173442560,
+          "private_bytes": 922898432,
+          "swap_pss_bytes": 0
+        },
+        "auxiliar": {
+          "cpu_one_core_percent": 4.676,
+          "cpu_total_percent": 0.39,
+          "rss_bytes": 50913280,
+          "pss_bytes": 30566400,
+          "private_bytes": 27873280,
+          "swap_pss_bytes": 0
+        }
+      },
+      "process_cpu": [
+        {
+          "pid": 29838,
+          "group": "auxiliar",
+          "cpu_one_core_percent": 4.676
+        },
+        {
+          "pid": 46207,
+          "group": "spotify",
+          "cpu_one_core_percent": 7.66
+        },
+        {
+          "pid": 46212,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46216,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46217,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46240,
+          "group": "spotify",
+          "cpu_one_core_percent": 2.089
+        },
+        {
+          "pid": 46242,
+          "group": "spotify",
+          "cpu_one_core_percent": 5.074
+        },
+        {
+          "pid": 46245,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46297,
+          "group": "spotify",
+          "cpu_one_core_percent": 35.118
+        },
+        {
+          "pid": 46326,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 10.036,
+      "groups": {
+        "spotify": {
+          "cpu_one_core_percent": 46.235,
+          "cpu_total_percent": 3.853,
+          "rss_bytes": 2202497024,
+          "pss_bytes": 1177630720,
+          "private_bytes": 927084544,
+          "swap_pss_bytes": 0
+        },
+        "auxiliar": {
+          "cpu_one_core_percent": 4.982,
+          "cpu_total_percent": 0.415,
+          "rss_bytes": 50913280,
+          "pss_bytes": 30566400,
+          "private_bytes": 27873280,
+          "swap_pss_bytes": 0
+        }
+      },
+      "process_cpu": [
+        {
+          "pid": 29838,
+          "group": "auxiliar",
+          "cpu_one_core_percent": 4.982
+        },
+        {
+          "pid": 46207,
+          "group": "spotify",
+          "cpu_one_core_percent": 10.363
+        },
+        {
+          "pid": 46212,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46216,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46217,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46240,
+          "group": "spotify",
+          "cpu_one_core_percent": 2.292
+        },
+        {
+          "pid": 46242,
+          "group": "spotify",
+          "cpu_one_core_percent": 6.975
+        },
+        {
+          "pid": 46245,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.0
+        },
+        {
+          "pid": 46297,
+          "group": "spotify",
+          "cpu_one_core_percent": 26.505
+        },
+        {
+          "pid": 46326,
+          "group": "spotify",
+          "cpu_one_core_percent": 0.1
+        }
+      ]
+    }
+  ],
+  "memory_start": {
+    "processes": [
+      {
+        "pid": 29838,
+        "group": "auxiliar",
+        "type": "python",
+        "ticks": 6720,
+        "rss_bytes": 50900992,
+        "pss_bytes": 30551040,
+        "private_bytes": 27860992,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46207,
+        "group": "spotify",
+        "type": "spotify",
+        "ticks": 1273,
+        "rss_bytes": 445083648,
+        "pss_bytes": 269970432,
+        "private_bytes": 221270016,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46212,
+        "group": "spotify",
+        "type": "crashpad-handler",
+        "ticks": 2,
+        "rss_bytes": 122769408,
+        "pss_bytes": 34924544,
+        "private_bytes": 18055168,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46216,
+        "group": "spotify",
+        "type": "zygote",
+        "ticks": 2,
+        "rss_bytes": 144420864,
+        "pss_bytes": 30151680,
+        "private_bytes": 1171456,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46217,
+        "group": "spotify",
+        "type": "zygote",
+        "ticks": 3,
+        "rss_bytes": 145047552,
+        "pss_bytes": 25736192,
+        "private_bytes": 888832,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46240,
+        "group": "spotify",
+        "type": "gpu-process",
+        "ticks": 456,
+        "rss_bytes": 262746112,
+        "pss_bytes": 111299584,
+        "private_bytes": 73539584,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46242,
+        "group": "spotify",
+        "type": "utility",
+        "ticks": 779,
+        "rss_bytes": 202358784,
+        "pss_bytes": 62934016,
+        "private_bytes": 30695424,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46245,
+        "group": "spotify",
+        "type": "utility",
+        "ticks": 3,
+        "rss_bytes": 86638592,
+        "pss_bytes": 18213888,
+        "private_bytes": 3383296,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46297,
+        "group": "spotify",
+        "type": "renderer",
+        "ticks": 4897,
+        "rss_bytes": 635482112,
+        "pss_bytes": 528827392,
+        "private_bytes": 492724224,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46326,
+        "group": "spotify",
+        "type": "utility",
+        "ticks": 75,
+        "rss_bytes": 143478784,
+        "pss_bytes": 84726784,
+        "private_bytes": 73129984,
+        "swap_pss_bytes": 0
+      }
+    ],
+    "totals": {
+      "spotify": {
+        "rss_bytes": 2188025856,
+        "pss_bytes": 1166784512,
+        "private_bytes": 914857984,
+        "swap_pss_bytes": 0
+      },
+      "auxiliar": {
+        "rss_bytes": 50900992,
+        "pss_bytes": 30551040,
+        "private_bytes": 27860992,
+        "swap_pss_bytes": 0
+      }
+    },
+    "available_bytes": 27248832512,
+    "total_ram_bytes": 32974020608
+  },
+  "memory_end": {
+    "processes": [
+      {
+        "pid": 29838,
+        "group": "auxiliar",
+        "type": "python",
+        "ticks": 6870,
+        "rss_bytes": 50913280,
+        "pss_bytes": 30566400,
+        "private_bytes": 27873280,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46207,
+        "group": "spotify",
+        "type": "spotify",
+        "ticks": 1529,
+        "rss_bytes": 449507328,
+        "pss_bytes": 274191360,
+        "private_bytes": 225636352,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46212,
+        "group": "spotify",
+        "type": "crashpad-handler",
+        "ticks": 2,
+        "rss_bytes": 122769408,
+        "pss_bytes": 34919424,
+        "private_bytes": 18055168,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46216,
+        "group": "spotify",
+        "type": "zygote",
+        "ticks": 2,
+        "rss_bytes": 144420864,
+        "pss_bytes": 30146560,
+        "private_bytes": 1171456,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46217,
+        "group": "spotify",
+        "type": "zygote",
+        "ticks": 3,
+        "rss_bytes": 145047552,
+        "pss_bytes": 25735168,
+        "private_bytes": 897024,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46240,
+        "group": "spotify",
+        "type": "gpu-process",
+        "ticks": 526,
+        "rss_bytes": 263122944,
+        "pss_bytes": 110180352,
+        "private_bytes": 73777152,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46242,
+        "group": "spotify",
+        "type": "utility",
+        "ticks": 952,
+        "rss_bytes": 203059200,
+        "pss_bytes": 63295488,
+        "private_bytes": 31072256,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46245,
+        "group": "spotify",
+        "type": "utility",
+        "ticks": 4,
+        "rss_bytes": 87609344,
+        "pss_bytes": 18458624,
+        "private_bytes": 3497984,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46297,
+        "group": "spotify",
+        "type": "renderer",
+        "ticks": 5749,
+        "rss_bytes": 642568192,
+        "pss_bytes": 535770112,
+        "private_bytes": 499781632,
+        "swap_pss_bytes": 0
+      },
+      {
+        "pid": 46326,
+        "group": "spotify",
+        "type": "utility",
+        "ticks": 76,
+        "rss_bytes": 144392192,
+        "pss_bytes": 84933632,
+        "private_bytes": 73195520,
+        "swap_pss_bytes": 0
+      }
+    ],
+    "totals": {
+      "spotify": {
+        "rss_bytes": 2202497024,
+        "pss_bytes": 1177630720,
+        "private_bytes": 927084544,
+        "swap_pss_bytes": 0
+      },
+      "auxiliar": {
+        "rss_bytes": 50913280,
+        "pss_bytes": 30566400,
+        "private_bytes": 27873280,
+        "swap_pss_bytes": 0
+      }
+    },
+    "available_bytes": 27256000512,
+    "total_ram_bytes": 32974020608
+  },
+  "player_end": {
+    "playing": true,
+    "position_ms": 12389,
+    "title": "LAS FLORES"
+  }
+}

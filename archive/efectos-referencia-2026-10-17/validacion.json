@@ -1,0 +1,62 @@
+{
+  "settings": {
+    "enabled": true,
+    "shape": "flower",
+    "style": "swiftify",
+    "blur": 48,
+    "dark": 46,
+    "saturation": 150,
+    "sensitivity": 115,
+    "lyrics": true,
+    "art": true
+  },
+  "style": "swiftify",
+  "shape": "flower",
+  "viewport": [
+    1920,
+    1003
+  ],
+  "title": "Tragos De Amargo Licor",
+  "playing": false,
+  "boxes": {
+    ".art": {
+      "x": 365.8125,
+      "y": 206.703125,
+      "w": 274.40625,
+      "h": 274.40625
+    },
+    ".ring": {
+      "x": 251.484375,
+      "y": 92.375,
+      "w": 503.078125,
+      "h": 503.078125
+    },
+    ".transport": {
+      "x": 223.015625,
+      "y": 656.859375,
+      "w": 560,
+      "h": 64
+    },
+    ".progress": {
+      "x": 263.015625,
+      "y": 738.859375,
+      "w": 480,
+      "h": 28
+    },
+    ".volume": {
+      "x": 223.015625,
+      "y": 780.859375,
+      "w": 560,
+      "h": 28
+    },
+    ".lyrics": {
+      "x": 970.71875,
+      "y": 78,
+      "w": 814.890625,
+      "h": 833
+    }
+  },
+  "wave": true,
+  "buttons": 5,
+  "overflow": false
+}

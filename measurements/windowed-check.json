@@ -1,0 +1,53 @@
+{
+  "windowedOpen": {
+    "id": 2,
+    "result": {
+      "result": {
+        "type": "object",
+        "value": {
+          "fullscreen": false,
+          "diag": {
+            "mounted": true,
+            "frames": 0,
+            "cache": 0,
+            "lyricLines": 0,
+            "playing": false
+          }
+        }
+      }
+    }
+  },
+  "narrow": {
+    "id": 5,
+    "result": {
+      "result": {
+        "type": "object",
+        "value": {
+          "viewport": 640,
+          "shell": 640,
+          "dock": {
+            "x": 12,
+            "y": 804,
+            "width": 600,
+            "height": 84,
+            "top": 804,
+            "right": 612,
+            "bottom": 888,
+            "left": 12
+          },
+          "right": {
+            "x": 355,
+            "y": 753,
+            "width": 256,
+            "height": 40,
+            "top": 753,
+            "right": 611,
+            "bottom": 793,
+            "left": 355
+          },
+          "rightPanel": "none"
+        }
+      }
+    }
+  }
+}

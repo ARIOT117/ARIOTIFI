@@ -1,2 +1,14 @@
 __pycache__/
+*.py[cod]
+*.heapsnapshot
+*.cpuprofile
+*.log
+.env
+.env.*
+prefs
+credentials.json
+config-xpui.ini
+backups/
+.local/
+# Evidencia histórica ya versionada permanece en Git.
 measurements/

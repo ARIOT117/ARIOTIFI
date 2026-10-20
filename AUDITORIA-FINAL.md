@@ -1,3 +1,5 @@
+> Informe histórico del 18 de octubre de 2026. No es un benchmark nuevo de ARIOTIFI. Las capturas de esa auditoría también están en [la galería](docs/GALERIA.md). Para instalar usa [la guía actual](docs/INSTALACION.md).
+
 # Auditoría final — 18 de octubre de 2026
 
 Las correcciones visuales están aplicadas y comprobadas en Spotify real. Los dos adjuntos están copiados sin cambios; sus IIFE exactos se ejecutan al principio del bundle, antes de la integración VideoGlass. No se cambiaron el periodo de FlowerButton (24 s), su amplitud ni las opciones de WavyProgress.

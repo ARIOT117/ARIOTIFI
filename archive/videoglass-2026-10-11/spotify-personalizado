@@ -1,0 +1,3 @@
+#!/bin/bash
+systemctl --user start spotify-videoglass.service
+exec /home/diego/.local/share/spotify-personalizado/spotify/spotify "$@"

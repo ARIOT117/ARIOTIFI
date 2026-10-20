@@ -1,0 +1,26 @@
+# Referencia: sustituye @HOME@ por tu carpeta personal.
+# Conserva la sección [Backup] de tu propia instalación al actualizar.
+[Setting]
+spotify_path = @HOME@/.local/share/spotify-personalizado/spotify
+prefs_path = @HOME@/.config/spotify/prefs
+current_theme = VideoGlass
+color_scheme = Base
+inject_theme_js = 1
+inject_css = 1
+replace_colors = 1
+overwrite_assets = 0
+check_spicetify_update = 0
+always_enable_devtools = 0
+
+[Preprocesses]
+disable_sentry = 1
+disable_ui_logging = 1
+remove_rtl_rule = 1
+expose_apis = 1
+
+[AdditionalOptions]
+extensions = videoglass.js
+custom_apps =
+sidebar_config = 0
+home_config = 1
+experimental_features = 1

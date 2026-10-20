@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=Spotify
+Comment=Spotify personalizado con letras y visualizadores
+Exec=/home/diego/.local/bin/spotify-personalizado %U
+Icon=/home/diego/.local/share/spotify-personalizado/spotify/icons/spotify-linux-256.png
+Terminal=false
+Categories=Audio;Music;Player;AudioVideo;
+MimeType=x-scheme-handler/spotify;
+StartupWMClass=Spotify
+Actions=Original;
+
+[Desktop Action Original]
+Name=Abrir Spotify original
+Exec=/snap/bin/spotify

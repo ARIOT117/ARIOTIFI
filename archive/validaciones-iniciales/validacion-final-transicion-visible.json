@@ -1,0 +1,11 @@
+{
+  "debug_port_closed": true,
+  "same_song": true,
+  "playing_before": true,
+  "playing_after": true,
+  "volume_before": 1.0,
+  "volume_after": 1.0,
+  "position_before_ms": 49522,
+  "position_after_ms": 71357,
+  "installed_code_matches": true
+}

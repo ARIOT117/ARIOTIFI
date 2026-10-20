@@ -1,0 +1,12 @@
+{
+  "playing": false,
+  "same_track": true,
+  "position_ms": 7244,
+  "title": "QUE VUELVAS",
+  "debug_port_open": false,
+  "health": {
+    "ok": true,
+    "audio": "output monitor",
+    "active": false
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "component": {
+    "canvases": 1,
+    "oldSVG": 0,
+    "nativeRail": "0"
+  },
+  "pausedIdle": true,
+  "immersive": {
+    "body": true,
+    "nav": "hidden",
+    "pointer": "none",
+    "z": "2147483647",
+    "canvases": 1,
+    "gap": 8,
+    "fullscreen": false
+  },
+  "close": {
+    "body": false,
+    "nav": "visible",
+    "canvas": 0,
+    "destroyed": [
+      "vg-seek-wrap"
+    ],
+    "native": [
+      false,
+      true
+    ]
+  },
+  "rates": {
+    "dock": {
+      "writes": 17,
+      "minIntervalMs": 253.5
+    },
+    "immersive": {
+      "writes": 9,
+      "minIntervalMs": 253.5
+    }
+  },
+  "continuousFrames": 434
+}

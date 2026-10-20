@@ -1,0 +1,16 @@
+{
+  "normal_start": true,
+  "debug_port_9222_closed": true,
+  "same_song": true,
+  "playing_before": true,
+  "playing_after": true,
+  "volume_before": 1.0,
+  "volume_after": 1.0,
+  "position_before_ms": 64669,
+  "position_after_ms": 86011,
+  "service": {
+    "ok": true,
+    "audio": "output monitor",
+    "active": true
+  }
+}

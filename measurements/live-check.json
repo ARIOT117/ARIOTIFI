@@ -1,0 +1,50 @@
+{
+  "fullscreen": true,
+  "withLyrics": {
+    "mounted": true,
+    "frames": 0,
+    "cache": 1,
+    "lyricLines": 80,
+    "playing": false,
+    "title": "Virtual Insanity - Remastered 2013",
+    "duration": "5:14"
+  },
+  "transition": {
+    "points": 96,
+    "transform": "matrix(1388.52, 748.741, -748.741, 1388.52, 0, 0)"
+  },
+  "playing": {
+    "mounted": true,
+    "frames": 1,
+    "cache": 1,
+    "lyricLines": 80,
+    "playing": true
+  },
+  "spectrum": {
+    "active": true,
+    "peak": 0.543,
+    "error": ""
+  },
+  "paused": {
+    "mounted": true,
+    "frames": 0,
+    "cache": 1,
+    "lyricLines": 80,
+    "playing": false
+  },
+  "narrow": {
+    "width": 640,
+    "scrollWidth": 625,
+    "canvas": 1
+  },
+  "emptyLyrics": "Sin letra para esta canción",
+  "closed": {
+    "mounted": false,
+    "frames": 0,
+    "cache": 1,
+    "lyricLines": 0,
+    "playing": false,
+    "nodes": 0,
+    "mask": 0
+  }
+}

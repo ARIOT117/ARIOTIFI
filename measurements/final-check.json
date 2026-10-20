@@ -1,0 +1,45 @@
+{
+  "windowed": {
+    "fullscreen": false,
+    "mounted": true,
+    "frames": 1,
+    "cache": 2,
+    "lyricLines": 29,
+    "playing": true
+  },
+  "640": {
+    "width": 640,
+    "left": 12,
+    "right": 628,
+    "bottom": 888,
+    "height": 84,
+    "buttonRight": 623,
+    "buttonLeft": 587,
+    "shell": 640
+  },
+  "480": {
+    "width": 480,
+    "left": 12,
+    "right": 468,
+    "bottom": 888,
+    "height": 84,
+    "buttonRight": 463,
+    "buttonLeft": 427,
+    "shell": 480
+  },
+  "reducedMotion": {
+    "spin": "none",
+    "pulse": "none",
+    "mask": false
+  },
+  "closed": {
+    "mounted": false,
+    "frames": 0,
+    "cache": 2,
+    "lyricLines": 0,
+    "playing": true,
+    "canvases": 0,
+    "mask": false,
+    "inert": false
+  }
+}

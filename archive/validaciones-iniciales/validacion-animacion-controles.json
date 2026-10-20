@@ -1,0 +1,663 @@
+{
+  "sizes": [
+    {
+      "viewport": [
+        800,
+        600
+      ],
+      "lyrics": true,
+      "boxes": {
+        ".song": {
+          "x": 40,
+          "y": 83.796875,
+          "width": 324.890625,
+          "height": 452.390625,
+          "right": 364.890625,
+          "bottom": 536.1875
+        },
+        ".art-space": {
+          "x": 94.4375,
+          "y": 83.796875,
+          "width": 216,
+          "height": 216,
+          "right": 310.4375,
+          "bottom": 299.796875
+        },
+        ".art": {
+          "x": 121.95035552978516,
+          "y": 111.30973052978516,
+          "width": 160.95867919921875,
+          "height": 160.95867919921875,
+          "right": 282.9090347290039,
+          "bottom": 272.2684097290039
+        },
+        ".title": {
+          "x": 40,
+          "y": 313.796875,
+          "width": 324.890625,
+          "height": 30,
+          "right": 364.890625,
+          "bottom": 343.796875
+        },
+        ".transport": {
+          "x": 40,
+          "y": 381.390625,
+          "width": 324.890625,
+          "height": 56,
+          "right": 364.890625,
+          "bottom": 437.390625
+        },
+        ".progress": {
+          "x": 40,
+          "y": 449.390625,
+          "width": 324.890625,
+          "height": 28,
+          "right": 364.890625,
+          "bottom": 477.390625
+        },
+        ".volume": {
+          "x": 40,
+          "y": 485.390625,
+          "width": 324.890625,
+          "height": 28,
+          "right": 364.890625,
+          "bottom": 513.390625
+        },
+        ".album": {
+          "x": 40,
+          "y": 519.390625,
+          "width": 324.890625,
+          "height": 16.796875,
+          "right": 364.890625,
+          "bottom": 536.1875
+        }
+      },
+      "overflow": false
+    },
+    {
+      "viewport": [
+        800,
+        600
+      ],
+      "lyrics": false,
+      "boxes": {
+        ".song": {
+          "x": 70,
+          "y": 83.796875,
+          "width": 660,
+          "height": 452.390625,
+          "right": 730,
+          "bottom": 536.1875
+        },
+        ".art-space": {
+          "x": 292,
+          "y": 83.796875,
+          "width": 216,
+          "height": 216,
+          "right": 508,
+          "bottom": 299.796875
+        },
+        ".art": {
+          "x": 319.9016418457031,
+          "y": 111.69851684570312,
+          "width": 160.18109130859375,
+          "height": 160.18109130859375,
+          "right": 480.0827331542969,
+          "bottom": 271.8796081542969
+        },
+        ".title": {
+          "x": 70,
+          "y": 313.796875,
+          "width": 660,
+          "height": 30,
+          "right": 730,
+          "bottom": 343.796875
+        },
+        ".transport": {
+          "x": 70,
+          "y": 381.390625,
+          "width": 660,
+          "height": 56,
+          "right": 730,
+          "bottom": 437.390625
+        },
+        ".progress": {
+          "x": 160,
+          "y": 449.390625,
+          "width": 480,
+          "height": 28,
+          "right": 640,
+          "bottom": 477.390625
+        },
+        ".volume": {
+          "x": 70,
+          "y": 485.390625,
+          "width": 660,
+          "height": 28,
+          "right": 730,
+          "bottom": 513.390625
+        },
+        ".album": {
+          "x": 70,
+          "y": 519.390625,
+          "width": 660,
+          "height": 16.796875,
+          "right": 730,
+          "bottom": 536.1875
+        }
+      },
+      "overflow": false
+    },
+    {
+      "viewport": [
+        1200,
+        800
+      ],
+      "lyrics": true,
+      "boxes": {
+        ".song": {
+          "x": 84,
+          "y": 96.40625,
+          "width": 460.78125,
+          "height": 593.1875,
+          "right": 544.78125,
+          "bottom": 689.59375
+        },
+        ".art-space": {
+          "x": 162.390625,
+          "y": 96.40625,
+          "width": 304,
+          "height": 304,
+          "right": 466.390625,
+          "bottom": 400.40625
+        },
+        ".art": {
+          "x": 201.67001342773438,
+          "y": 135.68563842773438,
+          "width": 225.44122314453125,
+          "height": 225.44122314453125,
+          "right": 427.1112365722656,
+          "bottom": 361.1268615722656
+        },
+        ".title": {
+          "x": 84,
+          "y": 424.40625,
+          "width": 460.78125,
+          "height": 36,
+          "right": 544.78125,
+          "bottom": 460.40625
+        },
+        ".transport": {
+          "x": 84,
+          "y": 510.796875,
+          "width": 460.78125,
+          "height": 64,
+          "right": 544.78125,
+          "bottom": 574.796875
+        },
+        ".progress": {
+          "x": 84,
+          "y": 592.796875,
+          "width": 460.78125,
+          "height": 28,
+          "right": 544.78125,
+          "bottom": 620.796875
+        },
+        ".volume": {
+          "x": 84,
+          "y": 634.796875,
+          "width": 460.78125,
+          "height": 28,
+          "right": 544.78125,
+          "bottom": 662.796875
+        },
+        ".album": {
+          "x": 84,
+          "y": 672.796875,
+          "width": 460.78125,
+          "height": 16.796875,
+          "right": 544.78125,
+          "bottom": 689.59375
+        }
+      },
+      "overflow": false
+    },
+    {
+      "viewport": [
+        1200,
+        800
+      ],
+      "lyrics": false,
+      "boxes": {
+        ".song": {
+          "x": 270,
+          "y": 96.40625,
+          "width": 660,
+          "height": 593.1875,
+          "right": 930,
+          "bottom": 689.59375
+        },
+        ".art-space": {
+          "x": 448,
+          "y": 96.40625,
+          "width": 304,
+          "height": 304,
+          "right": 752,
+          "bottom": 400.40625
+        },
+        ".art": {
+          "x": 486.18499755859375,
+          "y": 134.59124755859375,
+          "width": 227.6300048828125,
+          "height": 227.6300048828125,
+          "right": 713.8150024414062,
+          "bottom": 362.22125244140625
+        },
+        ".title": {
+          "x": 270,
+          "y": 424.40625,
+          "width": 660,
+          "height": 36,
+          "right": 930,
+          "bottom": 460.40625
+        },
+        ".transport": {
+          "x": 270,
+          "y": 510.796875,
+          "width": 660,
+          "height": 64,
+          "right": 930,
+          "bottom": 574.796875
+        },
+        ".progress": {
+          "x": 360,
+          "y": 592.796875,
+          "width": 480,
+          "height": 28,
+          "right": 840,
+          "bottom": 620.796875
+        },
+        ".volume": {
+          "x": 270,
+          "y": 634.796875,
+          "width": 660,
+          "height": 28,
+          "right": 930,
+          "bottom": 662.796875
+        },
+        ".album": {
+          "x": 270,
+          "y": 672.796875,
+          "width": 660,
+          "height": 16.796875,
+          "right": 930,
+          "bottom": 689.59375
+        }
+      },
+      "overflow": false
+    },
+    {
+      "viewport": [
+        800,
+        900
+      ],
+      "lyrics": true,
+      "boxes": {
+        ".song": {
+          "x": 40,
+          "y": 187.75,
+          "width": 324.890625,
+          "height": 532.5,
+          "right": 364.890625,
+          "bottom": 720.25
+        },
+        ".art-space": {
+          "x": 72.484375,
+          "y": 187.75,
+          "width": 259.90625,
+          "height": 259.90625,
+          "right": 332.390625,
+          "bottom": 447.65625
+        },
+        ".art": {
+          "x": 105.13250732421875,
+          "y": 220.39813232421875,
+          "width": 194.6099853515625,
+          "height": 194.6099853515625,
+          "right": 299.74249267578125,
+          "bottom": 415.00811767578125
+        },
+        ".title": {
+          "x": 40,
+          "y": 471.65625,
+          "width": 324.890625,
+          "height": 28.796875,
+          "right": 364.890625,
+          "bottom": 500.453125
+        },
+        ".transport": {
+          "x": 40,
+          "y": 549.453125,
+          "width": 324.890625,
+          "height": 56,
+          "right": 364.890625,
+          "bottom": 605.453125
+        },
+        ".progress": {
+          "x": 40,
+          "y": 623.453125,
+          "width": 324.890625,
+          "height": 28,
+          "right": 364.890625,
+          "bottom": 651.453125
+        },
+        ".volume": {
+          "x": 40,
+          "y": 665.453125,
+          "width": 324.890625,
+          "height": 28,
+          "right": 364.890625,
+          "bottom": 693.453125
+        },
+        ".album": {
+          "x": 40,
+          "y": 703.453125,
+          "width": 324.890625,
+          "height": 16.796875,
+          "right": 364.890625,
+          "bottom": 720.25
+        }
+      },
+      "overflow": false
+    },
+    {
+      "viewport": [
+        800,
+        900
+      ],
+      "lyrics": false,
+      "boxes": {
+        ".song": {
+          "x": 70,
+          "y": 146.703125,
+          "width": 660,
+          "height": 614.59375,
+          "right": 730,
+          "bottom": 761.296875
+        },
+        ".art-space": {
+          "x": 229,
+          "y": 146.703125,
+          "width": 342,
+          "height": 342,
+          "right": 571,
+          "bottom": 488.703125
+        },
+        ".art": {
+          "x": 273.1814880371094,
+          "y": 190.88461303710938,
+          "width": 253.62136840820312,
+          "height": 253.62139892578125,
+          "right": 526.8028564453125,
+          "bottom": 444.5060119628906
+        },
+        ".title": {
+          "x": 70,
+          "y": 512.703125,
+          "width": 660,
+          "height": 28.796875,
+          "right": 730,
+          "bottom": 541.5
+        },
+        ".transport": {
+          "x": 70,
+          "y": 590.5,
+          "width": 660,
+          "height": 56,
+          "right": 730,
+          "bottom": 646.5
+        },
+        ".progress": {
+          "x": 160,
+          "y": 664.5,
+          "width": 480,
+          "height": 28,
+          "right": 640,
+          "bottom": 692.5
+        },
+        ".volume": {
+          "x": 70,
+          "y": 706.5,
+          "width": 660,
+          "height": 28,
+          "right": 730,
+          "bottom": 734.5
+        },
+        ".album": {
+          "x": 70,
+          "y": 744.5,
+          "width": 660,
+          "height": 16.796875,
+          "right": 730,
+          "bottom": 761.296875
+        }
+      },
+      "overflow": false
+    },
+    {
+      "viewport": [
+        1920,
+        1003
+      ],
+      "lyrics": true,
+      "boxes": {
+        ".song": {
+          "x": 223.015625,
+          "y": 153.34375,
+          "width": 560,
+          "height": 682.3125,
+          "right": 783.015625,
+          "bottom": 835.65625
+        },
+        ".art-space": {
+          "x": 312.453125,
+          "y": 153.34375,
+          "width": 381.125,
+          "height": 381.125,
+          "right": 693.578125,
+          "bottom": 534.46875
+        },
+        ".art": {
+          "x": 361.6964111328125,
+          "y": 202.5870361328125,
+          "width": 282.638427734375,
+          "height": 282.638427734375,
+          "right": 644.3348388671875,
+          "bottom": 485.2254638671875
+        },
+        ".title": {
+          "x": 223.015625,
+          "y": 558.46875,
+          "width": 560,
+          "height": 48,
+          "right": 783.015625,
+          "bottom": 606.46875
+        },
+        ".transport": {
+          "x": 223.015625,
+          "y": 656.859375,
+          "width": 560,
+          "height": 64,
+          "right": 783.015625,
+          "bottom": 720.859375
+        },
+        ".progress": {
+          "x": 263.015625,
+          "y": 738.859375,
+          "width": 480,
+          "height": 28,
+          "right": 743.015625,
+          "bottom": 766.859375
+        },
+        ".volume": {
+          "x": 223.015625,
+          "y": 780.859375,
+          "width": 560,
+          "height": 28,
+          "right": 783.015625,
+          "bottom": 808.859375
+        },
+        ".album": {
+          "x": 223.015625,
+          "y": 818.859375,
+          "width": 560,
+          "height": 16.796875,
+          "right": 783.015625,
+          "bottom": 835.65625
+        }
+      },
+      "overflow": false
+    },
+    {
+      "viewport": [
+        1920,
+        1003
+      ],
+      "lyrics": false,
+      "boxes": {
+        ".song": {
+          "x": 630,
+          "y": 153.34375,
+          "width": 660,
+          "height": 682.3125,
+          "right": 1290,
+          "bottom": 835.65625
+        },
+        ".art-space": {
+          "x": 769.4375,
+          "y": 153.34375,
+          "width": 381.125,
+          "height": 381.125,
+          "right": 1150.5625,
+          "bottom": 534.46875
+        },
+        ".art": {
+          "x": 817.9947509765625,
+          "y": 201.90101623535156,
+          "width": 284.010498046875,
+          "height": 284.010498046875,
+          "right": 1102.0052490234375,
+          "bottom": 485.91151428222656
+        },
+        ".title": {
+          "x": 630,
+          "y": 558.46875,
+          "width": 660,
+          "height": 48,
+          "right": 1290,
+          "bottom": 606.46875
+        },
+        ".transport": {
+          "x": 630,
+          "y": 656.859375,
+          "width": 660,
+          "height": 64,
+          "right": 1290,
+          "bottom": 720.859375
+        },
+        ".progress": {
+          "x": 720,
+          "y": 738.859375,
+          "width": 480,
+          "height": 28,
+          "right": 1200,
+          "bottom": 766.859375
+        },
+        ".volume": {
+          "x": 630,
+          "y": 780.859375,
+          "width": 660,
+          "height": 28,
+          "right": 1290,
+          "bottom": 808.859375
+        },
+        ".album": {
+          "x": 630,
+          "y": 818.859375,
+          "width": 660,
+          "height": 16.796875,
+          "right": 1290,
+          "bottom": 835.65625
+        }
+      },
+      "overflow": false
+    }
+  ],
+  "compact": {
+    "mini": true,
+    "play": 56
+  },
+  "enter_start": {
+    "animations": [
+      300,
+      300
+    ],
+    "display": "block",
+    "inert": false
+  },
+  "enter_mid": {
+    "opacity": 0.875891,
+    "transform": "matrix(0.998138, 0, 0, 0.998138, 0, 1.48931)"
+  },
+  "enter_end": {
+    "animations": 0,
+    "immersive": true,
+    "focus": "vg"
+  },
+  "exit_start": {
+    "animations": [
+      220,
+      220
+    ],
+    "display": "block",
+    "inert": true,
+    "libraryVisible": true
+  },
+  "exit_mid": {
+    "opacity": 2.68632e-05
+  },
+  "exit_end": {
+    "display": "none",
+    "libraryInert": false,
+    "focus": ""
+  },
+  "rapid": {
+    "open": true,
+    "immersive": true,
+    "animations": 0,
+    "opacity": "1"
+  },
+  "reduced": {
+    "matches": true,
+    "closed": "none",
+    "open": "block",
+    "animations": 0
+  },
+  "drag_preview": {
+    "target": 181223.757,
+    "calls": 0,
+    "fill": "75.3%",
+    "elapsed": "3:01"
+  },
+  "seek_commit": {
+    "calls": 1,
+    "difference_ms": 519.2429999999877,
+    "same_song": true
+  },
+  "focused_progress": {
+    "first": "6",
+    "second": "14",
+    "playing": true
+  },
+  "passed": true
+}

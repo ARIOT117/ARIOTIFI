@@ -1,0 +1,18 @@
+{
+  "open": {
+    "ok": true,
+    "audio": "output monitor",
+    "active": true,
+    "pipeline": true,
+    "lease_timer": true,
+    "worker_pid": 8216
+  },
+  "closed": {
+    "ok": true,
+    "audio": "output monitor",
+    "active": false,
+    "pipeline": false,
+    "lease_timer": false,
+    "worker_pid": null
+  }
+}

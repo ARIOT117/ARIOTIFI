@@ -1,0 +1,112 @@
+{
+  "label": "baseline-final",
+  "time": "2026-10-18T12:00:12-0600",
+  "spotify": {
+    "rss_MiB": 1830.03515625,
+    "pss_MiB": 1130.8935546875,
+    "cpu_percent": 135.20843222544286,
+    "pids": [
+      10368,
+      10371,
+      10375,
+      10376,
+      10404,
+      10406,
+      10410,
+      10468,
+      10507
+    ],
+    "processes": {
+      "10368": {
+        "cpu": 26.7,
+        "rss": 413450240,
+        "pss": 281928704
+      },
+      "10371": {
+        "cpu": 0.02,
+        "rss": 99442688,
+        "pss": 31818752
+      },
+      "10375": {
+        "cpu": 0.03,
+        "rss": 109678592,
+        "pss": 25042944
+      },
+      "10376": {
+        "cpu": 0.03,
+        "rss": 109772800,
+        "pss": 20948992
+      },
+      "10404": {
+        "cpu": 235.12,
+        "rss": 274407424,
+        "pss": 160598016
+      },
+      "10406": {
+        "cpu": 2.9699999999999998,
+        "rss": 155447296,
+        "pss": 57338880
+      },
+      "10410": {
+        "cpu": 0.060000000000000005,
+        "rss": 54427648,
+        "pss": 13604864
+      },
+      "10468": {
+        "cpu": 1533.0400000000002,
+        "rss": 583774208,
+        "pss": 513127424
+      },
+      "10507": {
+        "cpu": 0.75,
+        "rss": 118530048,
+        "pss": 81419264
+      }
+    }
+  },
+  "visualizer": {
+    "rss_MiB": 34.85546875,
+    "pss_MiB": 19.62890625,
+    "cpu_percent": 0.0,
+    "pids": [
+      14836
+    ],
+    "processes": {
+      "14836": {
+        "cpu": 0.11,
+        "rss": 36548608,
+        "pss": 20582400
+      }
+    }
+  },
+  "sample_seconds": 10.058544260999952,
+  "visibility": "visible",
+  "heap": {
+    "usedSize": 89851248,
+    "totalSize": 94384128,
+    "embedderHeapUsedSize": 69949504,
+    "backingStorageSize": 11546502
+  },
+  "dom": {
+    "documents": 3,
+    "nodes": 13507,
+    "jsEventListeners": 4839
+  },
+  "diagnostics": {
+    "mounted": false,
+    "frames": 0,
+    "cache": 1,
+    "lyricLines": 0,
+    "playing": true,
+    "flowers": 1,
+    "progress": 1,
+    "artLoading": false,
+    "loading": false,
+    "visualizerRequests": 0
+  },
+  "audit": null,
+  "playback": {
+    "playing": true,
+    "uri": "spotify:track:6lRU3pKjNnSI9svHzznkC6"
+  }
+}

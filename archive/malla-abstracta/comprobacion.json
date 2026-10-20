@@ -1,0 +1,62 @@
+{
+  "syntax": true,
+  "geometry": {
+    "quiet": {
+      "min": 136.536,
+      "max": 139.608,
+      "mean": 138.07199999999858,
+      "finite": true
+    },
+    "active": {
+      "min": 140.14195800576036,
+      "max": 215.1799108799673,
+      "mean": 165.2378926604601,
+      "finite": true
+    },
+    "paused": {
+      "min": 136.536,
+      "max": 139.608,
+      "mean": 138.07199999999858,
+      "finite": true
+    },
+    "attack": 0.5999999973310878,
+    "previous": 0.5999999973310878,
+    "firstRelease": 0.5537988009705199,
+    "seam": 2.842170943040401e-14,
+    "seamNear": 0.00020931403008717098,
+    "rotationalDifference": 23.486038050745336,
+    "phasesDifferent": true,
+    "sectorDifference": 4.58699486221203,
+    "highResponse": true,
+    "settled": true,
+    "silenceFreezesPhase": true,
+    "strokes": 64,
+    "fills": 0,
+    "minWidth": 0.49797654151916504,
+    "maxWidth": 0.711089015007019,
+    "maxAlpha": 0.13998156048768248,
+    "insidePixels": 0,
+    "meshPixels": 48074,
+    "frameMs": 5.141666666682188,
+    "pass": true
+  },
+  "live": {
+    "style": "abstract",
+    "shape": "circle",
+    "buttons": 5,
+    "seek": true,
+    "volume": true,
+    "title": "Can't Tell Me Nothing",
+    "playing": true
+  },
+  "canvas": {
+    "cssWidth": 555,
+    "pixelWidth": 555,
+    "dpr": 1,
+    "coverWidth": 285.34375,
+    "coverHeight": 285.34375,
+    "borderRadius": "50%",
+    "transform": "scale(1)"
+  },
+  "passed": true
+}

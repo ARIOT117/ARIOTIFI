@@ -1,0 +1,12 @@
+{
+  "playing": true,
+  "same_track": true,
+  "position_ms": 159852,
+  "title": "CUÍDALA",
+  "debug_port_open": false,
+  "health": {
+    "ok": true,
+    "audio": "output monitor",
+    "active": false
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "geometry": {
+    "finite": true,
+    "quietPixels": 5510,
+    "loudPixels": 25645,
+    "frameMs": 0.14250000000029103,
+    "pass": true
+  },
+  "sizes": [
+    {
+      "width": 900,
+      "height": 700,
+      "boxes": [
+        {
+          "s": ".art",
+          "left": 138.46875,
+          "right": 317.015625,
+          "top": 152.515625,
+          "bottom": 331.0625,
+          "visible": true
+        },
+        {
+          "s": ".transport",
+          "left": 45,
+          "right": 410.5,
+          "top": 447.390625,
+          "bottom": 503.390625,
+          "visible": true
+        },
+        {
+          "s": ".progress",
+          "left": 45,
+          "right": 410.5,
+          "top": 515.390625,
+          "bottom": 543.390625,
+          "visible": true
+        },
+        {
+          "s": ".volume",
+          "left": 45,
+          "right": 410.5,
+          "top": 551.390625,
+          "bottom": 579.390625,
+          "visible": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "width": 640,
+      "height": 600,
+      "boxes": [
+        {
+          "s": ".art",
+          "left": 87.09375,
+          "right": 236.796875,
+          "top": 107.109375,
+          "bottom": 256.8125,
+          "visible": true
+        },
+        {
+          "s": ".transport",
+          "left": 32,
+          "right": 291.90625,
+          "top": 397.515625,
+          "bottom": 453.515625,
+          "visible": true
+        },
+        {
+          "s": ".progress",
+          "left": 32,
+          "right": 291.90625,
+          "top": 465.515625,
+          "bottom": 493.515625,
+          "visible": true
+        },
+        {
+          "s": ".volume",
+          "left": 32,
+          "right": 291.90625,
+          "top": 501.515625,
+          "bottom": 529.515625,
+          "visible": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "width": 480,
+      "height": 780,
+      "boxes": [
+        {
+          "s": ".art",
+          "left": 189.59375,
+          "right": 290.390625,
+          "top": 97.59375,
+          "bottom": 198.390625,
+          "visible": true
+        },
+        {
+          "s": ".transport",
+          "left": 38.390625,
+          "right": 441.609375,
+          "top": 289.390625,
+          "bottom": 345.390625,
+          "visible": true
+        },
+        {
+          "s": ".progress",
+          "left": 38.390625,
+          "right": 441.609375,
+          "top": 363.390625,
+          "bottom": 391.390625,
+          "visible": true
+        },
+        {
+          "s": ".volume",
+          "left": 38.390625,
+          "right": 441.609375,
+          "top": 405.390625,
+          "bottom": 433.390625,
+          "visible": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "audio": {
+    "playing": true,
+    "active": true,
+    "error": "",
+    "peak": 0.572,
+    "valid": true
+  },
+  "pass": true
+}

@@ -1,0 +1,11 @@
+{
+  "cpu_before_one_core_percent": 160.17,
+  "cpu_after_one_core_percent": 46.31,
+  "cpu_paused_one_core_percent": 9.47,
+  "logical_cpus": 12,
+  "ram_before_bytes": 1299329024,
+  "ram_after_bytes": 675119104,
+  "helper_ram_after_bytes": 25772032,
+  "gpu_temperature_after_celsius": 46,
+  "note": "Mediciones breves durante la sesi\u00f3n; la RAM posterior tambi\u00e9n refleja el reinicio de Spotify."
+}

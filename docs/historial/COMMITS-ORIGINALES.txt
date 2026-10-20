@@ -1,0 +1,28 @@
+7725d39 2026-10-19T20:49:29-06:00 Respaldo antes de letras con relleno por palabra
+b84049a 2026-10-19T20:43:30-06:00 Sincronizar seguimiento de letras con eventos del reproductor
+8d93cdb 2026-10-19T20:42:57-06:00 Respaldo antes de mejorar seguimiento de letras
+f5e1dfc 2026-10-19T20:40:25-06:00 Mostrar la composición de la portada desenfocada en el fondo inmersivo
+75188be 2026-10-19T20:40:13-06:00 Respaldo antes de hacer visible la portada en el fondo inmersivo
+de1e412 2026-10-18T12:39:45-06:00 Centrar icono de reproducción dentro de la flor del dock
+254ef63 2026-10-18T12:33:53-06:00 5: limpiar ciclos de vida, detener proceso de audio y auditar RAM y CPU
+3ad567c 2026-10-18T10:19:49-06:00 4: retirar skeleton del DOM al completar o cancelar las letras
+7671fcb 2026-10-18T10:19:49-06:00 3: precargar portadas con respaldo de URLs y fundido sin huecos
+8f57b15 2026-10-18T10:18:24-06:00 2: actualizar WavyProgress original con destrucción idempotente
+8172e2f 2026-10-18T10:18:24-06:00 1: integrar FlowerButton original y retirar animaciones CSS de play
+963c7f2 2026-10-18T10:10:02-06:00 Respaldo antes de componentes finales y auditoría de memoria
+842125b 2026-10-18T01:09:58-06:00 2: ocultar menú nativo durante inmersiva y verificar captura real
+bfdf60d 2026-10-18T01:01:12-06:00 1: sustituir la onda anterior por WavyProgress original
+e4d1bf1 2026-10-18T00:58:40-06:00 Respaldo antes de instalar WavyProgress y ocultar menú nativo
+f5db5d2 2026-10-18T00:32:22-06:00 4: añadir skeleton de letras y alinear tiempos sin tooltips nativos
+414d261 2026-10-18T00:31:24-06:00 3: separar cerrar y más opciones en la barra superior
+d28119b 2026-10-18T00:31:10-06:00 2: suavizar flor SVG de reproducción y detener movimiento en pausa
+570da50 2026-10-18T00:30:38-06:00 1: unificar progreso con onda suave, riel limpio y slider nativo
+1f73ee3 2026-10-18T00:27:39-06:00 Respaldo previo al pulido visual de controles
+c4d1572 2026-10-18T00:10:25-06:00 Validar en Spotify, registrar memoria y documentar reversión
+42a35ae 2026-10-18T00:05:52-06:00 Respetar ventana al abrir inmersiva y corregir diseño angosto
+c2b8c2f 2026-10-17T13:34:39-06:00 E: liberar captura y recursos, limitar caché y verificar geometría
+b6cde93 2026-10-17T13:31:18-06:00 D: inicio premium con superficies oscuras y acento de la canción
+5d040c4 2026-10-17T13:30:55-06:00 C: transición reversible con máscara floral SVG y transformaciones
+42a1bb3 2026-10-17T13:30:25-06:00 B: barra flotante con flor, progreso ondulado y acceso inmersivo
+9580cd4 2026-10-17T13:29:23-06:00 A: reconstruir vista inmersiva con audio real y letras accesibles
+36da865 2026-10-17T13:25:48-06:00 Respaldo: estado anterior al rediseño premium

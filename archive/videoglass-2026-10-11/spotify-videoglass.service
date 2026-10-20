@@ -1,0 +1,9 @@
+[Unit]
+Description=Visualizador local y letras de Spotify VideoGlass
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/diego/.local/share/spotify-personalizado/visualizer.py
+Restart=on-failure
+RestartSec=3
+
