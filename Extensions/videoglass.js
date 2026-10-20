@@ -487,7 +487,8 @@
       const pixels=c.getImageData(0,0,64,64).data,sum=[0,0,0];let weight=0;
       for(let i=0;i<pixels.length;i+=4){const rgb=[pixels[i],pixels[i+1],pixels[i+2]],hi=Math.max(...rgb),lo=Math.min(...rgb);if(hi<35||lo>225)continue;const w=.15+(hi-lo)/255;rgb.forEach((x,j)=>sum[j]+=x*w);weight+=w;}
       if(weight)asset.accent=sum.map(x=>Math.round(x/weight)).join(',');
-      const b=blurred.getContext('2d');b.fillStyle=`rgb(${asset.accent})`;b.fillRect(0,0,64,64);b.filter='blur(12px) saturate(1.4)';b.drawImage(small,-8,-8,80,80);asset.background=blurred.toDataURL('image/jpeg',.8);
+      // Blur once at thumbnail size, preserving the cover's composition when enlarged.
+      const b=blurred.getContext('2d');b.fillStyle=`rgb(${asset.accent})`;b.fillRect(0,0,64,64);b.filter='blur(3px) saturate(1.4)';b.drawImage(small,-8,-8,80,80);asset.background=blurred.toDataURL('image/jpeg',.8);
     } catch {/* A tainted canvas still leaves the loaded cover and accent fallback. */}
     finally {small.width=small.height=blurred.width=blurred.height=0;}
     return asset;
