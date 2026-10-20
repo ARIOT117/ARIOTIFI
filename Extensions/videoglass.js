@@ -554,7 +554,32 @@
     v.resize=new ResizeObserver(()=>{sizeCanvas(v);updateLyric(v,position(),true);if(!state?.playing)drawSpectrum(v);});v.resize.observe(root.querySelector('.vg-art-space'));v.resize.observe(root.querySelector('.vg-lyrics'));
     v.flower=new FlowerButton(root.querySelector('.vg-play'),{size:64});FlowerButton.bindSpicetify(v.flower);
     v.progress=attachProgress(root.querySelector('.vg-seek-wrap'));
+    // Follow the actual player clock (including seeks), independently of the 500 ms UI poll.
+    const followLyrics=()=>{
+      if(view!==v||closing||document.hidden)return;
+      if(Spicetify.Player.data?.item?.uri!==track){refresh();return;}
+      updateLyric(v,Math.max(0,Number(Spicetify.Player.getProgress())||0));
+    };
+    const playerChanged=()=>{if(view===v&&!closing)refresh();};
+    const visibleLyrics=()=>{if(!document.hidden){playerChanged();followLyrics();}};
+    for(const [event,listener] of [['onprogress',followLyrics],['songchange',playerChanged],['onplaypause',playerChanged]]){
+      Spicetify.Player.addEventListener(event,listener);
+      v.abort.signal.addEventListener('abort',()=>Spicetify.Player.removeEventListener(event,listener),{once:true});
+    }
+    document.addEventListener('visibilitychange',visibleLyrics,{signal:v.abort.signal});
     sizeCanvas(v);loadSong(v);prepareArtwork(track);updateUI();root.focus({preventScroll:true});return v;
+  }
+  function parseSyncedLyrics(text) {
+    const offset=Number(text.match(/\[offset:([+-]?\d+)\]/i)?.[1]||0);
+    const lines=[];
+    for(const row of text.split(/\r?\n/)){
+      const words=row.replace(/\[[^\]]*\]/g,'').trim()||'♪';
+      for(const stamp of row.matchAll(/\[(\d+):(\d+(?:\.\d+)?)\]/g)){
+        const time=Math.max(0,(Number(stamp[1])*60+Number(stamp[2]))*1000-offset);
+        lines.push({time,text:words});
+      }
+    }
+    return lines.sort((a,b)=>a.time-b.time);
   }
   async function loadSong(v) {
     if(view!==v)return;
@@ -569,12 +594,12 @@
       const q=new URLSearchParams({track_name:m.title||'',artist_name:m.artist_name||'',album_name:m.album_title||'',duration:Math.round((state?.duration||0)/1000)});
       const response=await fetch(API+'/lyrics?'+q,{signal:AbortSignal.any([abort.signal,AbortSignal.timeout(15000)])});if(!response.ok)throw Error('lyrics');const data=await response.json();
       if(view!==v||abort.signal.aborted)return;
-      for(const line of (data.syncedLyrics||'').split('\n'))for(const match of line.matchAll(/\[(\d+):(\d+(?:\.\d+)?)\]/g))v.lines.push({time:(Number(match[1])*60+Number(match[2]))*1000,text:line.replace(/\[[^\]]*\]/g,'').trim()||'♪'});
+      v.lines=parseSyncedLyrics(data.syncedLyrics||'');
       clearLyricsLoading(v);v.lines.sort((a,b)=>a.time-b.time);box.replaceChildren();
       if(v.lines.length){
         if(v.lines[0].time>0)v.lines.unshift({time:0,text:'♪'});
         for(const [i,line] of v.lines.entries()){const b=document.createElement('button');b.className='vg-lyric';b.dataset.line=i;b.textContent=line.text;b.setAttribute('aria-label','Reproducir desde '+fmt(line.time)+': '+line.text);box.append(b);}
-        updateLyric(v,position(),true);
+        updateLyric(v,Math.max(0,Number(Spicetify.Player.getProgress())||0),true);
       }else if(data.plainLyrics){const p=document.createElement('p');p.className='vg-plain';p.textContent=data.plainLyrics;box.append(p);}
       else emptyLyrics(v,data.instrumental);
     }catch(e){if(view===v&&!abort.signal.aborted)emptyLyrics(v,false);}
