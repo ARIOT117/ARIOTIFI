@@ -35,3 +35,9 @@ Primera vista con letras y controles grandes, 11 de octubre:
 ![Vista anterior](capturas/vista-animacion-grande-letras.png)
 
 Las fuentes iniciales están en `archive/videoglass-2026-10-11/`. Los respaldos de código están en `archive/etapas/`. Los contactos y fotogramas de las referencias originales se guardan en `archive/referencias/`, `archive/efectos-referencia-2026-10-17/` y `archive/transicion-fotogramas/`. Los diseños históricos no se instalan automáticamente junto con el tema principal.
+
+## Widget Flower Music del panel
+
+![Píldora y desplegable de la captura aportada](capturas/widget/captura-aportada.png)
+
+[Configuración e instalación](../widget/README.md) · [Capturas nuevas con Pulso](RENDIMIENTO.md).

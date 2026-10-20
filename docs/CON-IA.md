@@ -18,6 +18,11 @@ aplica ./install.sh, pasando --spotify-path y --prefs-path si hacen falta.
 Conserva otras extensiones y el estado Backup de Spicetify. No registres
 flower-button.js ni wavy-progress.js por separado: ya están en videoglass.js.
 
+Si también quiero el widget del panel, lee widget/README.md y detecta GNOME Shell.
+Solo en GNOME 50, comprueba ./widget/install.sh --check y ejecuta el instalador
+del widget. Explícame cuándo debo cerrar y volver a iniciar sesión. No actives
+Flower Music y Media Controls simultáneamente.
+
 Comprueba el servicio, /health y /player con la aplicación abierta. Verifica
 que ARIOTIFI aparece en el menú. Ayúdame a probar Inmersiva, letras, reproducción,
 visualizador y salida con Esc. No ejecutes los benchmarks históricos ni cambies

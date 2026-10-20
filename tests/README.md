@@ -12,3 +12,5 @@ El resto de archivos se conserva del desarrollo original. Varias pruebas usan CD
 `geometry.js` también es histórico: extrae funciones de una revisión antigua. Puede necesitar adaptar su extracción al código actual. Los resultados originales de 447 comprobaciones pertenecen a la revisión indicada en la documentación histórica.
 
 Los JSON ya versionados de `measurements/` son evidencia de sesiones anteriores. Los perfiles y snapshots grandes no se incluyen en esta entrega. La [auditoría](../AUDITORIA-FINAL.md) explica sus límites de RAM y CPU.
+
+Para repetir la prueba actual con Pulso utiliza `scripts/benchmark-pulso.py`, siguiendo [la metodología](../docs/RENDIMIENTO.md). Alterna el widget de la sesión y toma capturas reales; es una operación interactiva explícita, no parte de la suite de empaquetado.

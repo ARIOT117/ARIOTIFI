@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Widget de música de la barra superior</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0c0c0f}
+a{color:#fff}a:hover{color:#fff}
+.ib{appearance:none;border:0;background:transparent;color:rgba(255,255,255,.7);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:999px;transition:background .18s ease,color .18s ease,transform .12s ease}
+.ib:hover{background:rgba(255,255,255,.1);color:#fff}
+.ib:active{transform:scale(.92)}
+.ib:focus-visible,.play:focus-visible,.pill:focus-visible{outline:2px solid rgba(255,255,255,.7);outline-offset:2px}
+.ib.glass{background:rgba(255,255,255,.07);color:#fff}
+.ib.glass:hover{background:rgba(255,255,255,.14)}
+.ib.on{color:var(--accent)}
+.pill{appearance:none;border:1px solid rgba(255,255,255,.08);font:inherit;color:#fff;background:rgba(255,255,255,.08);cursor:pointer;transition:background .2s}
+.pill:hover{background:rgba(255,255,255,.12)}
+.play{appearance:none;border:0;background:transparent;padding:0;cursor:pointer;transition:transform .15s ease}
+.play:hover{transform:scale(1.05)}
+.play:active{transform:scale(.94)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+@keyframes wave{to{transform:translateX(-30px)}}
+@keyframes eq{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+.spin{animation:spin 24s linear infinite;will-change:transform}
+.pulse{animation:pulse 3s ease-in-out infinite}
+.wave{animation:wave 3.3s linear infinite}
+.eq{transform-origin:bottom;animation:eq 1.1s ease-in-out infinite}
+.paused .spin,.paused .pulse,.paused .wave,.paused .eq{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){.spin,.pulse,.wave,.eq{animation:none}}
+</style>
+</helmet>
+
+<div class="{{rootClass}}" style="--accent: {{accent}}; position: relative; width: 680px; height: 440px; overflow: hidden; background: radial-gradient(80% 70% at 70% 80%, #1d1a24 0%, #0c0c0f 70%); color: #fff; font-family: 'Figtree', system-ui, sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <!-- Barra superior del sistema -->
+  <div style="position: absolute; left: 0; right: 0; top: 0; height: 42px; background: rgba(8,8,10,0.92); display: flex; align-items: center; padding: 0 14px; gap: 12px;">
+    <div aria-hidden="true" style="display: flex; gap: 5px; align-items: center;">
+      <span style="width: 22px; height: 7px; border-radius: 4px; background: #fff;"></span>
+      <span style="width: 7px; height: 7px; border-radius: 4px; background: rgba(255,255,255,0.4);"></span>
+    </div>
+
+    <!-- Píldora: reproduciendo ahora -->
+    <button class="pill" aria-label="Abrir controles de música" aria-expanded="true" style="position: relative; height: 30px; display: flex; align-items: center; gap: 9px; padding: 0 6px 0 5px; border-radius: 999px; overflow: hidden;">
+      <span aria-hidden="true" class="spin" style="width: 20px; height: 20px; flex-shrink: 0; clip-path: {{artClip}}; background: {{art}};"></span>
+      <span style="font-size: 13px; font-weight: 600; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Die With A Smile</span>
+      <span aria-hidden="true" style="display: flex; align-items: center; gap: 2px; color: rgba(255,255,255,0.85);">
+        <sc-if value="{{playing}}" hint-placeholder-val="{{true}}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="3.6" height="14" rx="1.3"></rect><rect x="14.4" y="5" width="3.6" height="14" rx="1.3"></rect></svg>
+        </sc-if>
+        <sc-if value="{{paused}}" hint-placeholder-val="{{false}}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8a1 1 0 0 0 1.52.86l10.2-6.4a1 1 0 0 0 0-1.72L9.52 4.74A1 1 0 0 0 8 5.6z"></path></svg>
+        </sc-if>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 6px;"><rect x="16.6" y="5" width="2.4" height="14" rx="1.2"></rect><path d="M5 6.2v11.6a1 1 0 0 0 1.55.83l7.85-5.23a1.7 1.7 0 0 0 0-2.8L6.55 5.37A1 1 0 0 0 5 6.2z"></path></svg>
+      </span>
+      <span aria-hidden="true" style="position: absolute; left: 30px; right: 10px; bottom: 3px; height: 2px; border-radius: 2px; background: rgba(255,255,255,0.12); overflow: hidden;">
+        <span style="display: block; height: 100%; width: {{playedPct}}%; background: rgba(255,255,255,0.75); border-radius: 2px; transition: width .5s linear;"></span>
+      </span>
+    </button>
+  </div>
+
+  <!-- Popover -->
+  <section aria-label="Reproduciendo ahora" style="position: absolute; left: 16px; top: 54px; width: 560px; height: 272px; border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,0.09); box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 2px 0 rgba(255,255,255,0.04) inset;">
+
+    <!-- Fondo: tinte de la portada + vidrio -->
+    <div aria-hidden="true" style="position: absolute; inset: -40px; background: {{bg}}; filter: blur(30px);"></div>
+    <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(110deg, rgba(14,12,18,0.55) 0%, rgba(14,12,18,0.78) 55%, rgba(14,12,18,0.86) 100%);"></div>
+
+    <div style="position: relative; height: 100%; box-sizing: border-box; padding: 24px; display: flex; gap: 24px; align-items: center;">
+
+      <div role="img" aria-label="Portada de Die With A Smile" style="width: 184px; height: 184px; flex-shrink: 0; border-radius: 22px; background: {{art}}; box-shadow: 0 18px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);"></div>
+
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span aria-hidden="true" style="display: flex; align-items: flex-end; gap: 2px; height: 11px;">
+            <span class="eq" style="width: 3px; height: 11px; border-radius: 2px; background: var(--accent); animation-delay: -0.2s;"></span>
+            <span class="eq" style="width: 3px; height: 11px; border-radius: 2px; background: var(--accent); animation-delay: -0.6s;"></span>
+            <span class="eq" style="width: 3px; height: 11px; border-radius: 2px; background: var(--accent); animation-delay: -0.9s;"></span>
+          </span>
+          <span style="font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,0.62);">Spotify</span>
+          <span style="flex: 1;"></span>
+          <button class="ib on" aria-label="Guardada en tu biblioteca" style="width: 30px; height: 30px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"></circle><path d="M7.5 12.2l3 3 6-6.2" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+        </div>
+
+        <div style="margin-top: 6px; font-size: 24px; line-height: 1.15; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Die With A Smile</div>
+        <div style="margin-top: 3px; font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.66);">Lady Gaga, Bruno Mars</div>
+
+        <!-- Progreso ondulado -->
+        <div style="margin-top: 18px;">
+          <div role="slider" aria-label="Progreso" aria-valuemin="0" aria-valuemax="{{dur}}" aria-valuenow="{{posInt}}" tabindex="0" style="position: relative; height: 14px;">
+            <div style="position: absolute; left: {{trackLeft}}; right: 0; top: 5.5px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.18);"></div>
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: {{playedPct}}%; transition: width .5s linear;">
+              <div style="position: absolute; inset: 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 12px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 12px), transparent 100%);">
+                <svg class="wave" width="1200" height="14" viewBox="0 0 1200 14" aria-hidden="true" style="display: block;">
+                  <path d="{{wavePath}}" fill="none" stroke="rgba(255,255,255,0.95)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </div>
+              <div style="position: absolute; left: 0; right: 0; top: 5.75px; height: 2.5px; border-radius: 2px; background: rgba(255,255,255,0.95); -webkit-mask-image: linear-gradient(90deg, #000 0, transparent 14px, transparent calc(100% - 12px), #000 100%); mask-image: linear-gradient(90deg, #000 0, transparent 14px, transparent calc(100% - 12px), #000 100%);"></div>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 4px; font-size: 11.5px; font-variant-numeric: tabular-nums; color: rgba(255,255,255,0.58);">
+            <span>{{elapsed}}</span><span>{{total}}</span>
+          </div>
+        </div>
+
+        <!-- Controles -->
+        <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <button class="ib" aria-label="Aleatorio" style="width: 36px; height: 36px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h4v4M20 4l-6.5 6.5M4 20l6-6M16 20h4v-4M20 20L4 4"></path></svg>
+          </button>
+          <button class="ib glass" aria-label="Anterior" style="width: 44px; height: 44px;" onClick="{{prev}}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="5" width="2.4" height="14" rx="1.2"></rect><path d="M19 6.2v11.6a1 1 0 0 1-1.55.83L9.6 13.4a1.7 1.7 0 0 1 0-2.8l7.85-5.23A1 1 0 0 1 19 6.2z"></path></svg>
+          </button>
+          <button class="play" aria-label="{{playLabel}}" onClick="{{togglePlay}}" style="width: 60px; height: 60px; position: relative;">
+            <span aria-hidden="true" class="pulse" style="position: absolute; inset: 0; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35));">
+              <span class="spin" style="position: absolute; inset: 0; background: #fff; clip-path: {{playClip}};"></span>
+            </span>
+            <span aria-hidden="true" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #121014;">
+              <sc-if value="{{playing}}" hint-placeholder-val="{{true}}">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4.5" width="4" height="15" rx="1.4"></rect><rect x="14" y="4.5" width="4" height="15" rx="1.4"></rect></svg>
+              </sc-if>
+              <sc-if value="{{paused}}" hint-placeholder-val="{{false}}">
+                <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8a1 1 0 0 0 1.52.86l10.2-6.4a1 1 0 0 0 0-1.72L9.52 4.74A1 1 0 0 0 8 5.6z"></path></svg>
+              </sc-if>
+            </span>
+          </button>
+          <button class="ib glass" aria-label="Siguiente" style="width: 44px; height: 44px;" onClick="{{next}}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="16.6" y="5" width="2.4" height="14" rx="1.2"></rect><path d="M5 6.2v11.6a1 1 0 0 0 1.55.83l7.85-5.23a1.7 1.7 0 0 0 0-2.8L6.55 5.37A1 1 0 0 0 5 6.2z"></path></svg>
+          </button>
+          <button class="ib" aria-label="Repetir" style="width: 36px; height: 36px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2.5l3 3-3 3"></path><path d="M4 11V9.5a4 4 0 0 1 4-4h12"></path><path d="M7 21.5l-3-3 3-3"></path><path d="M20 13v1.5a4 4 0 0 1-4 4H4"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#E8527F","options":["#E8527F","#5B8DEF","#1ED760","#C9C3D6"]},"$preview":{"width":680,"height":440}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { playing: true, pos: 21 };
+  }
+
+  componentDidMount() {
+    var self = this;
+    this._t = setInterval(function () {
+      if (!self.state.playing) return;
+      var p = self.state.pos + 0.5;
+      self.setState({ pos: p >= 251 ? 0 : p });
+    }, 500);
+  }
+
+  componentWillUnmount() { if (this._t) clearInterval(this._t); }
+
+  cookie(lobes, amp) {
+    var pts = [];
+    for (var i = 0; i < 240; i++) {
+      var a = (i / 240) * Math.PI * 2;
+      var r = 1 - amp + amp * Math.cos(lobes * a);
+      pts.push((50 + 50 * r * Math.cos(a)).toFixed(2) + '% ' + (50 + 50 * r * Math.sin(a)).toFixed(2) + '%');
+    }
+    return 'polygon(' + pts.join(', ') + ')';
+  }
+
+  fmt(t) {
+    t = Math.max(0, Math.floor(t));
+    var m = Math.floor(t / 60), s = t % 60;
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  hexToRgb(hex) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+    var n = m ? parseInt(m[1], 16) : 0xE8527F;
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  renderVals() {
+    var self = this;
+    var s = this.state;
+    var accent = this.props.accent ?? '#E8527F';
+    var c = this.hexToRgb(accent);
+    var dur = 251;
+    if (!this._cache) {
+      var d = 'M0 7';
+      for (var x = 1; x <= 1200; x += 1) d += ' L' + x + ' ' + (7 + 2.2 * Math.sin((x / 30) * Math.PI * 2)).toFixed(2);
+      this._cache = { wave: d, playClip: this.cookie(10, 0.028), artClip: this.cookie(10, 0.05) };
+    }
+    var pct = (s.pos / dur) * 100;
+    return {
+      accent: accent,
+      rootClass: s.playing ? '' : 'paused',
+      art: 'radial-gradient(55% 60% at 38% 40%, #e9e9e9 0%, rgba(233,233,233,0) 60%), radial-gradient(40% 50% at 72% 70%, #5c5c5c 0%, rgba(0,0,0,0) 70%), linear-gradient(160deg, #3a3a3a 0%, #121212 100%)',
+      bg: 'radial-gradient(50% 70% at 18% 50%, rgba(220,220,220,0.35) 0%, rgba(0,0,0,0) 70%), radial-gradient(45% 60% at 85% 30%, rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.35) 0%, rgba(0,0,0,0) 70%), #18161c',
+      artClip: this._cache.artClip,
+      playClip: this._cache.playClip,
+      wavePath: this._cache.wave,
+      playing: s.playing, paused: !s.playing,
+      playLabel: s.playing ? 'Pausar' : 'Reproducir',
+      togglePlay: function () { self.setState({ playing: !self.state.playing }); },
+      prev: function () { self.setState({ pos: 0 }); },
+      next: function () { self.setState({ pos: Math.min(dur - 1, self.state.pos + 20) }); },
+      elapsed: this.fmt(s.pos),
+      total: this.fmt(dur),
+      dur: dur, posInt: Math.floor(s.pos),
+      playedPct: pct.toFixed(2),
+      trackLeft: 'calc(' + pct.toFixed(2) + '% + 4px)'
+    };
+  }
+}
+</script>
+</body>
+</html>

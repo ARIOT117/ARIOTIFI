@@ -1,0 +1,39 @@
+.flower-indicator { -natural-hpadding: 6px; -minimum-hpadding: 3px; }
+.flower-indicator:hover, .flower-indicator:active { background-color: transparent; box-shadow: none; }
+.flower-pill { height: 28px; border: 1px solid rgba(255,255,255,.08); border-radius: 99px; background-color: rgba(255,255,255,.08); padding: 0 5px 0 4px; }
+.flower-pill:hover { background-color: rgba(255,255,255,.12); }
+.flower-pill-row { spacing: 2px; height: 24px; }
+.flower-pill-main { padding: 0; border-radius: 99px; }
+.flower-pill-info { spacing: 9px; }
+.flower-pill-title { font-size: 13px; font-weight: 600; max-width: 150px; padding-right: 5px; }
+.flower-pill-control { width: 22px; height: 24px; padding: 0; border-radius: 12px; color: rgba(255,255,255,.85); }
+.flower-pill-control:hover { background-color: rgba(255,255,255,.1); }
+.flower-pill-main:focus, .flower-pill-control:focus { box-shadow: inset 0 0 0 1px rgba(255,255,255,.7); }
+.flower-pill-progress { margin: 0 4px 2px 25px; }
+.flower-menu { -arrow-rise: 0px; -arrow-base: 0px; -arrow-border-radius: 0px; -arrow-border-width: 0px; -arrow-background-color: transparent; -arrow-border-color: transparent; }
+.flower-menu.popup-menu.panel-menu { -boxpointer-gap: 8px; margin: 0; }
+.flower-menu .popup-menu-content, .flower-menu-box { background-color: transparent; border: 0; padding: 0; margin: 0; box-shadow: none; }
+.flower-menu-item, .flower-menu-item:focus, .flower-menu-item:hover { padding: 0; margin: 0; background-color: transparent !important; spacing: 0; box-shadow: none !important; }
+.flower-menu-item { border-radius: 22px !important; }
+.flower-popup StLabel, .flower-pill StLabel { text-shadow: none; }
+.flower-popup StIcon, .flower-pill StIcon { icon-shadow: none; }
+.flower-popup { background-color: #050506; border-radius: 22px; border: 0; box-shadow: 0 24px 60px rgba(0,0,0,.7); }
+.flower-content { padding: 16px; spacing: 16px; }
+.flower-album { border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,.6); }
+.flower-details { width: 224px; }
+.flower-header { height: 14px; spacing: 6px; }
+.flower-source { font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,.55); }
+.flower-title { font-size: 18px; font-weight: 800; letter-spacing: -.36px; color: white; }
+.flower-artist { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.64); }
+.flower-progress-wrap { margin-top: 10px; }
+.flower-times { margin-top: 2px; }
+.flower-time { font-size: 11px; font-feature-settings: "tnum"; color: rgba(255,255,255,.58); min-width: 42px; }
+.flower-controls { margin-top: 4px; spacing: 11.5px; }
+.flower-control { padding: 0; border-radius: 99px; color: rgba(255,255,255,.55); }
+.flower-control:hover { background-color: rgba(255,255,255,.1); color: white; }
+.flower-small { width: 30px; height: 30px; }
+.flower-skip { width: 36px; height: 36px; color: white; background-color: transparent; }
+.flower-play { width: 46px; height: 46px; padding: 0; border-radius: 99px; }
+.flower-play:hover { background-color: rgba(255,255,255,.06); }
+.flower-play:active { background-color: rgba(255,255,255,.12); }
+.flower-control:focus, .flower-play:focus { box-shadow: inset 0 0 0 2px rgba(255,255,255,.7); }

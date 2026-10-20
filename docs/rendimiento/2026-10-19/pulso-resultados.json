@@ -1,0 +1,2444 @@
+{
+  "created": "2026-10-19T21:10:34.744414-06:00",
+  "method": "Pulso Collector; CPU % of all logical CPUs; PSS bytes; no forced GC",
+  "pulso_commit": "da554121e6a213a3dac46589142abce2d7ba89b2",
+  "samples_per_phase": 10,
+  "interval_seconds": 2.0,
+  "scope": "Widget incremental effect; Spotify theme stays installed in every phase.",
+  "initial_widget": {
+    "enabled": true,
+    "popupOpen": false,
+    "mounted": false,
+    "timeline": false,
+    "positionTimer": false,
+    "cacheEntries": 3,
+    "liveSurfaces": 1,
+    "playing": true
+  },
+  "phases": [
+    {
+      "phase": "sin-widget-antes",
+      "start_state": {
+        "enabled": false,
+        "popupOpen": false,
+        "mounted": false,
+        "timeline": false,
+        "positionTimer": false,
+        "cacheEntries": 0,
+        "liveSurfaces": 0,
+        "playing": false
+      },
+      "end_state": {
+        "enabled": false,
+        "popupOpen": false,
+        "mounted": false,
+        "timeline": false,
+        "positionTimer": false,
+        "cacheEntries": 0,
+        "liveSurfaces": 0,
+        "playing": false
+      },
+      "summary": {
+        "gnome-shell": {
+          "cpu_total_mean_pct": 3.8645034589165532,
+          "cpu_total_max_pct": 6.123098169516056,
+          "pss_mean_mib": 331.75849609375,
+          "pss_min_mib": 331.5703125,
+          "pss_max_mib": 331.94140625,
+          "unknown_samples": 0
+        },
+        "spotify": {
+          "cpu_total_mean_pct": 11.35652188925362,
+          "cpu_total_max_pct": 18.061954416424953,
+          "pss_mean_mib": 905.48720703125,
+          "pss_min_mib": 632.8896484375,
+          "pss_max_mib": 1099.158203125,
+          "unknown_samples": 0
+        },
+        "bridge": {
+          "cpu_total_mean_pct": 0.038655477324069626,
+          "cpu_total_max_pct": 0.19275582198523147,
+          "pss_mean_mib": 31.6974609375,
+          "pss_min_mib": 21.763671875,
+          "pss_max_mib": 47.4052734375,
+          "unknown_samples": 0
+        }
+      },
+      "samples": [
+        {
+          "monotonic": 1792465843.3938172,
+          "ncpu": 12,
+          "system_cpu_pct": 27.69607843137255,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.049831930584879,
+              "pss_bytes": 347687936,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 1.1843848098880307,
+              "pss_bytes": 1028888576,
+              "pss_unknown": 0,
+              "pids": [
+                31341,
+                31345,
+                31346,
+                31371,
+                31373,
+                31376,
+                31428,
+                31473,
+                31337
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23172096,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465845.600087,
+          "ncpu": 12,
+          "system_cpu_pct": 50.30651340996169,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 3.543046940515034,
+              "pss_bytes": 347687936,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 663632896,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23172096,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465847.8384004,
+          "ncpu": 12,
+          "system_cpu_pct": 40.15094339622642,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.521417326653506,
+              "pss_bytes": 347937792,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 18.061954416424953,
+              "pss_bytes": 663632896,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.03901070068342324,
+              "pss_bytes": 23094272,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465849.9493215,
+          "ncpu": 12,
+          "system_cpu_pct": 41.6,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 3.0516639471573788,
+              "pss_bytes": 347937792,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 17.230736677242277,
+              "pss_bytes": 708417536,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23094272,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465852.0276048,
+          "ncpu": 12,
+          "system_cpu_pct": 26.940268183665175,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.816065111459147,
+              "pss_bytes": 347937792,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 9.830439407681034,
+              "pss_bytes": 1000256512,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23094272,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465854.2042508,
+          "ncpu": 12,
+          "system_cpu_pct": 37.04422032583398,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 2.368446284929546,
+              "pss_bytes": 348065792,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 8.309633575939255,
+              "pss_bytes": 1000256512,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 49708032,
+              "pss_unknown": 0,
+              "pids": [
+                14818,
+                41010
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465856.3050342,
+          "ncpu": 12,
+          "system_cpu_pct": 38.600723763570564,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 6.123098169516056,
+              "pss_bytes": 348065792,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 16.68544251193125,
+              "pss_bytes": 1028803584,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.11480809067842604,
+              "pss_bytes": 45299712,
+              "pss_unknown": 0,
+              "pids": [
+                14818,
+                41057
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465858.391493,
+          "ncpu": 12,
+          "system_cpu_pct": 36.63967611336032,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.351290072197487,
+              "pss_bytes": 348065792,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 16.807014745272102,
+              "pss_bytes": 1124151296,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22820864,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465860.552774,
+          "ncpu": 12,
+          "system_cpu_pct": 34.76730543605788,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.037500146595556,
+              "pss_bytes": 347676672,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 14.352877401807973,
+              "pss_bytes": 1124130816,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.03998015989361552,
+              "pss_bytes": 49463296,
+              "pss_unknown": 0,
+              "pids": [
+                14818,
+                41106
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465862.6635277,
+          "ncpu": 12,
+          "system_cpu_pct": 30.90763694522191,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.782674659556944,
+              "pss_bytes": 347676672,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 11.102735346349332,
+              "pss_bytes": 1152550912,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.19275582198523147,
+              "pss_bytes": 49453056,
+              "pss_unknown": 0,
+              "pids": [
+                14818,
+                41106
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        }
+      ]
+    },
+    {
+      "phase": "widget-cerrado",
+      "start_state": {
+        "enabled": true,
+        "popupOpen": false,
+        "mounted": false,
+        "timeline": false,
+        "positionTimer": false,
+        "cacheEntries": 1,
+        "liveSurfaces": 1,
+        "playing": true
+      },
+      "end_state": {
+        "enabled": true,
+        "popupOpen": false,
+        "mounted": false,
+        "timeline": false,
+        "positionTimer": false,
+        "cacheEntries": 2,
+        "liveSurfaces": 1,
+        "playing": false
+      },
+      "summary": {
+        "gnome-shell": {
+          "cpu_total_mean_pct": 5.627325074845228,
+          "cpu_total_max_pct": 6.8691276669858015,
+          "pss_mean_mib": 358.70673828125,
+          "pss_min_mib": 358.08984375,
+          "pss_max_mib": 359.0517578125,
+          "unknown_samples": 0
+        },
+        "spotify": {
+          "cpu_total_mean_pct": 7.974551139604998,
+          "cpu_total_max_pct": 15.947250038590125,
+          "pss_mean_mib": 1228.3333984375,
+          "pss_min_mib": 1182.267578125,
+          "pss_max_mib": 1252.748046875,
+          "unknown_samples": 0
+        },
+        "bridge": {
+          "cpu_total_mean_pct": 0.06603517751466882,
+          "cpu_total_max_pct": 0.23960030704835417,
+          "pss_mean_mib": 29.3880859375,
+          "pss_min_mib": 21.7568359375,
+          "pss_max_mib": 47.2001953125,
+          "unknown_samples": 0
+        }
+      },
+      "samples": [
+        {
+          "monotonic": 1792465873.1387498,
+          "ncpu": 12,
+          "system_cpu_pct": 37.4846876276031,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 6.8691276669858015,
+              "pss_bytes": 376493056,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 12.902329744867512,
+              "pss_bytes": 1239697408,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.18172295415306355,
+              "pss_bytes": 49483776,
+              "pss_unknown": 0,
+              "pids": [
+                14818,
+                41106
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465875.2256932,
+          "ncpu": 12,
+          "system_cpu_pct": 32.45221634810899,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 6.074633274614841,
+              "pss_bytes": 376493056,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 12.59178950300957,
+              "pss_bytes": 1239703552,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.20114679717267686,
+              "pss_bytes": 49483776,
+              "pss_unknown": 0,
+              "pids": [
+                14818,
+                41106
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465877.425365,
+          "ncpu": 12,
+          "system_cpu_pct": 33.70484242890085,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.910140907192737,
+              "pss_bytes": 375997440,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 12.938416580611126,
+              "pss_bytes": 1284363264,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.23960030704835417,
+              "pss_bytes": 49492992,
+              "pss_unknown": 0,
+              "pids": [
+                14818,
+                41106
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465879.5262492,
+          "ncpu": 12,
+          "system_cpu_pct": 35.26336952151186,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 6.174719833932765,
+              "pss_bytes": 375997440,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 14.243525506495214,
+              "pss_bytes": 1284363264,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.03788171677259365,
+              "pss_bytes": 22813696,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465881.607438,
+          "ncpu": 12,
+          "system_cpu_pct": 42.503047541649735,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 6.3471641944637325,
+              "pss_bytes": 375997440,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 15.947250038590125,
+              "pss_bytes": 1284363264,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22813696,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465883.7798603,
+          "ncpu": 12,
+          "system_cpu_pct": 20.899573478092282,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.00402209845529,
+              "pss_bytes": 376455168,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 1.2810296572045543,
+              "pss_bytes": 1312109568,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22813696,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465885.9075959,
+          "ncpu": 12,
+          "system_cpu_pct": 21.142403808012695,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.025849354304298,
+              "pss_bytes": 376455168,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 2.5704725705220453,
+              "pss_bytes": 1312109568,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22813696,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465887.9641817,
+          "ncpu": 12,
+          "system_cpu_pct": 19.409109560935576,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.858269379078902,
+              "pss_bytes": 376455168,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.9403102024023682,
+              "pss_bytes": 1312109568,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22813696,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465890.1357038,
+          "ncpu": 12,
+          "system_cpu_pct": 22.2999222999223,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.9837119118256314,
+              "pss_bytes": 375484416,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.7293236944135071,
+              "pss_bytes": 1313601536,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22813696,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465892.217737,
+          "ncpu": 12,
+          "system_cpu_pct": 25.172274017024726,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.025612127598275,
+              "pss_bytes": 375484416,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 5.601063897933955,
+              "pss_bytes": 1297588224,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22813696,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        }
+      ]
+    },
+    {
+      "phase": "widget-abierto",
+      "start_state": {
+        "enabled": true,
+        "popupOpen": true,
+        "mounted": true,
+        "timeline": false,
+        "positionTimer": true,
+        "cacheEntries": 2,
+        "liveSurfaces": 1,
+        "playing": false
+      },
+      "end_state": {
+        "enabled": true,
+        "popupOpen": true,
+        "mounted": true,
+        "timeline": false,
+        "positionTimer": true,
+        "cacheEntries": 2,
+        "liveSurfaces": 1,
+        "playing": false
+      },
+      "summary": {
+        "gnome-shell": {
+          "cpu_total_mean_pct": 5.239756573979235,
+          "cpu_total_max_pct": 5.6455358436984,
+          "pss_mean_mib": 358.88798828125,
+          "pss_min_mib": 358.0439453125,
+          "pss_max_mib": 359.693359375,
+          "unknown_samples": 0
+        },
+        "spotify": {
+          "cpu_total_mean_pct": 0.8520501787226723,
+          "cpu_total_max_pct": 1.023016562280918,
+          "pss_mean_mib": 933.541015625,
+          "pss_min_mib": 933.0810546875,
+          "pss_max_mib": 934.060546875,
+          "unknown_samples": 0
+        },
+        "bridge": {
+          "cpu_total_mean_pct": 0.007725970164035314,
+          "cpu_total_max_pct": 0.03945174845698831,
+          "pss_mean_mib": 22.04931640625,
+          "pss_min_mib": 22.0478515625,
+          "pss_max_mib": 22.052734375,
+          "unknown_samples": 0
+        }
+      },
+      "samples": [
+        {
+          "monotonic": 1792465902.4874218,
+          "ncpu": 12,
+          "system_cpu_pct": 20.392628205128204,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.295803819492643,
+              "pss_bytes": 375681024,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8888062354393248,
+              "pss_bytes": 978442240,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23118848,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465904.5479872,
+          "ncpu": 12,
+          "system_cpu_pct": 21.826371826371826,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.641600029349328,
+              "pss_bytes": 375681024,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.907390214510731,
+              "pss_bytes": 978442240,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.03945174845698831,
+              "pss_bytes": 23118848,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465906.7484279,
+          "ncpu": 12,
+          "system_cpu_pct": 20.24492920015308,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.457998217295673,
+              "pss_bytes": 375436288,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8490219449126603,
+              "pss_bytes": 978926592,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23118848,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465908.825953,
+          "ncpu": 12,
+          "system_cpu_pct": 25.172834485563236,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.6455358436984,
+              "pss_bytes": 375436288,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 1.023016562280918,
+              "pss_bytes": 978934784,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23118848,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465910.887045,
+          "ncpu": 12,
+          "system_cpu_pct": 23.38511856091578,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.492248063806392,
+              "pss_bytes": 375436288,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8017880385118821,
+              "pss_bytes": 978934784,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23118848,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465913.0495775,
+          "ncpu": 12,
+          "system_cpu_pct": 20.21772939346812,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.813865784055241,
+              "pss_bytes": 377165824,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.7281477656554146,
+              "pss_bytes": 978406400,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23118848,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465915.1289372,
+          "ncpu": 12,
+          "system_cpu_pct": 21.703853955375255,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.352564152741543,
+              "pss_bytes": 377165824,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.9241837386028564,
+              "pss_bytes": 978920448,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23118848,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465917.2129118,
+          "ncpu": 12,
+          "system_cpu_pct": 20.954692556634303,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.768718533645195,
+              "pss_bytes": 377165824,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8014652997723017,
+              "pss_bytes": 979012608,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23123968,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465919.417017,
+          "ncpu": 12,
+          "system_cpu_pct": 25.46845124282983,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.20323714778733,
+              "pss_bytes": 377022464,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8405229238733377,
+              "pss_bytes": 979433472,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23123968,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465921.471644,
+          "ncpu": 12,
+          "system_cpu_pct": 17.827868852459016,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.725994147920605,
+              "pss_bytes": 377022464,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.7561590636672968,
+              "pss_bytes": 979433472,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.037807953183364836,
+              "pss_bytes": 23123968,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        }
+      ]
+    },
+    {
+      "phase": "widget-cerrado-despues",
+      "start_state": {
+        "enabled": true,
+        "popupOpen": false,
+        "mounted": false,
+        "timeline": false,
+        "positionTimer": false,
+        "cacheEntries": 2,
+        "liveSurfaces": 1,
+        "playing": false
+      },
+      "end_state": {
+        "enabled": true,
+        "popupOpen": false,
+        "mounted": false,
+        "timeline": false,
+        "positionTimer": false,
+        "cacheEntries": 2,
+        "liveSurfaces": 1,
+        "playing": false
+      },
+      "summary": {
+        "gnome-shell": {
+          "cpu_total_mean_pct": 5.39627019989709,
+          "cpu_total_max_pct": 6.71778244234701,
+          "pss_mean_mib": 391.5314453125,
+          "pss_min_mib": 391.158203125,
+          "pss_max_mib": 391.8193359375,
+          "unknown_samples": 0
+        },
+        "spotify": {
+          "cpu_total_mean_pct": 7.478423105568249,
+          "cpu_total_max_pct": 18.643733295052943,
+          "pss_mean_mib": 969.9783203125,
+          "pss_min_mib": 934.7890625,
+          "pss_max_mib": 1054.8701171875,
+          "unknown_samples": 0
+        },
+        "bridge": {
+          "cpu_total_mean_pct": 0.01584350942964313,
+          "cpu_total_max_pct": 0.04055549939484966,
+          "pss_mean_mib": 21.9662109375,
+          "pss_min_mib": 21.875,
+          "pss_max_mib": 22.052734375,
+          "unknown_samples": 0
+        }
+      },
+      "samples": [
+        {
+          "monotonic": 1792465931.7389927,
+          "ncpu": 12,
+          "system_cpu_pct": 21.188524590163933,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.991807221356086,
+              "pss_bytes": 410159104,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.7941511488521045,
+              "pss_bytes": 980197376,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23123968,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465933.8129668,
+          "ncpu": 12,
+          "system_cpu_pct": 24.288039056143205,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.673165741117104,
+              "pss_bytes": 410159104,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8509748611675657,
+              "pss_bytes": 980197376,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23123968,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465936.0414343,
+          "ncpu": 12,
+          "system_cpu_pct": 19.078201737816396,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.304784613203251,
+              "pss_bytes": 410561536,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8841307688672084,
+              "pss_bytes": 980625408,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23123968,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465938.1098957,
+          "ncpu": 12,
+          "system_cpu_pct": 26.335099877700774,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.683451297074204,
+              "pss_bytes": 410561536,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8973870469064533,
+              "pss_bytes": 980625408,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23123968,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465940.1644092,
+          "ncpu": 12,
+          "system_cpu_pct": 18.077709611451944,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.875277907198311,
+              "pss_bytes": 410561536,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8461226119930955,
+              "pss_bytes": 980625408,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23123968,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465942.372085,
+          "ncpu": 12,
+          "system_cpu_pct": 34.006862371330534,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.785548928592259,
+              "pss_bytes": 410852352,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 8.151655378364781,
+              "pss_bytes": 1018832896,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.04055549939484966,
+              "pss_bytes": 22937600,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465944.4418333,
+          "ncpu": 12,
+          "system_cpu_pct": 41.30612244897959,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 6.71778244234701,
+              "pss_bytes": 410852352,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 18.643733295052943,
+              "pss_bytes": 1018832896,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.03774035079970231,
+              "pss_bytes": 22937600,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465946.5299652,
+          "ncpu": 12,
+          "system_cpu_pct": 34.80016148566815,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.839425354911996,
+              "pss_bytes": 410852352,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 13.692445659793648,
+              "pss_bytes": 1018803200,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.040271898999393076,
+              "pss_bytes": 22937600,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465948.7498503,
+          "ncpu": 12,
+          "system_cpu_pct": 43.10672236992024,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 4.983418137810778,
+              "pss_bytes": 410472448,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 14.511713617304986,
+              "pss_bytes": 1106111488,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.039867345102486226,
+              "pss_bytes": 22949888,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": true,
+            "uri": "spotify:track:3dnP0JxCgygwQH9Gm7q7nb"
+          }
+        },
+        {
+          "monotonic": 1792465950.8747618,
+          "ncpu": 12,
+          "system_cpu_pct": 39.43606036536934,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 5.108040355359902,
+              "pss_bytes": 410472448,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 15.511916667379705,
+              "pss_bytes": 1106108416,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22949888,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        }
+      ]
+    },
+    {
+      "phase": "sin-widget-despues",
+      "start_state": {
+        "enabled": false,
+        "popupOpen": false,
+        "mounted": false,
+        "timeline": false,
+        "positionTimer": false,
+        "cacheEntries": 0,
+        "liveSurfaces": 0,
+        "playing": false
+      },
+      "end_state": {
+        "enabled": false,
+        "popupOpen": false,
+        "mounted": false,
+        "timeline": false,
+        "positionTimer": false,
+        "cacheEntries": 0,
+        "liveSurfaces": 0,
+        "playing": false
+      },
+      "summary": {
+        "gnome-shell": {
+          "cpu_total_mean_pct": 1.0800352615935465,
+          "cpu_total_max_pct": 1.252414097055038,
+          "pss_mean_mib": 391.00673828125,
+          "pss_min_mib": 389.6142578125,
+          "pss_max_mib": 391.41796875,
+          "unknown_samples": 0
+        },
+        "spotify": {
+          "cpu_total_mean_pct": 1.281195085359375,
+          "cpu_total_max_pct": 5.331791273307908,
+          "pss_mean_mib": 972.09306640625,
+          "pss_min_mib": 945.47265625,
+          "pss_max_mib": 1076.79296875,
+          "unknown_samples": 0
+        },
+        "bridge": {
+          "cpu_total_mean_pct": 0.0039811768132107005,
+          "cpu_total_max_pct": 0.039811768132107,
+          "pss_mean_mib": 22.021875,
+          "pss_min_mib": 21.88671875,
+          "pss_max_mib": 22.0556640625,
+          "unknown_samples": 0
+        }
+      },
+      "samples": [
+        {
+          "monotonic": 1792465959.6635413,
+          "ncpu": 12,
+          "system_cpu_pct": 16.318163181631817,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.0518723046170548,
+              "pss_bytes": 410377216,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8264710964848286,
+              "pss_bytes": 1129077760,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22949888,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465961.7479153,
+          "ncpu": 12,
+          "system_cpu_pct": 23.527037933817596,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.0905936695402538,
+              "pss_bytes": 410377216,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 5.331791273307908,
+              "pss_bytes": 1129099264,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 22949888,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465963.907425,
+          "ncpu": 12,
+          "system_cpu_pct": 19.311962470680218,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.039515174114333,
+              "pss_bytes": 410431488,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8396084098615767,
+              "pss_bytes": 991404032,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23127040,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465966.00011,
+          "ncpu": 12,
+          "system_cpu_pct": 17.5,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.0418427906731107,
+              "pss_bytes": 410431488,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.7331486304736707,
+              "pss_bytes": 991399936,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23127040,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465968.066943,
+          "ncpu": 12,
+          "system_cpu_pct": 17.851307189542485,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.035105971434782,
+              "pss_bytes": 410431488,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.995294203302675,
+              "pss_bytes": 991399936,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.039811768132107,
+              "pss_bytes": 23127040,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465970.2251143,
+          "ncpu": 12,
+          "system_cpu_pct": 18.589243959469993,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.0484445517045824,
+              "pss_bytes": 410291200,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.7258462281031725,
+              "pss_bytes": 991840256,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23127040,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465972.2956638,
+          "ncpu": 12,
+          "system_cpu_pct": 17.433808553971488,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.0811448549361002,
+              "pss_bytes": 410291200,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8494709574497931,
+              "pss_bytes": 992001024,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23127040,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465974.4249835,
+          "ncpu": 12,
+          "system_cpu_pct": 19.287128712871286,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.0466725188861705,
+              "pss_bytes": 410291200,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8051327068355157,
+              "pss_bytes": 992001024,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23127040,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465976.5967042,
+          "ncpu": 12,
+          "system_cpu_pct": 24.125874125874127,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.252414097055038,
+              "pss_bytes": 408540160,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8610346917253386,
+              "pss_bytes": 992462848,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23127040,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        },
+        {
+          "monotonic": 1792465978.674836,
+          "ncpu": 12,
+          "system_cpu_pct": 17.93103448275862,
+          "groups": {
+            "gnome-shell": {
+              "cpu_total_pct": 1.1127466829740398,
+              "pss_bytes": 408540160,
+              "pss_unknown": 0,
+              "pids": [
+                4117
+              ]
+            },
+            "spotify": {
+              "cpu_total_pct": 0.8441526560492716,
+              "pss_bytes": 992448512,
+              "pss_unknown": 0,
+              "pids": [
+                40658,
+                40663,
+                40664,
+                40688,
+                40690,
+                40693,
+                40744,
+                40788,
+                40654
+              ]
+            },
+            "bridge": {
+              "cpu_total_pct": 0.0,
+              "pss_bytes": 23127040,
+              "pss_unknown": 0,
+              "pids": [
+                14818
+              ]
+            }
+          },
+          "player": {
+            "playing": false,
+            "uri": "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+          }
+        }
+      ]
+    }
+  ],
+  "completed": true,
+  "restored_widget": {
+    "enabled": true,
+    "popupOpen": false,
+    "mounted": false,
+    "timeline": false,
+    "positionTimer": false,
+    "cacheEntries": 1,
+    "liveSurfaces": 1,
+    "playing": false
+  },
+  "restored_enabled_state": true
+}

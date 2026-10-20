@@ -1,6 +1,6 @@
 # ARIOTIFI
 
-Personalización de **Spotify Desktop para Linux** con Spicetify: interfaz VideoGlass, fondo basado en la portada, vista inmersiva con letras sincronizadas, visualizador de audio real, controles florales y progreso ondulado.
+Personalización de **Spotify Desktop para Linux**, con un widget opcional para GNOME 50 y Spicetify: interfaz VideoGlass, fondo basado en la portada, vista inmersiva con letras sincronizadas, visualizador de audio real, controles florales y progreso ondulado.
 
 Este repositorio reúne el código que estaba instalado al preparar la entrega, su configuración reproducible, los diseños anteriores, capturas y el historial Git original. Spotify y Spicetify se instalan por separado.
 
@@ -15,6 +15,7 @@ Este repositorio reúne el código que estaba instalado al preparar la entrega, 
 - Visualizador de 72 barras, alimentado por el monitor de salida del equipo mediante GStreamer. No usa el micrófono; puede reaccionar al sonido de otras aplicaciones.
 - Letras de LRCLIB, seguimiento de la línea actual, salto al pulsar un verso y estados de carga, instrumental o sin letra.
 - Reproducción, posición, volumen, aleatorio y repetición mediante MPRIS/D-Bus; temporizador, modo compacto y ajustes visuales.
+- Widget opcional **Flower Music** para el panel de GNOME 50, con portada y controles MPRIS: [instalación y configuración](widget/README.md).
 - Adaptación a ventanas pequeñas y respeto de la preferencia de movimiento reducido.
 
 No incluye el cliente de Spotify, contraseñas, cookies, tokens, preferencias privadas ni cachés de canciones. Las funciones de la cuenta siguen dependiendo de Spotify. Las letras requieren conexión y disponibilidad en LRCLIB.
@@ -24,6 +25,10 @@ No incluye el cliente de Spotify, contraseñas, cookies, tokens, preferencias pr
 Las imágenes son capturas reales guardadas durante el desarrollo, principalmente del 17 y 18 de octubre de 2026; muestran estados de distintas revisiones. Los controles y el fondo recibieron ajustes posteriores que están en el código principal. [Galería con más fotos](docs/GALERIA.md).
 
 ![Biblioteca con barra flotante](docs/capturas/premium/home-final.png)
+
+El widget del panel también está incluido:
+
+![Flower Music: píldora y desplegable](docs/capturas/widget/captura-aportada.png)
 
 ## Instalar
 
@@ -56,12 +61,17 @@ Abre **ARIOTIFI** desde el menú o ejecuta `~/.local/bin/spotify-personalizado`.
 | `Extensions/` | VideoGlass y componentes originales FlowerButton/WavyProgress; el bundle ya incorpora ambos componentes. |
 | `VideoGlass/` | CSS y paleta del tema activo. |
 | `visualizer.py` | Servicio local de audio, letras y controles MPRIS, en `127.0.0.1:43891`. |
+| `widget/` | Flower Music: código y diseño del widget del panel, instalación y restauración opcionales. |
 | `config/` | Configuración de ejemplo sin estado de respaldo, servicio y lanzador. |
 | `install.sh`, `apply.sh`, `revert.sh`, `scripts/` | Instalación, actualización y restauración para el usuario actual. |
 | `docs/capturas/` | Capturas reales del desarrollo, ventanas pequeñas y detalles de controles. |
 | `archive/` | VideoGlass del 11 de octubre, malla, halo, fotogramas de referencia y fuentes de etapas anteriores. |
 | `tests/`, `measurements/` | Herramientas y evidencia de desarrollo; varias pruebas históricas requieren una sesión preparada. |
 | `docs/historial/` | Documentación original y lista de commits anteriores. |
+
+## Consumo medido con Pulso
+
+[Resultados y capturas reales del widget](docs/RENDIMIENTO.md). La prueba distingue GNOME Shell, todos los procesos de Spotify y el puente de audio. La reproducción cambió entre fases y no permite aislar el coste adicional de Flower Music; no equivale a una comparación de Spotify original con VideoGlass.
 
 ## Verificación y límites
 

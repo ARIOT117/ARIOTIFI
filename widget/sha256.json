@@ -1,0 +1,15 @@
+{
+  "metadata.json": "ae05df2b98cbc51d525387b063fe168b8a1bf0a7eff1331fd575d677f0d53cd6",
+  "extension.js": "495a3923e4a2ab98fe80df464b648410b01481d5f1f62d7caae31150d26741d8",
+  "mpris.js": "2817bc292fa73d6fde541857de681bf9fc16b00e35aafe629bfb4c6196435475",
+  "artwork-cache.js": "91516a2c5a443608fa3528276aee7a81371cd9332646bfc362965c328b0c5b03",
+  "stylesheet.css": "aad0e7c1bc7e552ae550bd2210fe48d1e2c797f19a9ecb38da43415223951980",
+  "icons/media-playlist-shuffle-symbolic.svg": "bff8518a0e894a498b375bfa932ad0f266b85b766ffe5cbd79b6bc932a6b6d36",
+  "icons/media-skip-backward-symbolic.svg": "1ccdc357305e50acd133083b6c0ec6eba46daa82d06ac43a3b4a486f2350daf7",
+  "icons/media-playlist-repeat-symbolic.svg": "9268616a7bc425ee13e9d76281bed243a9b4d680a0238446c219cc2abd65d79e",
+  "icons/media-playback-start-symbolic.svg": "91df417e590a09d04ce01ee3c5390528c143f73d6ee75fa15a100e906304d593",
+  "icons/media-skip-forward-symbolic.svg": "9f448e891b529ab9ef0d7bff15f5c0fa8540d62d9f2873fa8209c828dfa37c59",
+  "icons/media-playback-pause-symbolic.svg": "fa366172b80fcc69c29c8566334dfe1d72d1d6ab44160dd2be5ed46bf3b1fc0b",
+  "ui/paint.js": "1fc8ed9afbdd0cdd916b78ccd0748957c48f0b3ea69db5771f282567761e513e",
+  "ui/indicator.js": "0e7de0c710d48d451bf4061bb901899b67ab8ac28fc3a41814c7b254c2ce7f1c"
+}

@@ -18,3 +18,9 @@ Las capturas son las que ya se habían guardado durante el desarrollo, no imáge
 Se conservan fuentes, CSS, paletas, código de validación y documentación de etapas anteriores en `archive/` y `docs/historial/`. Sus rutas absolutas son históricas. No se trasladan preferencias de cuenta, directorios de configuración completos, cachés, registros temporales, snapshots de memoria grandes ni el binario propietario de Spotify. Los datos compactos de auditoría que ya estaban en Git se conservan como evidencia histórica.
 
 La instalación y su restauración se verifican con un usuario temporal y comandos externos simulados. La comprobación estática no reinstala el tema ni cambia la reproducción del equipo original. La compatibilidad con otra máquina requiere ejecutar el diagnóstico y probar la interfaz allí.
+
+## Ampliación: widget Flower Music y medición con Pulso
+
+Se añadió la extensión instalada `flower-music@ariot117`, incluidos los cambios locales de `ui/indicator.js` y `ui/paint.js` que estaban pendientes de commit en su directorio original. No se modificaron sus archivos de producción al copiarlos. Los hashes de esta copia están en [widget/sha256.json](../widget/sha256.json).
+
+Las pruebas actuales de rendimiento y sus capturas se documentan en [RENDIMIENTO.md](RENDIMIENTO.md). Usan el recolector y la interfaz real de Pulso; se conservan todas las muestras y la tentativa incompleta. La captura del widget aportada por el usuario se incluye como referencia visual. Los scripts de instalación del widget y las herramientas del benchmark son nuevos y no se cargan con la extensión.

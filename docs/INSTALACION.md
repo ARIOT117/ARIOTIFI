@@ -162,3 +162,7 @@ systemctl --user stop spotify-videoglass.service
 ```
 
 Después cierra y abre Spotify. Para recuperar una instalación manual restaura también las copias de archivos que guardaste antes de instalar.
+
+## Widget del panel
+
+La configuración opcional de Flower Music se instala por separado y requiere GNOME Shell 50. Sigue [la guía del widget](../widget/README.md), que incluye instalación manual, respaldo y restauración.
