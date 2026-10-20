@@ -1,5 +1,7 @@
 # ARIOTIFI
 
+Proyecto de **Diego Esparza (ARIOT117)** · [Licencia MIT](LICENSE)
+
 Personalización de **Spotify Desktop para Linux**, con un widget opcional para GNOME 50 y Spicetify: interfaz VideoGlass, fondo basado en la portada, vista inmersiva con letras sincronizadas, visualizador de audio real, controles florales y progreso ondulado.
 
 Este repositorio reúne el código que estaba instalado al preparar la entrega, su configuración reproducible, los diseños anteriores, capturas y el historial Git original. Spotify y Spicetify se instalan por separado.
@@ -88,4 +90,14 @@ Las pruebas interactivas históricas usan el puerto de depuración 9222, cambian
 
 ## Créditos
 
-Personalización reunida para **ARIOT117**. Herramientas y servicios: [Spicetify CLI](https://github.com/spicetify/cli), [LRCLIB](https://lrclib.net), GStreamer y MPRIS. La documentación histórica describe las referencias visuales de @shred0s y los componentes aportados durante el trabajo. Las portadas, marcas, letras y referencias visuales pertenecen a sus titulares. No se ha asignado una licencia nueva a material de terceros ni se incluyen binarios de Spotify.
+Proyecto de **Diego Esparza (ARIOT117)**. Herramientas y servicios: [Spicetify CLI](https://github.com/spicetify/cli), [LRCLIB](https://lrclib.net), GStreamer y MPRIS. La documentación histórica describe las referencias visuales de @shred0s y los componentes aportados durante el trabajo. Las portadas, marcas, letras y referencias visuales pertenecen a sus titulares. No se ha asignado una licencia nueva a material de terceros ni se incluyen binarios de Spotify.
+
+## Licencia y autoría
+
+El código original de ARIOTIFI se publica bajo la [licencia MIT](LICENSE).
+
+**Copyright (c) 2026 Diego Esparza (ARIOT117).**
+
+Cualquiera puede usar, copiar, modificar, distribuir y vender copias del código, incluso en proyectos comerciales. Al distribuir copias o partes sustanciales deben conservar este aviso de copyright y el texto de la licencia MIT. Esa es la atribución exigida por la licencia; no obliga a mostrar un crédito en pantalla ni a publicar las modificaciones con la misma licencia.
+
+La licencia se aplica a las aportaciones originales sobre las que el autor tiene derechos. Las portadas, marcas, letras, referencias y demás material de terceros conservan sus derechos y condiciones propios: consulta [los avisos y créditos](NOTICE.md). Texto de referencia: [MIT en Open Source Initiative](https://opensource.org/license/mit).
